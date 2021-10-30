@@ -1,4 +1,4 @@
-﻿global.board = mp.browsers.new('package://game_resources/interface//board.html');
+﻿global.board = mp.browsers.new('package://game_resources/interface/board.html');
 global.openOutType = -1;
 
 mp.keys.bind(Keys.VK_I, false, function () {
@@ -53,7 +53,7 @@ function closeBoard() {
 var last
 mp.events.add('board', (act, data, index) => {
     if (board === null)
-        global.board = mp.browsers.new('package://game_resources/interface//board.html');
+        global.board = mp.browsers.new('package://game_resources/interface/board.html');
 
 	switch(act){
 		case 0:

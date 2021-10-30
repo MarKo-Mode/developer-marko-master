@@ -85,7 +85,7 @@ namespace NeptuneEvo.Voice
                     if (!target.IsInVehicle) target.StopAnimation();
                     else target.SetData("ToResetAnimPhone", true);
 
-                    Core.BasicSync.DetachObject(target);
+                    Globals.BasicSync.DetachObject(target);
 
                     Trigger.ClientEvent(target, "voice.phoneStop");
 
@@ -194,7 +194,7 @@ namespace NeptuneEvo.Voice
 
                     Main.OnAntiAnim(player);
                     player.PlayAnimation("anim@cellphone@in_car@ds", "cellphone_call_listen_base", 49);
-                    Core.BasicSync.AttachObjectToPlayer(player, NAPI.Util.GetHashKey("prop_amb_phone"), 6286, new Vector3(0.06, 0.01, -0.02), new Vector3(80, -10, 110));
+                    Globals.BasicSync.AttachObjectToPlayer(player, NAPI.Util.GetHashKey("prop_amb_phone"), 6286, new Vector3(0.06, 0.01, -0.02), new Vector3(80, -10, 110));
 
                     player.SetData("PhoneVoip", playerPhoneMeta);
                     target.SetData("PhoneVoip", targetPhoneMeta);
@@ -219,7 +219,7 @@ namespace NeptuneEvo.Voice
                                 player.StopAnimation();
                             else
                                 player.SetData("ToResetAnimPhone", true);
-                            Core.BasicSync.DetachObject(player);
+                            Globals.BasicSync.DetachObject(player);
 
                             player.SetData("PhoneVoip", pPhoneMeta);
                             target.SetData("PhoneVoip", tPhoneMeta);
@@ -293,7 +293,7 @@ namespace NeptuneEvo.Voice
 
                 Main.OnAntiAnim(player);
                 player.PlayAnimation("anim@cellphone@in_car@ds", "cellphone_call_listen_base", 49);
-                Core.BasicSync.AttachObjectToPlayer(player, NAPI.Util.GetHashKey("prop_amb_phone"), 6286, new Vector3(0.06, 0.01, -0.02), new Vector3(80, -10, 110));
+                Globals.BasicSync.AttachObjectToPlayer(player, NAPI.Util.GetHashKey("prop_amb_phone"), 6286, new Vector3(0.06, 0.01, -0.02), new Vector3(80, -10, 110));
 
                 Trigger.ClientEvent(player, "voice.phoneCall", target, 1);
                 Trigger.ClientEvent(target, "voice.phoneCall", player, 1);
@@ -349,8 +349,8 @@ namespace NeptuneEvo.Voice
                 if (player.IsInVehicle) player.SetData("ToResetAnimPhone", true);
                 if (player.IsInVehicle) target.SetData("ToResetAnimPhone", true);
 
-                Core.BasicSync.DetachObject(player);
-                Core.BasicSync.DetachObject(target);
+                Globals.BasicSync.DetachObject(player);
+                Globals.BasicSync.DetachObject(target);
 
                 Trigger.ClientEvent(player, "voice.phoneStop");
                 Trigger.ClientEvent(target, "voice.phoneStop");

@@ -1,10 +1,11 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
-using NeptuneEvo.Core.Character;
-using NeptuneEvo.Core.nAccount;
+using NeptuneEvo.Globals;
+using NeptuneEvo.Globals.Character;
+using NeptuneEvo.Globals.nAccount;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Houses;
 using NeptuneEvo.Infodata;
+using NeptuneEvo.Moules;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using NeptuneEvo.Voice;
@@ -162,8 +163,6 @@ namespace NeptuneEvo
         {
             try
             {
-                //NAPI.TextLabel.CreateTextLabel("~r~Мутный Тип", new Vector3(-875.41, -848.00, 20.40), 7f, 0.3f, 0, new Color(255, 255, 255), true, 0);
-                //NAPI.TextLabel.CreateTextLabel("~y~Барыга", new Vector3(1134.20, -878.71, 55.03), 7f, 0.3f, 0, new Color(255, 255, 255), true, 0);
 
                 NAPI.Server.SetAutoRespawnAfterDeath(false);
                 NAPI.Task.Run(() =>
@@ -171,6 +170,8 @@ namespace NeptuneEvo
                     NAPI.Server.SetGlobalServerChat(false);
                     NAPI.World.SetTime(DateTime.Now.Hour, 0, 0);
                 });
+
+                Timers.StartOnceTask(10000, () => Forbes.SyncMajors());
 
                 DataTable result = Database.QueryRead("SELECT `uuid`,`firstname`,`lastname`,`sim`,`lvl`,`exp`,`fraction`,`money`,`bank`,`adminlvl` FROM `characters`");
                 if (result != null)
@@ -201,13 +202,12 @@ namespace NeptuneEvo
                                 DataTable result2 = Database.QueryRead($"SELECT `socialclub` FROM `accounts` WHERE `character1`={uuid} OR `character2`={uuid} OR `character3`={uuid}");
                                 if (result2 == null || result2.Rows.Count == 0) continue;
                                 string socialclub = Convert.ToString(result2.Rows[0]["socialclub"]);
-                                //AdminSlots.Add(socialclub, new AdminSlotsData($"{name}_{lastname}", adminlvl, false, false));
                             }
                         }
                         catch (Exception e) { Log.Write("ResourceStart: " + e.Message, nLog.Type.Error); }
                     }
                 }
-                else Log.Write("DB `characters` return null result", nLog.Type.Warn);                                     //
+                else Log.Write("DB `characters` return null result", nLog.Type.Warn);
 
                 result = Database.QueryRead("SELECT `login`,`socialclub`,`email`,`hwid` FROM `accounts`");
                 if (result != null)
@@ -2825,6 +2825,8 @@ namespace NeptuneEvo
                     Fractions.Cityhall.lastHourTax = 0;
                     Fractions.Ems.HumanMedkitsLefts = 100;
 
+                    Forbes.SyncMajors();
+
                     var rndt = new Random();
                     pluscost = rndt.Next(10, 20);
 
@@ -3211,7 +3213,7 @@ namespace NeptuneEvo
         {
             try
             {
-                client.SendChatMessage($"Сборка сервера (Developer-MarKo-Master) !{{#00FFFF}}{Full}!{{#FFF}} успешно запущена !{{#f39c12}}{StartDate}");
+                client.SendChatMessage($"!{{#00FFFF}}{Full}!{{#FFF}}!{{#f39c12}}{StartDate}");
             }
             catch { }
         }
@@ -3330,7 +3332,7 @@ namespace NeptuneEvo
                 if (playerPhoneMeta.CallingState != "callMe" && playerPhoneMeta.Target != null)
                 {
                     player.PlayAnimation("anim@cellphone@in_car@ds", "cellphone_call_listen_base", 49);
-                    Core.BasicSync.AttachObjectToPlayer(player, NAPI.Util.GetHashKey("prop_amb_phone"), 6286, new Vector3(0.11, 0.03, -0.01), new Vector3(85, -15, 120));
+                    Globals.BasicSync.AttachObjectToPlayer(player, NAPI.Util.GetHashKey("prop_amb_phone"), 6286, new Vector3(0.11, 0.03, -0.01), new Vector3(85, -15, 120));
                 }
             }
         }
@@ -3445,114 +3447,154 @@ namespace NeptuneEvo
         #region MainMenu
         public static async Task OpenPlayerMenu(Player player)
         {
-            Menu menu = new Menu("mainmenu", false, false);
-            menu.Callback = callback_mainmenu;
+            Menu menu = new Menu("mainmenu", false, false)
+            {
+                Callback = callback_mainmenu
+            };
 
-            Menu.Item menuItem = new Menu.Item("header", Menu.MenuItem.Header);
-            menuItem.Text = "Меню";
+            Menu.Item menuItem = new Menu.Item("header", Menu.MenuItem.Header)
+            {
+                Text = ""
+            };
             menu.Add(menuItem);
 
             if (oldconfig.VoIPEnabled)
             {
-                Voice.VoicePhoneMetaData vpmd = player.GetData<VoicePhoneMetaData>("PhoneVoip");
+                VoicePhoneMetaData vpmd = player.GetData<VoicePhoneMetaData>("PhoneVoip");
                 if (vpmd.Target != null)
                 {
                     if (vpmd.CallingState == "callMe")
                     {
-                        menuItem = new Menu.Item("acceptcall", Menu.MenuItem.Button);
-                        menuItem.Scale = 1;
-                        menuItem.Color = Menu.MenuColor.Green;
-                        menuItem.Text = "Принять вызов";
+                        menuItem = new Menu.Item("acceptcall", Menu.MenuItem.Button)
+                        {
+                            Scale = 1,
+                            Color = Menu.MenuColor.Green,
+                            Text = "Принять вызов"
+                        };
                         menu.Add(menuItem);
                     }
 
                     string text = (vpmd.CallingState == "callMe") ? "Отклонить вызов" : (vpmd.CallingState == "callTo") ? "Отменить вызов" : "Завершить вызов";
-                    menuItem = new Menu.Item("endcall", Menu.MenuItem.Button);
-                    menuItem.Scale = 1;
-                    menuItem.Text = text;
+                    menuItem = new Menu.Item("endcall", Menu.MenuItem.Button)
+                    {
+                        Scale = 1,
+                        Text = text
+                    };
                     menu.Add(menuItem);
                 }
             }
 
-            menuItem = new Menu.Item("gps", Menu.MenuItem.gpsBtn);
-            menuItem.Column = 2;
-            menuItem.Text = "";
-            menu.Add(menuItem);
-
-            menuItem = new Menu.Item("contacts", Menu.MenuItem.contactBtn);
-            menuItem.Column = 2;
-            menuItem.Text = "";
-            menu.Add(menuItem);
-
-            menuItem = new Menu.Item("services", Menu.MenuItem.servicesBtn);
-            menuItem.Column = 2;
-            menuItem.Text = "";
-            menu.Add(menuItem);
-
-            if (Main.Players[player].BizIDs.Count > 0)
+            menuItem = new Menu.Item("gps", Menu.MenuItem.gpsBtn)
             {
-                menuItem = new Menu.Item("biz", Menu.MenuItem.businessBtn);
-                menuItem.Column = 2;
-                menuItem.Text = "";
+                Column = 2,
+                Text = "Навигатор"
+            };
+            menu.Add(menuItem);
+
+            menuItem = new Menu.Item("contacts", Menu.MenuItem.contactBtn)
+            {
+                Column = 2,
+                Text = "Контакты"
+            };
+            menu.Add(menuItem);
+
+            menuItem = new Menu.Item("services", Menu.MenuItem.servicesBtn)
+            {
+                Column = 2,
+                Text = "Сервисы"
+            };
+            menu.Add(menuItem);
+
+            if (Players[player].BizIDs.Count > 0)
+            {
+                menuItem = new Menu.Item("biz", Menu.MenuItem.businessBtn)
+                {
+                    Column = 2,
+                    Text = "Бизнес"
+                };
                 menu.Add(menuItem);
             }
 
-            if (Main.Players[player].FractionID > 0)
+            if (Players[player].FractionID > 0)
             {
-                menuItem = new Menu.Item("frac", Menu.MenuItem.grupBtn);
-                menuItem.Column = 2;
-                menuItem.Text = "";
+                menuItem = new Menu.Item("frac", Menu.MenuItem.grupBtn)
+                {
+                    Column = 2,
+                    Text = "Фракция"
+                };
                 menu.Add(menuItem);
             }
 
             if (Fractions.Manager.isLeader(player, 6))
             {
-                menuItem = new Menu.Item("citymanage", Menu.MenuItem.businessBtn);
-                menuItem.Column = 2;
-                menuItem.Text = "";
+                menuItem = new Menu.Item("citymanage", Menu.MenuItem.businessBtn)
+                {
+                    Column = 2,
+                    Text = "Управление"
+                };
                 menu.Add(menuItem);
             }
 
-            if (Main.Players[player].HotelID != -1)
+            if (Players[player].HotelID != -1)
             {
-                menuItem = new Menu.Item("hotel", Menu.MenuItem.hotelBtn);
-                menuItem.Column = 2;
-                menuItem.Text = "";
+                menuItem = new Menu.Item("hotel", Menu.MenuItem.hotelBtn)
+                {
+                    Column = 2,
+                    Text = "Отель"
+                };
                 menu.Add(menuItem);
             }
 
-            if (Main.Players[player].LVL < 1)
+            if (Players[player].LVL < 50)
             {
-                menuItem = new Menu.Item("promo", Menu.MenuItem.promoBtn);
-                menuItem.Column = 2;
-                menuItem.Text = "";
+                menuItem = new Menu.Item("promo", Menu.MenuItem.promoBtn)
+                {
+                    Column = 2,
+                    Text = "Промо"
+                };
                 menu.Add(menuItem);
             }
 
-            if (Houses.HouseManager.GetHouse(player, true) != null)
+            if (HouseManager.GetHouse(player, true) != null)
             {
-                menuItem = new Menu.Item("house", Menu.MenuItem.homeBtn);
-                menuItem.Column = 2;
-                menuItem.Text = "";
+                menuItem = new Menu.Item("house", Menu.MenuItem.homeBtn)
+                {
+                    Column = 2,
+                    Text = "Мой дом"
+                };
                 menu.Add(menuItem);
             }
-            else if (Houses.HouseManager.GetHouse(player) != null && Houses.HouseManager.GetHouse(player, true) == null)
+            else if (HouseManager.GetHouse(player) != null && HouseManager.GetHouse(player, true) == null)
             {
-                menuItem = new Menu.Item("openhouse", Menu.MenuItem.Button);
-                menuItem.Text = "Открыть/Закрыть Дом";
+                menuItem = new Menu.Item("openhouse", Menu.MenuItem.Button)
+                {
+                    Text = "Открыть/Закрыть Дом"
+                };
                 menu.Add(menuItem);
 
-                menuItem = new Menu.Item("leavehouse", Menu.MenuItem.Button);
-                menuItem.Text = "Выселиться из дома";
+                menuItem = new Menu.Item("leavehouse", Menu.MenuItem.Button)
+                {
+                    Text = "Выселиться из дома"
+                };
                 menu.Add(menuItem);
             }
 
-            menuItem = new Menu.Item("ad", Menu.MenuItem.ilanBtn);
-            menuItem.Text = "";
+            menuItem = new Menu.Item("ad", Menu.MenuItem.ilanBtn)
+            {
+                Text = "Обьявления"
+            };
             menu.Add(menuItem);
 
-            menuItem = new Menu.Item("close", Menu.MenuItem.closeBtn);
-            menuItem.Text = "";
+            menuItem = new Menu.Item("forb", Menu.MenuItem.forbBtn)
+            {
+                Text = "Рейтинг"
+            };
+            menu.Add(menuItem);
+
+            menuItem = new Menu.Item("close", Menu.MenuItem.closeBtn)
+            {
+                Text = "Выход"
+            };
             menu.Add(menuItem);
 
             await menu.OpenAsync(player);
@@ -3562,6 +3604,9 @@ namespace NeptuneEvo
             MenuManager.Close(player);
             switch (item.ID)
             {
+                case "forb":
+                    Forbes.OpenForbes(player);
+                    return;
                 case "gps":
                     OpenGPSMenu(player, "Категории");
                     return;

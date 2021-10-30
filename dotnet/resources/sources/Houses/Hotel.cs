@@ -1,4 +1,4 @@
-﻿using NeptuneEvo.Core;
+﻿using NeptuneEvo.Globals;
 using NeptuneEvo.Settings;
 using NeptuneEvo.GUI;
 using GTANetworkAPI;

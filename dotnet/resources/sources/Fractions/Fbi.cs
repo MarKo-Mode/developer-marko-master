@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Settings;
 using NeptuneEvo.GUI;
 using System;

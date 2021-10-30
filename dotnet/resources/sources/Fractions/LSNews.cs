@@ -1,6 +1,6 @@
 ﻿using GTANetworkAPI;
 using MySqlConnector;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using System;

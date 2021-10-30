@@ -1,5 +1,5 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using Newtonsoft.Json;
@@ -60,7 +60,7 @@ namespace NeptuneEvo.Modules
         {
             if (player != null)
             {
-                if (!Core.Group.CanUseCmd(player, "statebox")) return;
+                if (!Globals.Group.CanUseCmd(player, "statebox")) return;
             }
             foreach (var item in containers)
             {
@@ -73,7 +73,7 @@ namespace NeptuneEvo.Modules
         [Command("openallcontainers")]
         public static void OpenAllContainers(Player player)
         {
-            if (!Core.Group.CanUseCmd(player, "openallcontainers")) return;
+            if (!Globals.Group.CanUseCmd(player, "openallcontainers")) return;
             foreach (var item in containers)
             {
                 item.OpenDoor();

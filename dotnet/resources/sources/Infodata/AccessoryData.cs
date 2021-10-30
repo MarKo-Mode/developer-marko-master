@@ -1,4 +1,4 @@
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 
 namespace NeptuneEvo.Infodata
 {

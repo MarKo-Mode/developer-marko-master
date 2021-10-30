@@ -1,5 +1,5 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using System;
@@ -22,8 +22,8 @@ namespace NeptuneEvo.Working
                 NAPI.Data.SetEntityData(veh, "DRIVER", null);
                 NAPI.Data.SetEntityData(veh, "ON_WORK", false);
                 veh.SetSharedData("PETROL", VehicleManager.VehicleTank[veh.Class]);
-                Core.VehicleStreaming.SetEngineState(veh, false);
-                Core.VehicleStreaming.SetLockStatus(veh, false);
+                Globals.VehicleStreaming.SetEngineState(veh, false);
+                Globals.VehicleStreaming.SetLockStatus(veh, false);
             }
         }
         private static nLog Log = new nLog("Taxi");
@@ -51,7 +51,7 @@ namespace NeptuneEvo.Working
                     }
                     GameLog.Money($"player({Main.Players[player].UUID})", $"server", taxiRentCost, $"taxiRent");
                     Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы арендовали такси. Чтобы предложить игроку оплатить проезд, напишите /tprice [ID] [Цена]", 3000);
-                    Core.VehicleStreaming.SetEngineState(vehicle, false);
+                    Globals.VehicleStreaming.SetEngineState(vehicle, false);
                 }
             }
         }
@@ -185,8 +185,8 @@ namespace NeptuneEvo.Working
                 NAPI.Data.SetEntityData(veh, "NUMBER", i);
                 NAPI.Data.SetEntityData(veh, "DRIVER", null);
                 NAPI.Data.SetEntityData(veh, "ON_WORK", false);
-                Core.VehicleStreaming.SetEngineState(veh, false);
-                Core.VehicleStreaming.SetLockStatus(veh, false);
+                Globals.VehicleStreaming.SetEngineState(veh, false);
+                Globals.VehicleStreaming.SetLockStatus(veh, false);
                 veh.SetSharedData("PETROL", VehicleManager.VehicleTank[veh.Class]);
             }
             catch (Exception e) { Log.Write($"respawnCar: " + e.Message, nLog.Type.Error); }

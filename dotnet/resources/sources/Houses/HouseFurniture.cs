@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GTANetworkAPI;
 using Newtonsoft.Json;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Settings;
 using System.Data;
 using System.Linq;

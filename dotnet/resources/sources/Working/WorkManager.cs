@@ -1,5 +1,5 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
@@ -315,7 +315,7 @@ namespace NeptuneEvo.Working
                                 client.SetClothes(11, 38, 3);
                                 client.SetClothes(4, 17, 0);
                                 client.SetClothes(6, 1, 7);
-                                client.SetClothes(3, Core.Customization.CorrectTorso[gender][38], 0);
+                                client.SetClothes(3, Globals.Customization.CorrectTorso[gender][38], 0);
                             }
                             else
                             {
@@ -323,7 +323,7 @@ namespace NeptuneEvo.Working
                                 client.SetClothes(11, 0, 6);
                                 client.SetClothes(4, 25, 2);
                                 client.SetClothes(6, 1, 2);
-                                client.SetClothes(3, Core.Customization.CorrectTorso[gender][0], 0);
+                                client.SetClothes(3, Globals.Customization.CorrectTorso[gender][0], 0);
                             }
 
                             int x = Working.WorkManager.rnd.Next(0, Gopostal.GoPostalObjects.Count);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Settings;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Plugins;

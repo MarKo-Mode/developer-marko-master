@@ -244,7 +244,7 @@ require('./game_resources/handlers/character');
 require('./game_resources/handlers/render');
 require('./game_resources/handlers/main');
 require('./game_resources/handlers/voice');
-require('./game_resources/handlers/phone');
+require('./game_resources/handlers/mobile');
 require('./game_resources/handlers/checkpoints');
 require('./game_resources/handlers/board');
 require('./game_resources/handlers/hud');
@@ -261,21 +261,23 @@ require('./game_resources/handlers/environment');
 require('./game_resources/handlers/elections');
 require('./game_resources/handlers/animals');
 require('./game_resources/handlers/client/utils/utils');
-require('./game_resources/handlers/autopilot');
 require('./game_resources/handlers/crouch');
 require('./game_resources/handlers/markers');
 require('./game_resources/handlers/fingerpointer');
 require('./game_resources/handlers/atm');
-require('./game_resources/handlers/adminpanel');
 require('./game_resources/handlers/configs/tattoo');
 require('./game_resources/handlers/configs/barber');
 require('./game_resources/handlers/configs/clothes');
 require('./game_resources/handlers/configs/natives');
 require('./game_resources/handlers/configs/tuning');
-require('./game_resources/handlers/realtor');
-require('./game_resources/handlers/radiosync');
-require('./game_resources/handlers/containers');
 require('./game_resources/handlers/island/index');
+require('./game_resources/handlers/radiosync');
+require('./game_resources/handlers/modules/containers');
+require('./game_resources/handlers/modules/coordinates');
+require('./game_resources/handlers/modules/adminpanel');
+require('./game_resources/handlers/modules/autopilot');
+require('./game_resources/handlers/modules/teleport');
+require('./game_resources/handlers/modules/realtor');
 // // // // // // //
 
 if (mp.storage.data.friends == undefined) {

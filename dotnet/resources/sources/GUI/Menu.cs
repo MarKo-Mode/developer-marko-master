@@ -340,8 +340,8 @@ namespace NeptuneEvo.GUI
             leaveBtn,
             onRadio,
             offRadio,
-            promoBtn
-
+            promoBtn,
+            forbBtn
         }
         public enum MenuColor
         {

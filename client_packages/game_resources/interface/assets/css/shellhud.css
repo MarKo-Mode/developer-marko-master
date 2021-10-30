@@ -1,277 +1,287 @@
-﻿	@media  (max-width: 1300px)  {
-		.inGameHud {zoom: 70%}
-	}
-	@media (min-width: 1301px) and (max-width: 1400px) {
-		.inGameHud {zoom: 80%}
-	}
-	@media (min-width: 1401px) and (max-width: 1650px) {
-		.inGameHud {zoom: 80%}
-	}
-	@media (min-width: 1651px) and (max-width: 2560px) {
-		.inGameHud {zoom: 100%}
-	}
+/*
+* IT Studio "marko"
+* url: www.marko.com
+* CSS файл Стилизации
+*/
+
+.inGameHud {
+  width: 100%;
+  height: 100%;
+}
+
+#effect {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#safezone {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.inGameHud .logobox {
+  position: absolute;
+  font-family: Uni Neue;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, -10px);
+  font-size: 10.5pt;
+}
+
+.inGameHud .wallet {
+  position: absolute;
+  font-family: Uni Neue;
+  top: 16px;
+  right: 15px;
+  font-size: 10.5pt;
+  text-align: right;
+}
+
+.inGameHud .wallet p {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+/* IT Studio "marko" - Bind Помощь */
+.inGameHud .help {
+  position: absolute;
+  text-align: center;
+  left: 20px;
+  font-family: Uni Neue;
+  font-size: 10px;
+  width: 148px;
+  color: #ffffff;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inGameHud .help p {
+  font-size: 7pt;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  border-radius: 3px;
+  margin-top: 5px;
+  background: #1e1e1e80;
+  padding: 5px 20px;
+  color: #ffffff;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0);
+}
+
+.inGameHud .help span {
+  font-size: 7pt;
+  font-weight: 600;
+  float: left;
+  text-align: center;
+  background: rgb(255, 255, 255, 0.9);
+  position: relative;
+  left: -22px;
+  top: -5px;
+  width: 14px;
+  border-radius: 3px;
+  padding: 6px 6px;
+  color: #1e1e1e;
+  text-shadow: 0px 0px 0px rgba(145, 145, 145);
+}
+
+/* IT Studio "marko" - Voice Chat */
+.inGameHud .microhud {
+  font-size: 22pt;
+  padding: 0 20px 0 0;
+}
+
+.inGameHud .microhud .activate {
+  color: #047a14
+}
+
+.inGameHud .microhud .offline {
+  color: #ff0000
+}
+
+/* IT Studio "marko" - Локализация */
+.inGameHud .locationhud {
+  position: absolute;
+  font-family: Uni Neue;
+  bottom: 0.2px;
+  right: 15px;
+  font-size: 13pt;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* IT Studio "marko" - Спидометр транспорта */
+.inGameHud .speedometer {
+  position: absolute;
+  bottom: 7px;
+  right: 20px;
+  display: block;
+}
+
+.inGameHud .hud-speedometer {
+  position: absolute;
+  bottom: 3.4vh;
+  right: 0;
+}
+
+.inGameHud .hud-speedometer p {
+  margin: 0 0 -20px 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.inGameHud .hud-speedometer .hud-speed-text {
+  position: absolute;
+  color: #fff;
+  bottom: 7vh;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  font-size: 5vh;
+  text-transform: uppercase;
+  transform: skewY(-4deg);
+  width: 28vh;
+  align-items: flex-end;
+  align-items: center;
+  letter-spacing: 0;
+}
+
+.inGameHud .hud-speedometer .hud-engine-text {
+  position: absolute;
+  color: #fff;
+  bottom: 18vh;
+  left: 1.6vh;
+  transform: rotate(-66deg) skewY(4deg);
+  font-size: 1.4vh;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-align: right;
+}
+
+.inGameHud .speedometer .lamp_list {
+  position: absolute;
+  width: 13.88889vh;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  bottom: 0.7vh;
+  right: 6.35vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.inGameHud .speedometer .lamp_list .icon_fuel {
+  width: 1.75926vh;
+}
+
+.inGameHud .speedometer .lamp_list .icon_door {
+  width: 1.75926vh;
+}
+
+.inGameHud .speedometer .lamp_list .icon_sec {
+  width: 1.75926vh;
+}
+
+.inGameHud .speedometer .icon-engine {
+  position: absolute;
+  bottom: 2.4vh;
+  left: 2.2vh;
+  width: 2.2vh;
+  height: 1.6vh;
+  background-size: contain;
+}
+
+/* IT Studio "marko" - Ежедневный подарок */
+.inGameHud .bonus {
+  position: absolute;
+  top: 180px;
+  right: 5px;
+}
+
+.inGameHud .bonus-bar {
+  background: #18191D;
+  border-radius: 5px;
+  padding: 2px 5px;
+  color: gray;
+  font-size: 1.5em;
+}
+
+.inGameHud .bonus-block {
+  display: flex;
+  flex-wrap: wrap;
+  width: 240px;
+  height: auto;
+  background-color: #18191D;
+  color: #fff;
+}
+
+.inGameHud .bonus-block section {
+  flex: 40%;
+  width: 100%;
+  background-color: #1D2027;
+  padding: 7px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inGameHud .bonus-block section .fa-times {
+  color: #ab2b2b;
+}
+
+.inGameHud .personid {
+  position: absolute;
+  top: 120px;
+  right: 1px;
+  width: 160px;
+  color:#fff
+}
 
 
-	body {
-		user-select: none;
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		overflow: hidden;
-		margin: 0;
-	}
 
-	p {
-		margin: 0;
-	}
+/* IT Studio "marko" - Система пищеварения */
+.inGameHud .digestion {
+  position: absolute;
+  bottom: 1%;
+  left: 16%;
+  width: 150px;
+}
 
-	#effect {
-		position: absolute;
-		left: 0;
-		top: 0;
-	}
+.inGameHud .info_table .eatings {
+  display: flex;
+  position: absolute;
+  margin-top: -34px;
+  margin-left: 7px;
+}
 
-	#safezone {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
+.inGameHud .info_table .eatings .eat {
+  margin-right: 16px;
+}
 
-	.fade-enter-active, .fade-leave-active {
-	  transition: opacity .58s
-	}
-	.fade-enter, .fade-leave-to {
-	  opacity: 0
-	}
+.inGameHud .info_table .eatings .icohud {
+  width: 1.3vh;
+}
 
-	.inGameHud {
-		position: absolute;
-		margin: 0 auto;
-		line-height: normal;
-		color:#fff;
-		width: 100%;
-		height: 100%;
-        -webkit-animation-name: opacity, slide;
-        animation-name: opacity, slide;
-        -webkit-animation-duration: .5s, .5s;
-        animation-duration: .5s, .5s;
-        -webkit-animation-timing-function: ease, ease;
-        animation-timing-function: ease, ease;
-	}
-	.inGameHud .header_hud{
-		position: absolute;
-		top: 3%;
-		width: 90px;
-		height: 80px;
-		display: flex;
-		font-size: 16px;
-		right: 0%;
-	}
-	.inGameHud .header_hud .logo{
-		opacity: 0.8;
-		position: absolute;
-	}
-	.inGameHud .header_hud .online{
-		position: relative;
-		left: -35%;
-		top: 15%;
-	}
-	.inGameHud .header_hud .id{
-		position: relative;
-		left: -120%;
-		opacity: 0.5;
-		top: 14%;
-	}
-	.inGameHud .header_hud .user{
-		width: 51%;
-		position: relative;
-	}
-	.inGameHud .header_hud .onlinecount{
-		position: absolute;
-		top: -1%;
-		left: 62%;
-		letter-spacing: 0.05em;
-		color: #ffffffb8;
-	}
-	.inGameHud .money{
-		position: absolute;
-		top: 101px;
-		right: 59px;
-		height: 80px;
-		font-size: 25px;
-		color: #ffffffd4;
-	}
-	.inGameHud .money .ico{
-		width: 19px;
-		position: relative;
-		margin: -1px 0 0 7px;
-	}
-	
-	
-	.inGameHud .speedometer_hud{
-		position: absolute;
-		bottom: 1%;
-		right: 1%;
-	}
-	.inGameHud .speedometer_hud .speedcount{
-		position: relative;
-		color: #ffffff52;
-		display: flex;
-		justify-content: center;
-		width: 150%;
-		margin-left: -27px;
-		margin-bottom: 2%;
-	}
-	.inGameHud .speedometer_hud .speedcount .count{
-		font-size: 3em;
-		font-style: italic;
-		font-weight: 300;
-		color: white;
-		transition: all .73s;
-	}
-	.inGameHud .speedometer_hud .speedcount p{
-		position: absolute;
-		margin-top: -13px;
-		margin-left: 7px;
-		letter-spacing: 0.1em;
-		font-style: italic;
-		transition: all .33s;
-	}
-	.inGameHud .speedometer_hud .fuel{
-		margin-left: 57%;
-		margin-bottom: 11%;
-	}
-	.inGameHud .speedometer_hud .fuel a{
-		position: absolute;
-		margin-top: 4px;
-	}
-	.inGameHud .speedometer_hud .fuel .fuel_ico{
-		width: 28px;
-		opacity: 0.4;
-		margin-left: 50px;
-	}
-	.inGameHud .speedometer_hud .help_car{
-		display: flex;
-		right: 3%;
-	}
-	.inGameHud .speedometer_hud .help_car .helps{
-		display: flex;
-		margin-left: 13px;
-	}
-	.inGameHud .speedometer_hud .help_car .icon_help{
-		padding-right: 4px;
-		width: 27px;
-		height: 25px;
-		transition: all .33s;
-	}
-	.inGameHud .speedometer_hud .help_car p{
-		background: #6f6f6f78;
-		line-height: 1.7em;
-		width: 28px;
-		margin-left: 11px;
-		font-weight: 100;
-		font-size: 16px;
-		height: 25px;
-		text-align: center;
-		border-radius: 50%;
-	}
-	.inGameHud .steet_block{
-		position: absolute;
-		bottom: 1%;
-		left: 16%;
-		width: 150px;	
-	}
-	.inGameHud .steet_block .crossingroad{
-		color: #F44336;
-		letter-spacing: 0.03em;
-		font-size: 19px;
-		width: 500px;
-		font-weight: 100;
-		margin-bottom: 13px;
-	}
-	.inGameHud .steet_block .street{
-		margin-left: 12px;
-		width: 500px;
-		font-weight: 100;
-		margin-bottom: 33%;
-	}
-	.inGameHud .steet_block .street .marker{
-		width: 13px;
-		position: absolute;
-		margin-left: -13px;
-		margin-top: 3px;
-	}
-	.inGameHud .steet_block .info_table{
-		display:flex;
-	}
-	.inGameHud .steet_block .info_table .icon{
-		margin-bottom: -16px;
-		width: 20px;
-		margin-left: 3px;
-		transition: all .33s;
-		opacity: 0.6;
-	}
-	.inGameHud .steet_block .info_table p{
-		background: #6f6f6f75;
-		width: 30px;
-		padding: 1%;
-		line-height: 1.5em;
-		text-align: center;
-		margin-left: 13px;
-	}
-	.inGameHud .steet_block .info_table .activeP{
-		background: #ffff;
-		color:black;		
-		width: 30px;
-		padding: 1%;
-		line-height: 1.5em;
-		text-align: center;
-		margin-left: 13px;
-	}
-	.inGameHud .steet_block .info_table .info{
-		margin-left: 2%;
-	}
-	.inGameHud .stars{
-	    position: absolute;
-		top: 145px;
-		right: 59px;
-		display:flex
-	}
-	.inGameHud .stars .ico{
-		width: 25px;
-		height: 25px;
-		opacity: 0.4;
-		margin-left: 8px;
-	}
-	.inGameHud .info_table .eatings {
-		display: flex;
-		position: absolute;
-		margin-top: -34px;
-		margin-left: 7px;
-	}
-	.inGameHud .info_table .eatings .eat {
-		margin-right: 16px;
-	}
-	.inGameHud .info_table .eatings .icohud {
-		width: 1.3vh;
-	}
-	.inGameHud .info_table .eatings .waterhud {
-		width: 1.89vh;
-	}
-	.inGameHud .info_table .eatings a {
-		margin-left: 4px;
-		position: relative;
-		top: -0.6vh;
-		font-size: 1.8vh;
-	}
-	
-#chat {position: absolute;width: 100%;height: 100%;display: block;z-index: 0;color: white;color: rgb(255, 255, 255);line-height: 24px;font-weight: bold;font-family: Arial, sans-serif;font-size: 16px;letter-spacing: 0.4px;margin-left: 10px;user-select: none;}
-#chat ul#chat_messages {height: 160px;padding: 0 0.5vh 0 0.5vh;width: 40%;min-height: 2vh;font-size: 1.4vh;word-wrap: break-word;font-family: Arial, sans-serif;text-shadow: 0px 0px 2px black,0px 0px 2px black,0px 0px 2px black,0px 0px 2px black;overflow-y: scroll;}
-#chat ul#chat_messages > li {list-style-type: none;}
-#chat input#chat_msg {color: white;background: rgba(0,0,0,0.5);outline: none;border: none;border-radius: 15px;font-family: Arial, sans-serif;font-size: 15px;line-height: 20px;width: 25vw;padding: 5px 5px 5px 15px;}
-#chat_channels li {float: left;border: 1px solid black;list-style-type: none;padding: 5px 15px;margin: 5px 5px 0px 0px;text-transform: uppercase;font-size: 13px;text-shadow: none;}
-#chat_channels li#active {color: rgb(165,69,165);}
+.inGameHud .info_table .eatings .waterhud {
+  width: 1.89vh;
+}
+
+.inGameHud .info_table .eatings a {
+  margin-left: 4px;
+  position: relative;
+  top: -0.6vh;
+  font-size: 1.8vh;
+}
 
 /* IT Studio "marko" - Ниже будет переделываться! */
 .noty_theme__fivestar.noty_bar {margin: 4px 0;overflow: hidden;position: relative;background-color: rgba(0, 0, 0, 0.6);box-shadow: rgba(0, 0, 0, 0.6) 0 0 10px 0;}
@@ -318,6 +328,13 @@
 #noty_layout__bottomCenter, #noty_layout__topCenter {width: 56vh;}
 #noty_layout__topLeft, #noty_layout__topRight, #noty_layout__bottomLeft, #noty_layout__bottomRight, #noty_layout__centerLeft, #noty_layout__centerRight, #noty_layout__center {width: 450px;}
 
+#chat {position: absolute;width: 100%;height: 100%;display: block;z-index: 0;color: white;color: rgb(255, 255, 255);line-height: 24px;font-weight: bold;font-family: Arial, sans-serif;font-size: 16px;letter-spacing: 0.4px;margin-left: 10px;user-select: none;}
+#chat ul#chat_messages {height: 160px;padding: 0 0.5vh 0 0.5vh;width: 40%;min-height: 2vh;font-size: 1.4vh;word-wrap: break-word;font-family: Arial, sans-serif;text-shadow: 0px 0px 2px black,0px 0px 2px black,0px 0px 2px black,0px 0px 2px black;overflow-y: scroll;}
+#chat ul#chat_messages > li {list-style-type: none;}
+#chat input#chat_msg {color: white;background: rgba(0,0,0,0.5);outline: none;border: none;border-radius: 15px;font-family: Arial, sans-serif;font-size: 15px;line-height: 20px;width: 25vw;padding: 5px 5px 5px 15px;}
+#chat_channels li {float: left;border: 1px solid black;list-style-type: none;padding: 5px 15px;margin: 5px 5px 0px 0px;text-transform: uppercase;font-size: 13px;text-shadow: none;}
+#chat_channels li#active {color: rgb(165,69,165);}
+
 @-webkit-keyframes noty_modal_in {100% {opacity: .3;}}
 @keyframes noty_modal_in {100% {opacity: .3;}}
 @-webkit-keyframes noty_modal_out {100% {opacity: 0;}}
@@ -353,4 +370,34 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appe
 
 @media screen and (min-height: 1080px) {
     #chat {font-size: 18px !important;}
+}
+
+html, body {
+  margin: 0 auto;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  overflow: hidden;
+  
+}
+
+* {
+  font-family: 'Lato', Helvetica, sans-serif;
+  color: #fff;
+}
+
+.text-yellow {
+  color: #f8cd1e;
+}
+
+.text-gray {
+  color: #cdcdcd;
+}
+
+.text-green {
+  color: #2e7e00;
+}
+
+.text-red {
+  color: #ff0000;
 }

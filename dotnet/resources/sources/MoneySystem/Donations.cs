@@ -1,8 +1,8 @@
 ﻿using GTANetworkAPI;
 using MySqlConnector;
-using NeptuneEvo.Core;
-using NeptuneEvo.Core.Character;
-using NeptuneEvo.Core.nAccount;
+using NeptuneEvo.Globals;
+using NeptuneEvo.Globals.Character;
+using NeptuneEvo.Globals.nAccount;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;

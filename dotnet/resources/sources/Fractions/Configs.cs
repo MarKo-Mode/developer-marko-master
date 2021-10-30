@@ -1,5 +1,5 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using Newtonsoft.Json;
@@ -192,7 +192,7 @@ namespace NeptuneEvo.Fractions
                 if (canmeds)
                     NAPI.Data.SetEntityData(veh, "CANMEDKITS", true);
                 NAPI.Vehicle.SetVehicleNumberPlate(veh, vehicle.Key);
-                Core.VehicleStreaming.SetEngineState(veh, false);
+                Globals.VehicleStreaming.SetEngineState(veh, false);
                 VehicleManager.FracApplyCustomization(veh, fraction);
                 if(model == VehicleHash.Submersible || model == VehicleHash.Thruster) veh.SetSharedData("PETROL", 0);
             }
@@ -220,7 +220,7 @@ namespace NeptuneEvo.Fractions
                 if (canmeds)
                     NAPI.Data.SetEntityData(vehicle, "CANMEDKITS", true);
                 NAPI.Vehicle.SetVehicleNumberPlate(vehicle, number);
-                Core.VehicleStreaming.SetEngineState(vehicle, false);
+                Globals.VehicleStreaming.SetEngineState(vehicle, false);
                 VehicleManager.FracApplyCustomization(vehicle, fraction);
             }
             catch (Exception e) { Log.Write("RespawnFractionCar: " + e.Message, nLog.Type.Error); }

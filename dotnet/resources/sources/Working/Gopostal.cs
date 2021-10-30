@@ -1,5 +1,5 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Houses;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
@@ -209,7 +209,7 @@ namespace NeptuneEvo.Working
             player.SetData("WORK", veh);
             Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили рабочий транспорт", 3000);
             veh.SetData("ACCESS", "WORK");
-            Core.VehicleStreaming.SetEngineState(veh, true);
+            Globals.VehicleStreaming.SetEngineState(veh, true);
         }
     }
 }

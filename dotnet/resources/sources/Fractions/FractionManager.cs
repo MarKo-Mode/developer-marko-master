@@ -1,6 +1,6 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
-using NeptuneEvo.Core.Character;
+using NeptuneEvo.Globals;
+using NeptuneEvo.Globals.Character;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;

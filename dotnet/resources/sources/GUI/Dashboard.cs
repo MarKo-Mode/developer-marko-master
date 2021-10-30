@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NeptuneEvo.Core;
+using NeptuneEvo.Globals;
 using NeptuneEvo.Settings;
 using NeptuneEvo.MoneySystem;
 using Newtonsoft.Json;
@@ -48,7 +48,7 @@ namespace NeptuneEvo.GUI
                 int index = Convert.ToInt32(arguments[1]);
                 string data = Convert.ToString(arguments[2]);
                 Log.Debug($"Type: {type} | Index: {index} | Data: {data}");
-                Core.Character.Character acc = Main.Players[player];
+                Globals.Character.Character acc = Main.Players[player];
                 List<nItem> items;
                 nItem item;
                 switch (type)
@@ -777,7 +777,7 @@ namespace NeptuneEvo.GUI
             try
             {
                 if (!Main.Players.ContainsKey(player)) return;
-                Core.Character.Character acc = Main.Players[player];
+                Globals.Character.Character acc = Main.Players[player];
 
                 string status =
                     (acc.AdminLVL >= 1) ? "Администратор" :
@@ -834,7 +834,7 @@ namespace NeptuneEvo.GUI
             {
                 if (!Main.Players.ContainsKey(player))
                     return Task.CompletedTask;
-                Core.Character.Character acc = Main.Players[player];
+                Globals.Character.Character acc = Main.Players[player];
 
                 string status =
                     acc.AdminLVL >= 1 ? "Администратор" :
