@@ -1,0 +1,7 @@
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.pdb
