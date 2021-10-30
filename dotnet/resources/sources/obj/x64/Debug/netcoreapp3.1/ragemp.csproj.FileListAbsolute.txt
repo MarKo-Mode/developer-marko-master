@@ -5,3 +5,15 @@ C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\o
 C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.dll
 C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.pdb
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\ragemp.deps.json
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\ragemp.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\ragemp.pdb
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\MySqlConnector.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\Bootstrapper.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\System.Data.SQLite.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\linux-x64\native\SQLite.Interop.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\osx-x64\native\SQLite.Interop.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\win-x64\native\SQLite.Interop.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\win-x86\native\SQLite.Interop.dll
+C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.csproj.CopyComplete

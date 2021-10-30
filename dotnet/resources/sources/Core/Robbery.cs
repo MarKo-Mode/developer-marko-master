@@ -10,6 +10,7 @@ using NeptuneEvo.Fractions;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Settings;
 using NeptuneEvo.Core.Character;
+using NeptuneEvo.Infodata;
 
 namespace NeptuneEvo.Core
 {
