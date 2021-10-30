@@ -3,6 +3,7 @@ using MySqlConnector;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Houses;
 using NeptuneEvo.Infodata;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using Newtonsoft.Json;
 using System;
@@ -36,9 +37,8 @@ namespace NeptuneEvo.Core.Character
                         Trigger.ClientEvent(player, "UpdateWater", Main.Players[player].Water);
                         Trigger.ClientEvent(player, "UpdateBank", MoneySystem.Bank.Accounts[Bank].Balance);
                         Trigger.ClientEvent(player, "initPhone");
-                        Jobs.WorkManager.load(player);
+                        Working.WorkManager.load(player);
 
-                        // Skin, Health, Armor, RemoteID
                         player.SetSkin((Gender) ? PedHash.FreemodeMale01 : PedHash.FreemodeFemale01);
                         player.Health = (Health > 5) ? Health : 5;
                         player.Armor = Armor;

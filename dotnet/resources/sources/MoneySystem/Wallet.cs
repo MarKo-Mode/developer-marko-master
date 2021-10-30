@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GTANetworkAPI;
-using NeptuneEvo.Core;
+﻿using GTANetworkAPI;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
+using System;
 
 namespace NeptuneEvo.MoneySystem
 {
@@ -20,8 +18,21 @@ namespace NeptuneEvo.MoneySystem
             Main.Players[player].Money = temp;
             Trigger.ClientEvent(player, "UpdateMoney", temp, Convert.ToString(Amount));
             Database.Query($"UPDATE characters SET money={Main.Players[player].Money} WHERE uuid={Main.Players[player].UUID}");
-            //MoneyLog.Write("Wallet", player.Name, Amount);
             return true;
+        }
+        public static bool ChangeDonateBalance(Player player, int Amount)
+        {
+            if (!Main.Players.ContainsKey(player)) return false;
+            if (Main.Players[player] == null) return false;
+            int temp = Convert.ToInt32(Main.Accounts[player].RedBucks + Amount);
+            if (temp < 0)
+                return false;
+            else
+            {
+                Main.Accounts[player].RedBucks = temp;
+                Database.Query($"UPDATE `accounts` SET `redbucks`={temp} WHERE login='{Main.Accounts[player].Login}'");
+                return true;
+            }
         }
         public static void Set(Player player, long Amount)
         {

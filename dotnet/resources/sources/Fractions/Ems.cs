@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Core;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using System;
-using NeptuneEvo.GUI;
+using System.Collections.Generic;
 
 namespace NeptuneEvo.Fractions
 {
@@ -287,8 +288,8 @@ namespace NeptuneEvo.Fractions
                 Police.Event_PlayerDeath(player, entityKiller, weapon);
                 Houses.HouseManager.Event_OnPlayerDeath(player, entityKiller, weapon);
 
-                Jobs.Collector.Event_PlayerDeath(player, entityKiller, weapon);
-                Jobs.Gopostal.Event_PlayerDeath(player, entityKiller, weapon);
+                Working.Collector.Event_PlayerDeath(player, entityKiller, weapon);
+                Working.Gopostal.Event_PlayerDeath(player, entityKiller, weapon);
 
                 VehicleManager.WarpPlayerOutOfVehicle(player);
                 Main.Players[player].IsAlive = false;

@@ -1,14 +1,14 @@
 ﻿using GTANetworkAPI;
+using MySqlConnector;
+using NeptuneEvo.Fractions;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading;
-using NeptuneEvo.GUI;
-using Newtonsoft.Json;
 using System.Linq;
-using NeptuneEvo.Settings;
-using MySqlConnector;
-using NeptuneEvo.Fractions;
 
 namespace NeptuneEvo.Core
 {
@@ -16,7 +16,6 @@ namespace NeptuneEvo.Core
     {
         private static nLog Log = new nLog("Vehicle");
         private static Random Rnd = new Random();
-        //private static Timer fuelTimer;
 
         private Vehicle SpawnVeh = NAPI.Vehicle.CreateVehicle(VehicleHash.Dinghy, new Vector3(3370.183, 5186.575, 0.6195515), new Vector3(0.3827768, 2.631065, 261.6981), 1, 1);
 
@@ -1041,20 +1040,20 @@ namespace NeptuneEvo.Core
                         switch (work)
                         {
                             case "BUS":
-                                Jobs.Bus.respawnBusCar(vehicle);
+                                Working.Bus.respawnBusCar(vehicle);
                                 return;
                             case "MOWER":
-                                Jobs.Lawnmower.respawnCar(vehicle);
+                                Working.Lawnmower.respawnCar(vehicle);
                                 return;
                             case "TAXI":
-                                Jobs.Lawnmower.respawnCar(vehicle);
+                                Working.Lawnmower.respawnCar(vehicle);
                                 return;
                             case "TRUCKER":
-                                if (player != null) Jobs.Truckers.cancelOrder(player);
-                                Jobs.Truckers.respawnCar(vehicle);
+                                if (player != null) Working.Truckers.cancelOrder(player);
+                                Working.Truckers.respawnCar(vehicle);
                                 return;
                             case "COLLECTOR":
-                                Jobs.Collector.respawnCar(vehicle);
+                                Working.Collector.respawnCar(vehicle);
                                 return;
                         }
                         return;

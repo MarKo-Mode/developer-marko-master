@@ -1,80 +1,65 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Text;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Core;
-using NeptuneEvo.Settings;
-using NeptuneEvo.Core.nAccount;
 using NeptuneEvo.Core.Character;
+using NeptuneEvo.Core.nAccount;
 using NeptuneEvo.GUI;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Threading;
-using System.Globalization;
-using System.Net.Mail;
-using NeptuneEvo.Voice;
 using NeptuneEvo.Houses;
 using NeptuneEvo.Infodata;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
+using NeptuneEvo.Voice;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NeptuneEvo
 {
 
     public class Main : Script
     { 
-        public static string Codename { get; } = "redage_v2";
-        public static string Version { get; } = "2.3.9";
-        public static string Build { get; } = "1950";
-        // // // //
-        public static string Full { get; } = $"{Codename} {Version} {Build}";
+        public static string Codename { get; } = "Developer-Marko-Master";
+        public static string Version { get; } = "0.0.1";
+        public static string Full { get; } = $"{Codename} {Version}";
         public static DateTime StartDate { get; } = DateTime.Now;
         public static DateTime CompileDate { get; } = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
-
-        // // // //
         public static oldConfig oldconfig;
         private static Config config = new Config("Main");
         private static byte servernum = config.TryGet<byte>("ServerNumber", "1");
-
         private static int Slots = NAPI.Server.GetMaxPlayers();
         public static Dictionary<string, Tuple<int, int, int>> PromoCodes = new Dictionary<string, Tuple<int, int, int>>();
-
-        // Characters
-        public static List<int> UUIDs = new List<int>(); // characters UUIDs
-        public static Dictionary<int, string> PlayerNames = new Dictionary<int, string>(); // character uuid - character name
-        public static Dictionary<string, int> PlayerBankAccs = new Dictionary<string, int>(); // character name - character bank
-        public static Dictionary<string, int> PlayerUUIDs = new Dictionary<string, int>(); // character name - character uuid
-        public static Dictionary<int, Tuple<int, int, int, long>> PlayerSlotsInfo = new Dictionary<int, Tuple<int, int, int, long>>(); // character uuid - lvl,exp,fraction,money
-
+        public static List<int> UUIDs = new List<int>();
+        public static Dictionary<int, string> PlayerNames = new Dictionary<int, string>();
+        public static Dictionary<string, int> PlayerBankAccs = new Dictionary<string, int>();
+        public static Dictionary<string, int> PlayerUUIDs = new Dictionary<string, int>();
+        public static Dictionary<int, Tuple<int, int, int, long>> PlayerSlotsInfo = new Dictionary<int, Tuple<int, int, int, long>>();
         public static Dictionary<string, Player> LoggedIn = new Dictionary<string, Player>();
-        public static Dictionary<Player, Character> Players = new Dictionary<Player, Character>(); // character in
-
+        public static Dictionary<Player, Character> Players = new Dictionary<Player, Character>();
         public static Dictionary<int, int> SimCards = new Dictionary<int, int>();
         public static Dictionary<int, Player> MaskIds = new Dictionary<int, Player>();
-        // Accounts
-        public static List<string> Usernames = new List<string>(); // usernames
-        public static List<string> SocialClubs = new List<string>(); // socialclubnames
-        public static Dictionary<string, string> Emails = new Dictionary<string, string>(); // emails
-        public static List<string> HWIDs = new List<string>(); // emails
-        public static Dictionary<Player, Account> Accounts = new Dictionary<Player, Account>(); // client's accounts
-        public static Dictionary<Player, Tuple<int, string, string, string>> RestorePass = new Dictionary<Player, Tuple<int, string, string, string>>(); // int code, string Login, string SocialClub, string Email
-
+        public static List<string> Usernames = new List<string>();
+        public static List<string> SocialClubs = new List<string>();
+        public static Dictionary<string, string> Emails = new Dictionary<string, string>();
+        public static List<string> HWIDs = new List<string>();
+        public static Dictionary<Player, Account> Accounts = new Dictionary<Player, Account>();
+        public static Dictionary<Player, Tuple<int, string, string, string>> RestorePass = new Dictionary<Player, Tuple<int, string, string, string>>();
         public ColShape BonyCS = NAPI.ColShape.CreateSphereColShape(new Vector3(3367.203, 5185.236, 1.3402408), 3f, 0);
         public ColShape EmmaCS = NAPI.ColShape.CreateSphereColShape(new Vector3(3313.938, 5179.962, 18.91486), 3f, 0);
         public ColShape FrankCS = NAPI.ColShape.CreateSphereColShape(new Vector3(1924.431, 4922.007, 47.70858), 2f, 0);
         public ColShape FrankQuest0 = NAPI.ColShape.CreateSphereColShape(new Vector3(2043.343, 4853.748, 43.09409), 1.5f, 0);
-        public ColShape FrankQuest1 = NAPI.ColShape.CreateSphereColShape(new Vector3(1924.578, 4921.459, 46.576), 290f, 0); // Зона, из которой нельзя выгнать трактор.
-        public ColShape FrankQuest1_1 = NAPI.ColShape.CreateSphereColShape(new Vector3(1905.151, 4925.571, 49.52416), 4f, 0); // Зона, куда должен приехать трактор
-
+        public ColShape FrankQuest1 = NAPI.ColShape.CreateSphereColShape(new Vector3(1924.578, 4921.459, 46.576), 290f, 0);
+        public ColShape FrankQuest1_1 = NAPI.ColShape.CreateSphereColShape(new Vector3(1905.151, 4925.571, 49.52416), 4f, 0);
         public Vehicle FrankQuest1Trac0 = NAPI.Vehicle.CreateVehicle(VehicleHash.Tractor2, new Vector3(1981.87, 5174.382, 48.26282), new Vector3(0.1017629, -0.1177645, 129.811), 70, 70, "Frank0");
         public Vehicle FrankQuest1Trac1 = NAPI.Vehicle.CreateVehicle(VehicleHash.Tractor2, new Vector3(1974.506, 5168.247, 48.2662), new Vector3(0.07581472, -0.08908347, 129.8487), 70, 70, "Frank1");
-
         public ColShape Zone0 = NAPI.ColShape.CreateCylinderColShape(new Vector3(3282.16, 5186.997, 17.41686), 2f, 3f, 0);
         public ColShape Zone1 = NAPI.ColShape.CreateCylinderColShape(new Vector3(3289.234, 5182.008, 17.42562), 2f, 3f, 0);
-
         public static char[] stringBlock = { '\'', '@', '[', ']', ':', '"', '[', ']', '{', '}', '|', '`', '%',  '\\' };
 
         public static string BlockSymbols(string check) {
@@ -100,28 +85,6 @@ namespace NeptuneEvo
             "MED"
         };
 
-        /*public class AdminSlotsData {
-            public string Nickname { get; set; } = "Undefined_Undefined";
-            public int AdminLVL { get; set; } = 1;
-            public bool Logged { get; set; } = false;
-            public bool SlotUsed { get; set; } = false;
-
-            public AdminSlotsData(string nick, int alvl, bool logged, bool slotused) {
-                Nickname = nick;
-                AdminLVL = alvl;
-                Logged = logged;
-                SlotUsed = slotused;
-            }
-        }
-
-        public static Dictionary <string, AdminSlotsData> AdminSlots = new Dictionary<string, AdminSlotsData>();
-        private static ushort AdminSlotsReserved = config.TryGet<ushort>("AdminSlots", "10");
-        private static ushort AdminSlotsUsed = 0;*/
-
-        //private static Timer enviromentTimer;
-        //private static Timer playedMinutesTimer;
-        //private static Timer timer_payDay;
-        //private static Timer saveDBtimer;
         private static nLog Log = new nLog("GM");
 
         [ServerEvent(Event.PlayerEnterVehicle)]
@@ -310,33 +273,33 @@ namespace NeptuneEvo
                                 Rentcar.CarInfos.Add(data);
                                 break;
                             case 3:
-                                Jobs.Taxi.CarInfos.Add(data);
+                                Working.Taxi.CarInfos.Add(data);
                                 break;
                             case 4:
-                                Jobs.Bus.CarInfos.Add(data);
+                                Working.Bus.CarInfos.Add(data);
                                 break;
                             case 5:
-                                Jobs.Lawnmower.CarInfos.Add(data);
+                                Working.Lawnmower.CarInfos.Add(data);
                                 break;
                             case 6:
-                                Jobs.Truckers.CarInfos.Add(data);
+                                Working.Truckers.CarInfos.Add(data);
                                 break;
                             case 7:
-                                Jobs.Collector.CarInfos.Add(data);
+                                Working.Collector.CarInfos.Add(data);
                                 break;
                             case 8:
-                                Jobs.AutoMechanic.CarInfos.Add(data);
+                                Working.AutoMechanic.CarInfos.Add(data);
                                 break;
                         }
                     }
 
                     Rentcar.rentCarsSpawner();
-                    Jobs.Bus.busCarsSpawner();
-                    Jobs.Lawnmower.mowerCarsSpawner();
-                    Jobs.Taxi.taxiCarsSpawner();
-                    Jobs.Truckers.truckerCarsSpawner();
-                    Jobs.Collector.collectorCarsSpawner();
-                    Jobs.AutoMechanic.mechanicCarsSpawner();
+                    Working.Bus.busCarsSpawner();
+                    Working.Lawnmower.mowerCarsSpawner();
+                    Working.Taxi.taxiCarsSpawner();
+                    Working.Truckers.truckerCarsSpawner();
+                    Working.Collector.collectorCarsSpawner();
+                    Working.AutoMechanic.mechanicCarsSpawner();
                 }
                 else Log.Write("DB `othervehicles` return null result", nLog.Type.Warn);
 
@@ -453,12 +416,12 @@ namespace NeptuneEvo
                     try
                     {
                         if (player.HasData("PAYMENT")) MoneySystem.Wallet.Change(player, player.GetData<int>("PAYMENT"));
-                        Jobs.Bus.onPlayerDissconnectedHandler(player, type, reason);
-                        Jobs.Lawnmower.onPlayerDissconnectedHandler(player, type, reason);
-                        Jobs.Taxi.onPlayerDissconnectedHandler(player, type, reason);
-                        Jobs.Truckers.onPlayerDissconnectedHandler(player, type, reason);
-                        Jobs.Collector.Event_PlayerDisconnected(player, type, reason);
-                        Jobs.AutoMechanic.onPlayerDissconnectedHandler(player, type, reason);
+                        Working.Bus.onPlayerDissconnectedHandler(player, type, reason);
+                        Working.Lawnmower.onPlayerDissconnectedHandler(player, type, reason);
+                        Working.Taxi.onPlayerDissconnectedHandler(player, type, reason);
+                        Working.Truckers.onPlayerDissconnectedHandler(player, type, reason);
+                        Working.Collector.Event_PlayerDisconnected(player, type, reason);
+                        Working.AutoMechanic.onPlayerDissconnectedHandler(player, type, reason);
                     }
                     catch (Exception e) { Log.Write("EXCEPTION AT \"UnLoad:Unloading Neptune.jobs\":\n" + e.ToString()); }
                     Log.Debug("STAGE 5 (JOBS)");
@@ -1875,9 +1838,6 @@ namespace NeptuneEvo
                 intid = id;
                 switch (id)
                 {
-                    case 512:
-                        Realtor.OpenRealtorMenu(player);
-                        return;
                     case 1:
                         Fractions.Cityhall.beginWorkDay(player);
                         return;
@@ -1902,7 +1862,7 @@ namespace NeptuneEvo
                         return;
                     #endregion
                     case 8:
-                        Jobs.Electrician.StartWorkDay(player);
+                        Working.Electrician.StartWorkDay(player);
                         return;
                     case 9:
                         Fractions.Cityhall.OpenCityhallGunMenu(player);
@@ -1949,16 +1909,16 @@ namespace NeptuneEvo
                         return;
                     #endregion
                     case 28:
-                        Jobs.WorkManager.openGoPostalStart(player);
+                        Working.WorkManager.openGoPostalStart(player);
                         return;
                     case 29:
-                        Jobs.Gopostal.getGoPostalCar(player);
+                        Working.Gopostal.getGoPostalCar(player);
                         return;
                     case 30:
                         BusinessManager.interactionPressed(player);
                         return;
                     case 31:
-                        Jobs.Truckers.getOrderTrailer(player);
+                        Working.Truckers.getOrderTrailer(player);
                         return;
                     case 32:
                     case 33:
@@ -1992,7 +1952,7 @@ namespace NeptuneEvo
                         SafeMain.interactSafe(player);
                         return;
                     case 45:
-                        Jobs.Collector.CollectorTakeMoney(player);
+                        Working.Collector.CollectorTakeMoney(player);
                         return;
                     case 47:
                         Fractions.Gangs.InteractPressed(player);
@@ -2148,6 +2108,18 @@ namespace NeptuneEvo
                             player.SendChatMessage("Отлично, трактор на месте, давай скажем Фрэнку?");
                         }
                         return;
+                    #region Add-on Cases
+                    case 381:
+                    case 382:
+                        Working.DrugFarm.interactPressed(player, id);
+                        return;
+                    case 512:
+                        Realtor.OpenRealtorMenu(player);
+                        return;
+                    case 814:
+                        Modules.ContainerSystem.OpenMenuContainer(player);
+                        break;
+                    #endregion
                     default:
                         return;
                 }
@@ -2216,22 +2188,22 @@ namespace NeptuneEvo
                             BusinessManager.Carwash_Pay(player);
                             return;
                         case "BUS_RENT":
-                            Jobs.Bus.acceptBusRent(player);
+                            Working.Bus.acceptBusRent(player);
                             return;
                         case "MOWER_RENT":
-                            Jobs.Lawnmower.mowerRent(player);
+                            Working.Lawnmower.mowerRent(player);
                             return;
                         case "TAXI_RENT":
-                            Jobs.Taxi.taxiRent(player);
+                            Working.Taxi.taxiRent(player);
                             return;
                         case "TAXI_PAY":
-                            Jobs.Taxi.taxiPay(player);
+                            Working.Taxi.taxiPay(player);
                             return;
                         case "TRUCKER_RENT":
-                            Jobs.Truckers.truckerRent(player);
+                            Working.Truckers.truckerRent(player);
                             return;
                         case "COLLECTOR_RENT":
-                            Jobs.Collector.rentCar(player);
+                            Working.Collector.rentCar(player);
                             return;
                         case "PAY_MEDKIT":
                             Fractions.Ems.payMedkit(player);
@@ -2335,13 +2307,13 @@ namespace NeptuneEvo
                                 return;
                             }
                         case "MECHANIC_RENT":
-                            Jobs.AutoMechanic.mechanicRent(player);
+                            Working.AutoMechanic.mechanicRent(player);
                             return;
                         case "REPAIR_CAR":
-                            Jobs.AutoMechanic.mechanicPay(player);
+                            Working.AutoMechanic.mechanicPay(player);
                             return;
                         case "FUEL_CAR":
-                            Jobs.AutoMechanic.mechanicPayFuel(player);
+                            Working.AutoMechanic.mechanicPayFuel(player);
                             return;
                         case "HOUSE_SELL":
                             Houses.HouseManager.acceptHouseSell(player);
@@ -2835,6 +2807,21 @@ namespace NeptuneEvo
             {
                 try
                 {
+                    if (DateTime.Now.Hour == 19) //каждый день в 19 часов вечера, контейнеры будут активированы. Можете поменять тут время или добавить ещё какой-то час. Или вообще сделать, чтобы каждый час они активировались.
+                    {
+                        try
+                        {
+                            foreach (var item in Modules.ContainerSystem.containers)
+                            {
+                                item.Visible(true);
+                            }
+                            NAPI.Chat.SendChatMessageToAll("!{#fc4615} [Порт]: !{#ffffff}" + "В штат привезли новую партию контейнеров!");
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Write($"Ошибка контейнеров: {e.Message}", nLog.Type.Error);
+                        }
+                    }
                     Fractions.Cityhall.lastHourTax = 0;
                     Fractions.Ems.HumanMedkitsLefts = 100;
 
@@ -3224,7 +3211,7 @@ namespace NeptuneEvo
         {
             try
             {
-                client.SendChatMessage($"Сборка сервера (by RAGEMP.PRO) !{{#00FFFF}}{Full}!{{#FFF}} успешно запущена !{{#f39c12}}{StartDate}");
+                client.SendChatMessage($"Сборка сервера (Developer-MarKo-Master) !{{#00FFFF}}{Full}!{{#FFF}} успешно запущена !{{#f39c12}}{StartDate}");
             }
             catch { }
         }
@@ -3237,9 +3224,6 @@ namespace NeptuneEvo
         }
         public static string StringToU16(string utf8String)
         {
-            /*byte[] bytes = Encoding.Default.GetBytes(utf8String);
-            byte[] uBytes = Encoding.Convert(Encoding.Default, Encoding.Unicode, bytes);
-            return Encoding.Unicode.GetString(uBytes);*/
             return utf8String;
         }
         public static string GetVoiceKey()
@@ -3796,7 +3780,7 @@ namespace NeptuneEvo
                     Trigger.ClientEvent(player, "createWaypoint", waypoint.X, waypoint.Y);
                     return;
                 case "Ближайшая остановка":
-                    waypoint = Jobs.Bus.GetNearestStation(player.Position);
+                    waypoint = Working.Bus.GetNearestStation(player.Position);
                     Trigger.ClientEvent(player, "createWaypoint", waypoint.X, waypoint.Y);
                     return;
             }
@@ -3843,11 +3827,11 @@ namespace NeptuneEvo
             {
                 case "taxi":
                     MenuManager.Close(player);
-                    Jobs.Taxi.callTaxi(player);
+                    Working.Taxi.callTaxi(player);
                     return;
                 case "repair":
                     MenuManager.Close(player);
-                    Jobs.AutoMechanic.callMechanic(player);
+                    Working.AutoMechanic.callMechanic(player);
                     return;
                 case "police":
                     MenuManager.Close(player);

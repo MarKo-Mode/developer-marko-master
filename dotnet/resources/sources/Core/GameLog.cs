@@ -1,4 +1,5 @@
-﻿using NeptuneEvo.Settings;
+﻿using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading;

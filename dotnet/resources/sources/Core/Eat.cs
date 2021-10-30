@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using NeptuneEvo.Settings;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {

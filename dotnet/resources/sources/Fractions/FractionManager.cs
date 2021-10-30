@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Core;
-using NeptuneEvo.Settings;
-using NeptuneEvo.GUI;
 using NeptuneEvo.Core.Character;
-using System.Linq;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace NeptuneEvo.Fractions
 {
     class Manager : Script
-    { // Revision 3.0
+    {
         private static nLog Log = new nLog("Fractions");
         public static void onResourceStart()
         {

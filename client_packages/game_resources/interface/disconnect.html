@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Disconnect page</title>
+    <link rel="stylesheet" href="assets/css/disconnect.css">
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <script src="https://cdn.clan.su/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="bg-image"></div>
+        <div class="blur"></div>
+        <div class="main">
+            <img src="assets/images/phone/wifi.png" alt="wifi" class="wifi">
+            <img src="assets/images/disconnect/logo.svg" alt="logo" class="logo">
+            <div class="main__info">
+                <div id="header" class="main__info__title">Соединение было прервано</div>
+                <div class="main__info__reason">
+                    <div class="main__info__reason__title">Причина:</div>
+                    <div id="reason" class="main__info__reason__name">анти-афк</div>
+                </div>
+            </div>
+            <div class="tip">Быстро перезайти на сервер можно через кнопку F1<br>и выбрать наш сервер в списке.</div>
+        </div>
+        <img src="assets/images/disconnect/man.png" alt="мужик с радио" class="radio-man">
+    </div>
+    <script>
+        function lostConnection(header, reason) {
+            let replaceHeader = document.getElementById('header');
+            replaceHeader.innerHTML = header;
+
+            let replaceReason = document.getElementById('reason');
+            replaceReason.innerHTML = reason;
+        }
+        lostConnection('Соединение потеряно', '');
+    </script>
+</body>
+</html>

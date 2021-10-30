@@ -1,0 +1,356 @@
+﻿	@media  (max-width: 1300px)  {
+		.inGameHud {zoom: 70%}
+	}
+	@media (min-width: 1301px) and (max-width: 1400px) {
+		.inGameHud {zoom: 80%}
+	}
+	@media (min-width: 1401px) and (max-width: 1650px) {
+		.inGameHud {zoom: 80%}
+	}
+	@media (min-width: 1651px) and (max-width: 2560px) {
+		.inGameHud {zoom: 100%}
+	}
+
+
+	body {
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		overflow: hidden;
+		margin: 0;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	#effect {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	#safezone {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.fade-enter-active, .fade-leave-active {
+	  transition: opacity .58s
+	}
+	.fade-enter, .fade-leave-to {
+	  opacity: 0
+	}
+
+	.inGameHud {
+		position: absolute;
+		margin: 0 auto;
+		line-height: normal;
+		color:#fff;
+		width: 100%;
+		height: 100%;
+        -webkit-animation-name: opacity, slide;
+        animation-name: opacity, slide;
+        -webkit-animation-duration: .5s, .5s;
+        animation-duration: .5s, .5s;
+        -webkit-animation-timing-function: ease, ease;
+        animation-timing-function: ease, ease;
+	}
+	.inGameHud .header_hud{
+		position: absolute;
+		top: 3%;
+		width: 90px;
+		height: 80px;
+		display: flex;
+		font-size: 16px;
+		right: 0%;
+	}
+	.inGameHud .header_hud .logo{
+		opacity: 0.8;
+		position: absolute;
+	}
+	.inGameHud .header_hud .online{
+		position: relative;
+		left: -35%;
+		top: 15%;
+	}
+	.inGameHud .header_hud .id{
+		position: relative;
+		left: -120%;
+		opacity: 0.5;
+		top: 14%;
+	}
+	.inGameHud .header_hud .user{
+		width: 51%;
+		position: relative;
+	}
+	.inGameHud .header_hud .onlinecount{
+		position: absolute;
+		top: -1%;
+		left: 62%;
+		letter-spacing: 0.05em;
+		color: #ffffffb8;
+	}
+	.inGameHud .money{
+		position: absolute;
+		top: 101px;
+		right: 59px;
+		height: 80px;
+		font-size: 25px;
+		color: #ffffffd4;
+	}
+	.inGameHud .money .ico{
+		width: 19px;
+		position: relative;
+		margin: -1px 0 0 7px;
+	}
+	
+	
+	.inGameHud .speedometer_hud{
+		position: absolute;
+		bottom: 1%;
+		right: 1%;
+	}
+	.inGameHud .speedometer_hud .speedcount{
+		position: relative;
+		color: #ffffff52;
+		display: flex;
+		justify-content: center;
+		width: 150%;
+		margin-left: -27px;
+		margin-bottom: 2%;
+	}
+	.inGameHud .speedometer_hud .speedcount .count{
+		font-size: 3em;
+		font-style: italic;
+		font-weight: 300;
+		color: white;
+		transition: all .73s;
+	}
+	.inGameHud .speedometer_hud .speedcount p{
+		position: absolute;
+		margin-top: -13px;
+		margin-left: 7px;
+		letter-spacing: 0.1em;
+		font-style: italic;
+		transition: all .33s;
+	}
+	.inGameHud .speedometer_hud .fuel{
+		margin-left: 57%;
+		margin-bottom: 11%;
+	}
+	.inGameHud .speedometer_hud .fuel a{
+		position: absolute;
+		margin-top: 4px;
+	}
+	.inGameHud .speedometer_hud .fuel .fuel_ico{
+		width: 28px;
+		opacity: 0.4;
+		margin-left: 50px;
+	}
+	.inGameHud .speedometer_hud .help_car{
+		display: flex;
+		right: 3%;
+	}
+	.inGameHud .speedometer_hud .help_car .helps{
+		display: flex;
+		margin-left: 13px;
+	}
+	.inGameHud .speedometer_hud .help_car .icon_help{
+		padding-right: 4px;
+		width: 27px;
+		height: 25px;
+		transition: all .33s;
+	}
+	.inGameHud .speedometer_hud .help_car p{
+		background: #6f6f6f78;
+		line-height: 1.7em;
+		width: 28px;
+		margin-left: 11px;
+		font-weight: 100;
+		font-size: 16px;
+		height: 25px;
+		text-align: center;
+		border-radius: 50%;
+	}
+	.inGameHud .steet_block{
+		position: absolute;
+		bottom: 1%;
+		left: 16%;
+		width: 150px;	
+	}
+	.inGameHud .steet_block .crossingroad{
+		color: #F44336;
+		letter-spacing: 0.03em;
+		font-size: 19px;
+		width: 500px;
+		font-weight: 100;
+		margin-bottom: 13px;
+	}
+	.inGameHud .steet_block .street{
+		margin-left: 12px;
+		width: 500px;
+		font-weight: 100;
+		margin-bottom: 33%;
+	}
+	.inGameHud .steet_block .street .marker{
+		width: 13px;
+		position: absolute;
+		margin-left: -13px;
+		margin-top: 3px;
+	}
+	.inGameHud .steet_block .info_table{
+		display:flex;
+	}
+	.inGameHud .steet_block .info_table .icon{
+		margin-bottom: -16px;
+		width: 20px;
+		margin-left: 3px;
+		transition: all .33s;
+		opacity: 0.6;
+	}
+	.inGameHud .steet_block .info_table p{
+		background: #6f6f6f75;
+		width: 30px;
+		padding: 1%;
+		line-height: 1.5em;
+		text-align: center;
+		margin-left: 13px;
+	}
+	.inGameHud .steet_block .info_table .activeP{
+		background: #ffff;
+		color:black;		
+		width: 30px;
+		padding: 1%;
+		line-height: 1.5em;
+		text-align: center;
+		margin-left: 13px;
+	}
+	.inGameHud .steet_block .info_table .info{
+		margin-left: 2%;
+	}
+	.inGameHud .stars{
+	    position: absolute;
+		top: 145px;
+		right: 59px;
+		display:flex
+	}
+	.inGameHud .stars .ico{
+		width: 25px;
+		height: 25px;
+		opacity: 0.4;
+		margin-left: 8px;
+	}
+	.inGameHud .info_table .eatings {
+		display: flex;
+		position: absolute;
+		margin-top: -34px;
+		margin-left: 7px;
+	}
+	.inGameHud .info_table .eatings .eat {
+		margin-right: 16px;
+	}
+	.inGameHud .info_table .eatings .icohud {
+		width: 1.3vh;
+	}
+	.inGameHud .info_table .eatings .waterhud {
+		width: 1.89vh;
+	}
+	.inGameHud .info_table .eatings a {
+		margin-left: 4px;
+		position: relative;
+		top: -0.6vh;
+		font-size: 1.8vh;
+	}
+	
+#chat {position: absolute;width: 100%;height: 100%;display: block;z-index: 0;color: white;color: rgb(255, 255, 255);line-height: 24px;font-weight: bold;font-family: Arial, sans-serif;font-size: 16px;letter-spacing: 0.4px;margin-left: 10px;user-select: none;}
+#chat ul#chat_messages {height: 160px;padding: 0 0.5vh 0 0.5vh;width: 40%;min-height: 2vh;font-size: 1.4vh;word-wrap: break-word;font-family: Arial, sans-serif;text-shadow: 0px 0px 2px black,0px 0px 2px black,0px 0px 2px black,0px 0px 2px black;overflow-y: scroll;}
+#chat ul#chat_messages > li {list-style-type: none;}
+#chat input#chat_msg {color: white;background: rgba(0,0,0,0.5);outline: none;border: none;border-radius: 15px;font-family: Arial, sans-serif;font-size: 15px;line-height: 20px;width: 25vw;padding: 5px 5px 5px 15px;}
+#chat_channels li {float: left;border: 1px solid black;list-style-type: none;padding: 5px 15px;margin: 5px 5px 0px 0px;text-transform: uppercase;font-size: 13px;text-shadow: none;}
+#chat_channels li#active {color: rgb(165,69,165);}
+
+/* IT Studio "marko" - Ниже будет переделываться! */
+.noty_theme__fivestar.noty_bar {margin: 4px 0;overflow: hidden;position: relative;background-color: rgba(0, 0, 0, 0.6);box-shadow: rgba(0, 0, 0, 0.6) 0 0 10px 0;}
+.noty_theme__fivestar.noty_bar .noty_body {padding: 1.25em;font-size: 12pt;}
+.noty_theme__fivestar.noty_bar .noty_buttons {padding: 0 10px 0.5em 10px;}
+.noty_theme__fivestar.noty_type__alert, .noty_theme__fivestar.noty_type__notification {border-radius: 10px;margin-bottom: 15px;}
+.noty_theme__fivestar.noty_type__alert .text i, .noty_theme__fivestar.noty_type__notification .text i {color: #ffffff;margin-top: -6%;font-size: 2.4vh;margin-left: 0%;font-weight: 500;font-style: inherit;letter-spacing: 0.03em;}
+.noty_theme__fivestar.noty_type__warning {border-radius: 10px;margin-bottom: 15px;}
+.noty_theme__fivestar.noty_type__warning .text i {color: #ffffff;margin-top: -6%;font-size: 2.4vh;margin-left: 0%;font-weight: 500;font-style: inherit;letter-spacing: 0.03em;}
+.noty_theme__fivestar.noty_type__error {border-radius: 10px;margin-bottom: 15px;}
+.noty_theme__fivestar.noty_type__error .text i {color: #ffffff;margin-top: -6%;font-size: 2.4vh;margin-left: 0%;font-weight: 500;font-style: inherit;letter-spacing: 0.03em;}
+.noty_theme__fivestar.noty_type__info, .noty_theme__fivestar.noty_type__information {border-radius: 10px;margin-bottom: 15px;}
+.noty_theme__fivestar.noty_type__info .text i, .noty_theme__fivestar.noty_type__information .text i {color: #ffffff;margin-top: -6%;font-size: 2.4vh;margin-left: 0%;font-weight: 500;font-style: inherit;letter-spacing: 0.03em;}
+.noty_theme__fivestar.noty_type__success {border-radius: 10px;margin-bottom: 15px;}
+.noty_theme__fivestar.noty_type__success .text i {color: #ffffff;margin-top: -6%;font-size: 2.4vh;margin-left: 0%;font-weight: 500;font-style: inherit;letter-spacing: 0.03em;}
+.text {line-height: 1.2em;font-size: 13pt;margin-top: 6%;margin-left: 15%;color: #ffffffe0;font-weight: 100;}
+.noty_theme__fivestar img {position: absolute;width: 7%;margin-top: -0.5%;margin-left: -10%;}
+.text i {float: left;font-size: 34pt;margin-right: 30px;}
+.noty_progressbar {display: none; }
+.noty_has_timeout.noty_has_progressbar .noty_progressbar {display: block;position: absolute;left: 0;bottom: 0;height: 3px;width: 100%;background-color: #646464;opacity: 0.2;filter: alpha(opacity=10); }
+.noty_bar {-webkit-transform: translate(0, 0) translateZ(0) scale(1, 1);-ms-transform: translate(0, 0) scale(1, 1);transform: translate(0, 0) scale(1, 1);-webkit-font-smoothing: subpixel-antialiased;overflow: hidden; }
+.noty_effects_open {opacity: 0;-webkit-transform: translate(50%);-ms-transform: translate(50%);transform: translate(50%);-webkit-animation: noty_anim_in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);animation: noty_anim_in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);-webkit-animation-fill-mode: forwards;animation-fill-mode: forwards; }
+.noty_effects_close {-webkit-animation: noty_anim_out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);animation: noty_anim_out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);-webkit-animation-fill-mode: forwards;animation-fill-mode: forwards; }
+.noty_fix_effects_height {-webkit-animation: noty_anim_height 75ms ease-out;animation: noty_anim_height 75ms ease-out; }
+.noty_close_with_click {cursor: pointer; }
+.noty_close_button {position: absolute;top: 2px;right: 2px;font-weight: bold;width: 20px;height: 20px;text-align: center;line-height: 20px;background-color: rgba(0, 0, 0, 0.05);border-radius: 2px;cursor: pointer;-webkit-transition: all .2s ease-out;transition: all .2s ease-out; }
+.noty_close_button:hover {background-color: rgba(0, 0, 0, 0.1);}
+.noty_modal {position: fixed;width: 100%;height: 100%;background-color: #000;opacity: .3;left: 0;top: 0; }
+.noty_modal.noty_modal_open {opacity: 0;-webkit-animation: noty_modal_in .3s ease-out;animation: noty_modal_in .3s ease-out; }
+.noty_modal.noty_modal_close {-webkit-animation: noty_modal_out .3s ease-out;animation: noty_modal_out .3s ease-out;-webkit-animation-fill-mode: forwards;animation-fill-mode: forwards; }
+.noty_layout_mixin, #noty_layout__top, #noty_layout__topLeft, #noty_layout__topCenter, #noty_layout__topRight, #noty_layout__bottom, #noty_layout__bottomLeft, #noty_layout__bottomCenter, #noty_layout__bottomRight, #noty_layout__center, #noty_layout__centerLeft, #noty_layout__centerRight {position: fixed;margin: 0;padding: 0;-webkit-transform: translateZ(0) scale(1, 1);transform: translateZ(0) scale(1, 1);-webkit-backface-visibility: hidden;backface-visibility: hidden;-webkit-font-smoothing: subpixel-antialiased;filter: blur(0); -webkit-filter: blur(0); width: 325px; }
+
+#noty_layout__top {top: 0;left: 5%;width: 325px;}
+#noty_layout__topLeft {top: 20px;left: 20px;width: 325px;}
+#noty_layout__topCenter {top: 5%;left: 50%;width: 325px;-webkit-transform: translate(-webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);transform: translate(calc(-50% - .5px)) translateZ(0) scale(1, 1); }
+#noty_layout__topRight {top: 20px;right: 20px;width: 325px; }
+#noty_layout__bottom {bottom: 0;left: 5%;width: 325px; }
+#noty_layout__bottomLeft {bottom: 20px;left: 20px;width: 325px; }
+#noty_layout__bottomCenter {bottom: 5%;left: 50%;width: 325px;-webkit-transform: translate(-webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);transform: translate(calc(-50% - .5px)) translateZ(0) scale(1, 1); }
+#noty_layout__bottomRight {bottom: 20px;right: 20px;width: 325px; }
+#noty_layout__center {top: 50%;left: 50%;width: 325px;-webkit-transform: translate(-webkit-calc(-50% - .5px), -webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);transform: translate(calc(-50% - .5px), calc(-50% - .5px)) translateZ(0) scale(1, 1); }
+#noty_layout__centerLeft {top: 50%;left: 20px;width: 325px;-webkit-transform: translate(0, -webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);transform: translate(0, calc(-50% - .5px)) translateZ(0) scale(1, 1); }
+#noty_layout__centerRight {top: 50%;right: 20px;width: 325px;-webkit-transform: translate(0, -webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);transform: translate(0, calc(-50% - .5px)) translateZ(0) scale(1, 1); }
+#noty_layout__bottomCenter, #noty_layout__topCenter {width: 56vh;}
+#noty_layout__topLeft, #noty_layout__topRight, #noty_layout__bottomLeft, #noty_layout__bottomRight, #noty_layout__centerLeft, #noty_layout__centerRight, #noty_layout__center {width: 450px;}
+
+@-webkit-keyframes noty_modal_in {100% {opacity: .3;}}
+@keyframes noty_modal_in {100% {opacity: .3;}}
+@-webkit-keyframes noty_modal_out {100% {opacity: 0;}}
+@keyframes noty_modal_out {100% {opacity: 0;}}
+@keyframes noty_modal_out {100% {opacity: 0;}}
+@-webkit-keyframes noty_anim_in {100% {-webkit-transform: translate(0);transform: translate(0);opacity: 1;}}
+@keyframes noty_anim_in { 100% {-webkit-transform: translate(0);transform: translate(0);opacity: 1;}}
+@-webkit-keyframes noty_anim_out {100% {-webkit-transform: translate(50%);transform: translate(50%);opacity: 0;}}
+@keyframes noty_anim_out {100% {-webkit-transform: translate(50%);transform: translate(50%);opacity: 0;}}
+@-webkit-keyframes noty_anim_height {100% {height: 0;}}
+@keyframes noty_anim_height {100% {height: 0;}}
+
+::-webkit-scrollbar {width: 0px;}
+::-webkit-scrollbar-track {box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius: 10px;}
+::-webkit-scrollbar-thumb {border-radius: 10px; box-shadow: inset 0 0 6px rgba(0,0,0,0.5);}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance: none;}
+
+@media (min-width: 1601px) and (max-width: 2560px) {
+    .marko .inGameHud .adaptivhud {zoom: 100%}
+}
+
+@media (min-width: 1401px) and (max-width: 1600px) {
+    .marko .inGameHud .adaptivhud {zoom: 84%}
+}
+
+@media (min-width: 1301px) and (max-width: 1400px) {
+    .marko .inGameHud .adaptivhud {zoom: 84%}
+}
+
+@media (min-width: 1024px) and (max-width: 1300px)  {
+    .marko .inGameHud .adaptivhud {zoom: 70%}
+}
+
+@media screen and (min-height: 1080px) {
+    #chat {font-size: 18px !important;}
+}

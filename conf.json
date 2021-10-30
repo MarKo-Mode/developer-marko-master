@@ -1,9 +1,9 @@
 {
 	"maxplayers" : 100,
-	"name" : "RAGEMP.PRO (redage_v2)", 
-	"gamemode" : "freeroam", 
+	"name" : "MarKo Role Play | Server #1 | X2 [NEW][DEV][VOICE][BETA] [RAGEMP 1.1]", 
+	"gamemode" : "roleplay", 
 	"stream-distance" : 500.0,
-	"announce" : false,
+	"announce" : true,
 	"csharp" : "enabled",
 	"port": 22005,
 	"voice-chat": true,

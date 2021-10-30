@@ -5,6 +5,7 @@ using NeptuneEvo.Settings;
 using NeptuneEvo.GUI;
 using System;
 using System.Linq;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Fractions
 {

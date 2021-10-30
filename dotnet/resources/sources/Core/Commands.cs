@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using MySqlConnector;
 using NeptuneEvo.Houses;
 using NeptuneEvo.Voice;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {
@@ -321,22 +322,22 @@ namespace NeptuneEvo.Core
                             Rentcar.CarInfos = new List<CarInfo>();
                             break;
                         case 3:
-                            Jobs.Taxi.CarInfos = new List<CarInfo>();
+                            Working.Taxi.CarInfos = new List<CarInfo>();
                             break;
                         case 4:
-                            Jobs.Bus.CarInfos = new List<CarInfo>();
+                            Working.Bus.CarInfos = new List<CarInfo>();
                             break;
                         case 5:
-                            Jobs.Lawnmower.CarInfos = new List<CarInfo>();
+                            Working.Lawnmower.CarInfos = new List<CarInfo>();
                             break;
                         case 6:
-                            Jobs.Truckers.CarInfos = new List<CarInfo>();
+                            Working.Truckers.CarInfos = new List<CarInfo>();
                             break;
                         case 7:
-                            Jobs.Collector.CarInfos = new List<CarInfo>();
+                            Working.Collector.CarInfos = new List<CarInfo>();
                             break;
                         case 8:
-                            Jobs.AutoMechanic.CarInfos = new List<CarInfo>();
+                            Working.AutoMechanic.CarInfos = new List<CarInfo>();
                             break;
                     }
 
@@ -357,22 +358,22 @@ namespace NeptuneEvo.Core
                                 Rentcar.CarInfos.Add(data);
                                 break;
                             case 3:
-                                Jobs.Taxi.CarInfos.Add(data);
+                                Working.Taxi.CarInfos.Add(data);
                                 break;
                             case 4:
-                                Jobs.Bus.CarInfos.Add(data);
+                                Working.Bus.CarInfos.Add(data);
                                 break;
                             case 5:
-                                Jobs.Lawnmower.CarInfos.Add(data);
+                                Working.Lawnmower.CarInfos.Add(data);
                                 break;
                             case 6:
-                                Jobs.Truckers.CarInfos.Add(data);
+                                Working.Truckers.CarInfos.Add(data);
                                 break;
                             case 7:
-                                Jobs.Collector.CarInfos.Add(data);
+                                Working.Collector.CarInfos.Add(data);
                                 break;
                             case 8:
-                                Jobs.AutoMechanic.CarInfos.Add(data);
+                                Working.AutoMechanic.CarInfos.Add(data);
                                 break;
                         }
                     }
@@ -392,22 +393,22 @@ namespace NeptuneEvo.Core
                                     Rentcar.rentCarsSpawner();
                                     break;
                                 case 3:
-                                    Jobs.Taxi.taxiCarsSpawner();
+                                    Working.Taxi.taxiCarsSpawner();
                                     break;
                                 case 4:
-                                    Jobs.Bus.busCarsSpawner();
+                                    Working.Bus.busCarsSpawner();
                                     break;
                                 case 5:
-                                    Jobs.Lawnmower.mowerCarsSpawner();
+                                    Working.Lawnmower.mowerCarsSpawner();
                                     break;
                                 case 6:
-                                    Jobs.Truckers.truckerCarsSpawner();
+                                    Working.Truckers.truckerCarsSpawner();
                                     break;
                                 case 7:
-                                    Jobs.Collector.collectorCarsSpawner();
+                                    Working.Collector.collectorCarsSpawner();
                                     break;
                                 case 8:
-                                    Jobs.AutoMechanic.mechanicCarsSpawner();
+                                    Working.AutoMechanic.mechanicCarsSpawner();
                                     break;
                             }
                         }
@@ -1102,7 +1103,7 @@ namespace NeptuneEvo.Core
                     if (acc.Licenses[i]) lic += $"{Main.LicWords[i]} / ";
                 if (lic == "") lic = "Отсутствуют";
 
-                string work = (acc.WorkID > 0) ? Jobs.WorkManager.JobStats[acc.WorkID - 1] : "Безработный";
+                string work = (acc.WorkID > 0) ? Working.WorkManager.JobStats[acc.WorkID - 1] : "Безработный";
                 string fraction = (acc.FractionID > 0) ? Fractions.Manager.FractionNames[acc.FractionID] : "Нет";
 
                 var number = (acc.Sim == -1) ? "Нет сим-карты" : Main.Players[player].Sim.ToString();
@@ -4237,25 +4238,10 @@ namespace NeptuneEvo.Core
                     Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
                     return;
                 }
-                Jobs.AutoMechanic.mechanicRepair(player, Main.GetPlayerByID(id), price);
+                Working.AutoMechanic.mechanicRepair(player, Main.GetPlayerByID(id), price);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
-
-        /*[Command("frepair")] Работа автомеханика (добавить)
-        public static void CMD_mechanicRepairFractions(Player player, int id, int price)
-        {
-            try
-            {
-                if (Main.GetPlayerByID(id) == null)
-                {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Person mit dieser ID nicht gefunden", 3000);
-                    return;
-                }
-                Fractions.AutoMechanic.mechanicRepair(player, Main.GetPlayerByID(id), price);
-            }
-            catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
-        }*/
 
         [Command("sellfuel")]
         public static void CMD_mechanicSellFuel(Player player, int id, int fuel, int pricePerLitr)
@@ -4267,7 +4253,7 @@ namespace NeptuneEvo.Core
                     Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
                     return;
                 }
-                Jobs.AutoMechanic.mechanicFuel(player, Main.GetPlayerByID(id), fuel, pricePerLitr);
+                Working.AutoMechanic.mechanicFuel(player, Main.GetPlayerByID(id), fuel, pricePerLitr);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4277,7 +4263,7 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                Jobs.AutoMechanic.buyFuel(player, fuel);
+                Working.AutoMechanic.buyFuel(player, fuel);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4292,7 +4278,7 @@ namespace NeptuneEvo.Core
                     Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
                     return;
                 }
-                Jobs.AutoMechanic.acceptMechanic(player, Main.GetPlayerByID(id));
+                Working.AutoMechanic.acceptMechanic(player, Main.GetPlayerByID(id));
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4302,7 +4288,7 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                Jobs.AutoMechanic.cancelMechanic(player);
+                Working.AutoMechanic.cancelMechanic(player);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4317,7 +4303,7 @@ namespace NeptuneEvo.Core
                     Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
                     return;
                 }
-                Jobs.Taxi.offerTaxiPay(player, Main.GetPlayerByID(id), price);
+                Working.Taxi.offerTaxiPay(player, Main.GetPlayerByID(id), price);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4332,7 +4318,7 @@ namespace NeptuneEvo.Core
                     Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
                     return;
                 }
-                Jobs.Taxi.acceptTaxi(player, Main.GetPlayerByID(id));
+                Working.Taxi.acceptTaxi(player, Main.GetPlayerByID(id));
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4342,7 +4328,7 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                Jobs.Taxi.cancelTaxi(player);
+                Working.Taxi.cancelTaxi(player);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4352,7 +4338,7 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                Jobs.Taxi.callTaxi(player);
+                Working.Taxi.callTaxi(player);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }
@@ -4362,7 +4348,7 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                Jobs.Truckers.truckerOrders(player);
+                Working.Truckers.truckerOrders(player);
             }
             catch (Exception e) { Log.Write("EXCEPTION AT \"CMD\":\n" + e.ToString(), nLog.Type.Error); }
         }

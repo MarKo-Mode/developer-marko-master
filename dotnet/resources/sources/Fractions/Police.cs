@@ -1,13 +1,13 @@
-﻿using System;
+﻿using GTANetworkAPI;
+using NeptuneEvo.Core;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Infodata;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using GTANetworkAPI;
-using NeptuneEvo.Core;
-using NeptuneEvo.Settings;
-using NeptuneEvo.GUI;
-using NeptuneEvo.Core.Character;
-using Newtonsoft.Json;
-using NeptuneEvo.Infodata;
 
 namespace NeptuneEvo.Fractions
 {

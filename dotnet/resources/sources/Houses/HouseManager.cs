@@ -7,6 +7,7 @@ using NeptuneEvo.Settings;
 using System.Linq;
 using System.Data;
 using NeptuneEvo.GUI;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Houses
 {
@@ -106,7 +107,7 @@ namespace NeptuneEvo.Houses
                 {
                     NAPI.Data.SetEntityData(ent, "HOUSEID", id);
                     NAPI.Data.SetEntityData(ent, "INTERACTIONCHECK", 6);
-                    Jobs.Gopostal.GoPostal_onEntityEnterColShape(s, ent);
+                    Working.Gopostal.GoPostal_onEntityEnterColShape(s, ent);
                 }
                 catch (Exception ex) { Console.WriteLine("shape.OnEntityEnterColShape: " + ex.Message); }
             };

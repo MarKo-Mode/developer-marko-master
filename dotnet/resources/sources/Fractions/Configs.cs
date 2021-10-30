@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Data;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Core;
-using Newtonsoft.Json;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace NeptuneEvo.Fractions
 {
     class Configs : Script
     {
         private static nLog Log = new nLog("FractionConfigs");
-        // fractionid - vehicle number - vehiclemodel, position, rotation, min rank, color1, color2
         public static Dictionary<int, Dictionary<string, Tuple<VehicleHash, Vector3, Vector3, int, int, int, VehicleManager.VehicleCustomization>>> FractionVehicles = new Dictionary<int, Dictionary<string, Tuple<VehicleHash, Vector3, Vector3, int, int, int, VehicleManager.VehicleCustomization>>>();
         public static Dictionary<int, string> FractionTypes = new Dictionary<int, string>()
         {
@@ -35,11 +34,8 @@ namespace NeptuneEvo.Fractions
             { 17, "MERRYWEATHER" },
             { 18, "SHERIFF" },
         };
-        // fractionid - ranknumber - rankname, rankclothes
         public static Dictionary<int, Dictionary<int, Tuple<string, string, string, int>>> FractionRanks = new Dictionary<int, Dictionary<int, Tuple<string, string, string, int>>>();
-        // fractionid - commandname, minrank
         public static Dictionary<int, Dictionary<string, int>> FractionCommands = new Dictionary<int, Dictionary<string, int>>();
-        // fractionid - commandname, minrank
         public static Dictionary<int, Dictionary<string, int>> FractionWeapons = new Dictionary<int, Dictionary<string, int>>();
         public static void LoadFractionConfigs()
         {
@@ -126,7 +122,6 @@ namespace NeptuneEvo.Fractions
             for (int i = 1; i <= 18; i++)
                 FractionWeapons.Add(i, new Dictionary<string, int>());
 
-            // loading fraction vehicle configs and spawn
             DataTable result = Database.QueryRead("SELECT * FROM `fractionvehicles`");
             if (result == null || result.Rows.Count == 0) return;
             foreach (DataRow Row in result.Rows)
@@ -147,7 +142,6 @@ namespace NeptuneEvo.Fractions
             foreach (var fraction in FractionVehicles.Keys)
                 SpawnFractionCars(fraction);
 
-            // load fraction ranks configs
             result = Database.QueryRead("SELECT * FROM `fractionranks`");
             if (result == null || result.Rows.Count == 0) return;
             foreach (DataRow Row in result.Rows)
@@ -182,9 +176,9 @@ namespace NeptuneEvo.Fractions
             foreach (var vehicle in FractionVehicles[fraction])
             {
                 var model = vehicle.Value.Item1;
-                var canmats = (model == VehicleHash.Barracks || model == VehicleHash.Youga || model == VehicleHash.Burrito3); // "CANMATS"
-                var candrugs = (model == VehicleHash.Youga || model == VehicleHash.Burrito3); // "CANDRUGS"
-                var canmeds = (model == VehicleHash.Ambulance); // "CANMEDKITS"
+                var canmats = (model == VehicleHash.Barracks || model == VehicleHash.Youga || model == VehicleHash.Burrito3);
+                var candrugs = (model == VehicleHash.Youga || model == VehicleHash.Burrito3);
+                var canmeds = (model == VehicleHash.Ambulance);
                 var veh = NAPI.Vehicle.CreateVehicle(model, vehicle.Value.Item2, vehicle.Value.Item3, vehicle.Value.Item5, vehicle.Value.Item6);
 
                 NAPI.Data.SetEntityData(veh, "ACCESS", "FRACTION");

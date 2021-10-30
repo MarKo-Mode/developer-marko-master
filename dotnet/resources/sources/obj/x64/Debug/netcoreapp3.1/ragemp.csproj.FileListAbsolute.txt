@@ -16,4 +16,3 @@ C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\b
 C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\osx-x64\native\SQLite.Interop.dll
 C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\win-x64\native\SQLite.Interop.dll
 C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\bin\x64\Debug\netcoreapp3.1\runtimes\win-x86\native\SQLite.Interop.dll
-C:\Users\Administrator\Desktop\developer-marko-master\dotnet\resources\sources\obj\x64\Debug\netcoreapp3.1\ragemp.csproj.CopyComplete

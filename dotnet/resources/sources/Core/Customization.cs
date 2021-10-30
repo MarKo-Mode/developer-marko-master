@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NeptuneEvo.Infodata;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {
@@ -199,10 +200,7 @@ namespace NeptuneEvo.Core
                 CustomPlayerData[uuid].LipstickColor = Convert.ToInt32(Row["lipstickc"]);
                 CustomPlayerData[uuid].ChestHairColor = Convert.ToInt32(Row["chesthairc"]);
                 CustomPlayerData[uuid].IsCreated = Convert.ToBoolean(Row["iscreated"]);
-
                 CustomPlayerData[uuid].Clothes.Bag.Variation = 0;
-
-                //CustomPlayerData.Add(Row["name"].ToString(), JsonConvert.DeserializeObject<PlayerCustomization>(Row["data"].ToString()));
             }
         }
 
@@ -214,7 +212,7 @@ namespace NeptuneEvo.Core
                 var col = NAPI.ColShape.CreateCylinderColShape(new Vector3(403.1231, -1000.107, -100.1241), 1, 2, NAPI.GlobalDimension);
                 col.OnEntityEnterColShape += (s, e) =>
                 {
-                    Commands.SendToAdmins(3, $"!{{#d35400}}[CHAR-CREATOR-EXPLOIT] {e.Name} ({e.Value})"); // Будет Exploit, если игрок сам спрыгнул  в fix-creator
+                    Commands.SendToAdmins(3, $"!{{#d35400}}[CHAR-CREATOR-EXPLOIT] {e.Name} ({e.Value})");
                     
                 };
                 NAPI.Marker.CreateMarker(1, new Vector3(403.1231, -1000.107, -100.1241), new Vector3(), new Vector3(), 1, new Color(255, 255, 255), false, NAPI.GlobalDimension);

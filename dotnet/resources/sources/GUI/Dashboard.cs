@@ -8,6 +8,7 @@ using NeptuneEvo.MoneySystem;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.GUI
 {
@@ -26,12 +27,12 @@ namespace NeptuneEvo.GUI
         private static nLog Log = new nLog("Dashboard");
         public static Dictionary<Player, bool> isopen = new Dictionary<Player, bool>();
         private static Dictionary<int, string> Status = new Dictionary<int, string>
-        {// Group id, Status
+        {
             {0, "Игрок" },
             {16, "Администратор" }
         };
         private static Dictionary<int, string> Gender = new Dictionary<int, string>
-        {// Group id, Status
+        {
             {0, "Женский" },
             {1, "Мужской" }
         };
@@ -53,11 +54,11 @@ namespace NeptuneEvo.GUI
                 switch (type)
                 {
                     case 0:
-                        {// self inventory
+                        {
                             items = nInventory.Items[acc.UUID];
                             item = items[index];
                             if (data == "drop")
-                            {//remove one item from player inventory
+                            {
                                 if (item.Type == ItemType.GasCan)
                                 {
                                     Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Возможность выкладывать канистры временно отключена", 3000);
@@ -386,7 +387,7 @@ namespace NeptuneEvo.GUI
                                             keysData = "";
                                             foreach (string key in keys)
                                                 keysData += $"{key}/";
-                                            keyring.Data = keysData; // ¯\_(ツ)_/¯
+                                            keyring.Data = keysData;
                                             nInventory.Items[Main.Players[player].UUID][player.GetData<int>("KEYRING")] = keyring;
 
                                             nInventory.Remove(player, item);
@@ -430,12 +431,11 @@ namespace NeptuneEvo.GUI
                             break;
                         }
                     case 1:
-                        { // droped items
-                          //TODO
+                        {
                             break;
                         }
                     case 2:
-                        { // in car items
+                        {
                             Vehicle veh = player.GetData<Vehicle>("SELECTEDVEH");
                             if (veh is null) return;
                             if (veh.Dimension != player.Dimension)
@@ -791,7 +791,7 @@ namespace NeptuneEvo.GUI
                     if (acc.Licenses[i]) lic += $"{Main.LicWords[i]} / ";
                 if (lic == "") lic = "Отсутствуют";
 
-                string work = (acc.WorkID > 0) ? Jobs.WorkManager.JobStats[acc.WorkID - 1] : "Безработный";
+                string work = (acc.WorkID > 0) ? Working.WorkManager.JobStats[acc.WorkID - 1] : "Безработный";
                 string fraction = (acc.FractionID > 0) ? Fractions.Manager.FractionNames[acc.FractionID] : "Нет";
 
 
@@ -848,7 +848,7 @@ namespace NeptuneEvo.GUI
                     if (acc.Licenses[i]) lic += $"{Main.LicWords[i]} / ";
                 if (lic == "") lic = "Отсутствуют";
 
-                string work = acc.WorkID > 0 ? Jobs.WorkManager.JobStats[acc.WorkID - 1] : "Отсутствует";
+                string work = acc.WorkID > 0 ? Working.WorkManager.JobStats[acc.WorkID - 1] : "Отсутствует";
                 string fraction = acc.FractionID > 0 ? Fractions.Manager.FractionNames[acc.FractionID] : "Отсутствует";
 
                 string number = acc.Sim == -1 ? "Нет сим-карты" : Main.Players[player].Sim.ToString();

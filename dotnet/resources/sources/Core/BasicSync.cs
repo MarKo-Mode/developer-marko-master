@@ -1,9 +1,8 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Plugins;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using NeptuneEvo.Settings;
 using System.Linq;
 
 namespace NeptuneEvo.Core

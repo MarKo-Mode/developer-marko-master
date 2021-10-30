@@ -1,14 +1,14 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Infodata;
+using NeptuneEvo.MoneySystem;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using NeptuneEvo.GUI;
-using NeptuneEvo.MoneySystem;
-using NeptuneEvo.Settings;
-using NeptuneEvo.Infodata;
 
 namespace NeptuneEvo.Core
 {
@@ -5998,7 +5998,7 @@ namespace NeptuneEvo.Core
 
             truckerShape = NAPI.ColShape.CreateCylinderColShape(UnloadPoint - new Vector3(0, 0, 1), 8, 10, NAPI.GlobalDimension);
             truckerShape.SetData("BIZID", ID);
-            truckerShape.OnEntityEnterColShape += Jobs.Truckers.onEntityEnterDropTrailer;
+            truckerShape.OnEntityEnterColShape += Working.Truckers.onEntityEnterDropTrailer;
 
             float range;
             if (Type == 1) range = 10f;

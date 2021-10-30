@@ -5,6 +5,7 @@ using GTANetworkAPI;
 using NeptuneEvo.Core;
 using NeptuneEvo.Settings;
 using NeptuneEvo.GUI;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Fractions
 {
@@ -142,7 +143,7 @@ namespace NeptuneEvo.Fractions
                 smbTryCapture = false;
                 return;
             }
-            var ter = Jobs.WorkManager.rnd.Next(0, 5);
+            var ter = Working.WorkManager.rnd.Next(0, 5);
             warBlips[ter].Color = 49;
             Manager.sendFractionMessage(biz.Mafia, $"Ахтунг! У нас есть 20 минут на сборы! {Manager.getName(Main.Players[player].FractionID)} решили отхватить наш бизнес");
             Manager.sendFractionMessage(Main.Players[player].FractionID, "Стреляй! Отжимай! Примерно через 20 минут подлетят противники");
@@ -151,10 +152,9 @@ namespace NeptuneEvo.Fractions
             bizID = biz.ID;
             
             attackersFracID = Main.Players[player].FractionID;
-            nextCaptDate[attackersFracID] = DateTime.Now.AddMinutes(60); // NEXT BIZWAR
+            nextCaptDate[attackersFracID] = DateTime.Now.AddMinutes(60);
             whereWarIsGoing = ter;
 
-            //toStartWarTimer = Main.StartT(1200000, 99999999, (o) => timerStart(), "MWARSTART_TIMER");
             toStartWarTimer = Timers.StartOnce(1200000, () => timerStart());
 
             warStarting = true;

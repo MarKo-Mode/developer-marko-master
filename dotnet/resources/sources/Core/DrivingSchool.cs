@@ -4,6 +4,7 @@ using GTANetworkAPI;
 using Newtonsoft.Json;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Settings;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {

@@ -1,13 +1,14 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Infodata;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
 using System.Data;
-using NeptuneEvo.GUI;
-using NeptuneEvo.Settings;
-using NeptuneEvo.Infodata;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace NeptuneEvo.Core
 {
@@ -1092,22 +1093,22 @@ namespace NeptuneEvo.Core
             switch (type)
             {
                 case "MOWER":
-                    Jobs.Lawnmower.respawnCar(vehicle);
+                    Working.Lawnmower.respawnCar(vehicle);
                     break;
                 case "BUS":
-                    Jobs.Bus.respawnBusCar(vehicle);
+                    Working.Bus.respawnBusCar(vehicle);
                     break;
                 case "TAXI":
-                    Jobs.Taxi.respawnCar(vehicle);
+                    Working.Taxi.respawnCar(vehicle);
                     break;
                 case "TRUCKER":
-                    Jobs.Truckers.respawnCar(vehicle);
+                    Working.Truckers.respawnCar(vehicle);
                     break;
                 case "COLLECTOR":
-                    Jobs.Collector.respawnCar(vehicle);
+                    Working.Collector.respawnCar(vehicle);
                     break;
                 case "MECHANIC":
-                    Jobs.AutoMechanic.respawnCar(vehicle);
+                    Working.AutoMechanic.respawnCar(vehicle);
                     break;
             }
         }

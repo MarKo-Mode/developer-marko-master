@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Core;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
-using NeptuneEvo.GUI;
+using System;
+using System.Collections.Generic;
 
 namespace NeptuneEvo.Fractions
 {
@@ -43,16 +43,6 @@ namespace NeptuneEvo.Fractions
                     NAPI.TextLabel.CreateTextLabel(Main.StringToU16("~g~Press E"), new Vector3(CityhallChecksCoords[i].X, CityhallChecksCoords[i].Y, CityhallChecksCoords[i].Z + 1), 5F, 0.3F, 0, new Color(255, 255, 255));
                     NAPI.Marker.CreateMarker(21, CityhallChecksCoords[i] + new Vector3(0, 0, 0.7), new Vector3(), new Vector3(), 0.8f, new Color(255, 255, 255, 60));
                 }
-                /*int door = 0;
-                for (int i = 4; i < 6; i++)
-                {
-                    Cols.Add(i, NAPI.ColShape.CreateCylinderColShape(CityhallChecksCoords[i], 1, 2, 0));
-                    Cols[i].OnEntityEnterColShape += city_OnEntityEnterColShape;
-                    Cols[i].OnEntityExitColShape += city_OnEntityExitColShape;
-                    Cols[i].SetData("INTERACT", 3);
-                    Cols[i].SetData("DOOR", door);
-                    door++;
-                }*/
 
                 Cols.Add(6, NAPI.ColShape.CreateCylinderColShape(new Vector3(255.2283, 223.976, 102.3932), 3, 2, 0));
                 Cols[6].OnEntityEnterColShape += city_OnEntityEnterColShape;

@@ -9,7 +9,7 @@ using NeptuneEvo.GUI;
 using NeptuneEvo.MoneySystem;
 using NeptuneEvo.Settings;
 using System.Threading;
-
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {

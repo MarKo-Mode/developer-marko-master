@@ -6,6 +6,7 @@ using NeptuneEvo.Core;
 using NeptuneEvo.Settings;
 using NeptuneEvo.GUI;
 using System.Data;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Fractions
 {
@@ -29,7 +30,7 @@ namespace NeptuneEvo.Fractions
         private class Elections
         {
             public int ID { get; set; }
-            public uint Election { get; set; } // Уникальный ID Выборов, у разных кандидатов одних выборов - одинаковый election
+            public uint Election { get; set; }
             public string Name { get; set; }
             public ushort Votes { get; set; }
         }
@@ -48,7 +49,6 @@ namespace NeptuneEvo.Fractions
         public static void OnResourceStart()
         {
             minVoteLVL = config.TryGet<byte>("minVoteLVL", 5);
-            //LoadElections();
         }
         
         public static void Interaction(ColShape colshape, Player player)
@@ -79,7 +79,7 @@ namespace NeptuneEvo.Fractions
                                         if (ElectionList[l].Election == ElectionPointsList[i].Election)
                                         {
                                             Console.Write("Menu open");
-                                            Trigger.ClientEvent(player, "openelem", ElectionList[l].Name); // Первый итем добавляется вместе с созданием самой меню natifveui, иначе рандомно случается краш, не у всех и не всегда
+                                            Trigger.ClientEvent(player, "openelem", ElectionList[l].Name);
                                             second = l + 1;
                                             break;
                                         }

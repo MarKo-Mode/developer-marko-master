@@ -8,6 +8,7 @@ using GTANetworkAPI;
 using Newtonsoft.Json;
 using NeptuneEvo.Settings;
 using NeptuneEvo.Core.Character;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {

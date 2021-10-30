@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Core;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
-using NeptuneEvo.GUI;
+using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace NeptuneEvo.Fractions
 {
     class AlcoFabrication : Script
     {
-        /*
-            {10, "La Cosa Nostra" },
-            {11, "Russian Mafia" },
-            {12, "Yakuza" },
-            {13, "Armenian Mafia" },
-        */
         private static nLog Log = new nLog("AlcoFabrication");
         private static Dictionary<int, Vector3> EnterAlcoShop = new Dictionary<int, Vector3>()
         {

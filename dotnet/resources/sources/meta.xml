@@ -1,5 +1,5 @@
 ﻿<meta>
   <info name="Developer-MarKo" type="script"/>
-  <script src="bin/x64/Debug/netcoreapp3.1/client.dll"/>
+  <script src="bin/x64/Debug/netcoreapp3.1/ragemp.dll"/>
   <export class="Customization" function="ApplyCharacter" />
 </meta>

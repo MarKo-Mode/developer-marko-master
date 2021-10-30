@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
+using MySqlConnector;
 using NeptuneEvo.Core;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
-using NeptuneEvo.GUI;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using MySqlConnector;
 
 namespace NeptuneEvo.Fractions
 {

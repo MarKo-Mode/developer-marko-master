@@ -1,13 +1,10 @@
 ﻿using GTANetworkAPI;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
-using System.Text;
-using System.Threading;
-using NeptuneEvo.Settings;
+using System.Linq;
 
 namespace NeptuneEvo.Core
 {

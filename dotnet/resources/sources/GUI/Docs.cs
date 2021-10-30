@@ -1,9 +1,8 @@
 ﻿using GTANetworkAPI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeptuneEvo.GUI
 {
@@ -68,7 +67,7 @@ namespace NeptuneEvo.GUI
             var acc = Main.Players[from];
             string gender = (acc.Gender) ? "Мужской" : "Женский";
             string fraction = (acc.FractionID > 0) ? Fractions.Manager.FractionNames[acc.FractionID] : "Нет";
-            string work = (acc.WorkID > 0) ? Jobs.WorkManager.JobStats[acc.WorkID] : "Безработный";
+            string work = (acc.WorkID > 0) ? Working.WorkManager.JobStats[acc.WorkID] : "Безработный";
             List<object> data = new List<object>
                     {
                         acc.UUID,

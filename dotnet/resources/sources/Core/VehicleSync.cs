@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using NeptuneEvo.Settings;
+using NeptuneEvo.Plugins;
 
 //Disapproved by god himself
 
@@ -85,7 +86,6 @@ namespace NeptuneEvo.Core
     public class VehicleStreaming : Script
     {
         private static nLog Log = new nLog("VehicleStreaming");
-        //This is the data object which will be synced to vehicles
         public class VehicleSyncData
         {
             public bool Locked { get; set; } = false;
@@ -95,13 +95,8 @@ namespace NeptuneEvo.Core
             public float Dirt { get; set; } = 0.0f;
             public float BodyHealth { get; set; } = 1000.0f;
             public float EngineHealth { get; set; } = 1000.0f;
-
-            //Doors 0-7 (0 = closed, 1 = open, 2 = broken) (This uses enums so don't worry about it)
             public List<int> Door { get; set; } = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 };
-            //Windows (0 = up, 1 = down, 2 = smashed) (This uses enums so don't worry about it)
             public int[] Window { get; set; } = new int[4] { 0, 0, 0, 0 };
-
-            //Wheels 0-7, 45/47 (0 = fixed, 1 = flat, 2 = missing) (This uses enums so don't worry about it)
             public int[] Wheel { get; set; } = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GTANetworkAPI;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
 
 namespace NeptuneEvo.Core
@@ -15,7 +16,6 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                //X:266,3624 Y:217,5697 Z:110,4328
                 RegisterDoor(-1246222793, new Vector3(0, 0, 0)); // pacific standart staff door
                 SetDoorLocked(0, true, 0);
 

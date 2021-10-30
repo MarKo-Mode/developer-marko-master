@@ -1,11 +1,11 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Core.nAccount;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using NeptuneEvo.Core.nAccount;
-using NeptuneEvo.Core.Character;
 using System.Linq;
-using NeptuneEvo.Settings;
 
 namespace NeptuneEvo.Core
 {

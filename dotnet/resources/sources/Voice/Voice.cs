@@ -1,9 +1,7 @@
 ﻿using GTANetworkAPI;
-using System;
-using System.Collections.Generic;
-using NeptuneEvo.GUI;
-using NeptuneEvo.Core;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
+using System;
 
 namespace NeptuneEvo.Voice
 {

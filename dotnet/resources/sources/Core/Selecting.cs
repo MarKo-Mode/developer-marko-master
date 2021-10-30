@@ -1,11 +1,12 @@
 ﻿using GTANetworkAPI;
-using System;
 using NeptuneEvo.GUI;
 using NeptuneEvo.Houses;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeptuneEvo.Settings;
 
 namespace NeptuneEvo.Core
 {
@@ -18,10 +19,8 @@ namespace NeptuneEvo.Core
         {
             try
             {
-                // var entity = (GTANetworkAPI.Object)arguments[0]; // error "Object referance not set to an instance of an object"
                 if (entity == null || player == null || !Main.Players.ContainsKey(player)) return;
-                //  if (entity.GetSharedData<bool>("PICKEDT") == true)
-                if (player.HasData("PICKEDT") && player.GetData<bool>("PICKEDT") == true) //вот эту дичь ебался долго!!!
+                if (player.HasData("PICKEDT") && player.GetData<bool>("PICKEDT") == true)
                 {
                     Commands.SendToAdmins(3, $"!{{#d35400}}[PICKUP-ITEMS-EXPLOIT] {player.Name} ({player.Value}) ");
                     return;
@@ -348,7 +347,7 @@ namespace NeptuneEvo.Core
                             var acc = Main.Players[target];
                             string gender = (acc.Gender) ? "Мужской" : "Женский";
                             string fraction = (acc.FractionID > 0) ? Fractions.Manager.FractionNames[acc.FractionID] : "Нет";
-                            string work = (acc.WorkID > 0) ? Jobs.WorkManager.JobStats[acc.WorkID] : "Безработный";
+                            string work = (acc.WorkID > 0) ? Working.WorkManager.JobStats[acc.WorkID] : "Безработный";
                             List<object> data = new List<object>
                             {
                                 acc.UUID,

@@ -1,14 +1,13 @@
 ﻿using GTANetworkAPI;
+using MySqlConnector;
+using NeptuneEvo.Core;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using NeptuneEvo.Core;
-using NeptuneEvo.Settings;
 using System.Data;
 using System.Linq;
-using Newtonsoft.Json;
-using NeptuneEvo.GUI;
-using System.Threading.Tasks;
-using MySqlConnector;
 
 namespace NeptuneEvo.MoneySystem
 {
@@ -316,7 +315,7 @@ namespace NeptuneEvo.MoneySystem
                         try
                         {
                             e.SetData("INTERACTIONCHECK", 13);
-                            Jobs.Collector.CollectorEnterATM(e, s);
+                            Working.Collector.CollectorEnterATM(e, s);
                         }
                         catch (Exception ex) { Log.Write("ATMCols.OnEntityEnterColShape: " + ex.Message, nLog.Type.Error); }
                     };

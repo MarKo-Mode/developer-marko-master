@@ -1,16 +1,15 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Fractions;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Infodata;
+using NeptuneEvo.MoneySystem;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Timers;
-using NeptuneEvo.MoneySystem;
-using NeptuneEvo.Fractions;
-using NeptuneEvo.GUI;
-using NeptuneEvo.Settings;
-using NeptuneEvo.Core.Character;
-using NeptuneEvo.Infodata;
 
 namespace NeptuneEvo.Core
 {

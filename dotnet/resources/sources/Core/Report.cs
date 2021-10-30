@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using NeptuneEvo.GUI;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Core
 {

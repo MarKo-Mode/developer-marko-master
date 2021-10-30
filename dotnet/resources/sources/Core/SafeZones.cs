@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GTANetworkAPI;
-using NeptuneEvo.Settings;
+﻿using GTANetworkAPI;
+using NeptuneEvo.Plugins;
+using System;
 
 namespace NeptuneEvo.Core
 {
@@ -36,7 +34,7 @@ namespace NeptuneEvo.Core
         {
             CreateSafeZone(new Vector3(445.07443, -983.2143, 29.569595), 70, 70); // полиция
             CreateSafeZone(new Vector3(240.7599, -1379.576, 32.74176), 70, 70); // ems safe zone
-            //CreateSafeZone(new Vector3(-712.2147, -1298.926, 4.101922), 70, 70); // driving school safe zone
+            CreateSafeZone(new Vector3(-712.2147, -1298.926, 4.101922), 70, 70); // driving school safe zone
         }
     }
 }

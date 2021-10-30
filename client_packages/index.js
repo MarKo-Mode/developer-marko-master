@@ -107,7 +107,7 @@ global.chatActive = false;
 global.loggedin = false;
 global.localplayer = mp.players.local;
 
-mp.gui.execute("window.location = 'package://cef/hud.html'");
+mp.gui.execute("window.location = 'package://game_resources/interface/shellhud.html'");
 if (mp.storage.data.chatcfg == undefined) {
     mp.storage.data.chatcfg = {
 		timestamp: 0,
@@ -122,11 +122,6 @@ setTimeout(function () {
     mp.gui.execute(`newcfg(0,${mp.storage.data.chatcfg.timestamp}); newcfg(1,${mp.storage.data.chatcfg.chatsize}); newcfg(2,${mp.storage.data.chatcfg.fontstep}); newcfg(3,${mp.storage.data.chatcfg.alpha});`);
 	mp.events.call('showHUD', false); 
 }, 1000);
-
-setInterval(function () {
-    var name = (localplayer.getVariable('REMOTE_ID') == undefined) ? `Не авторизован` : `Игрок №${localplayer.getVariable("REMOTE_ID")}`;
-	mp.discord.update('RAGEMP.PRO v2.0', name);
-}, 10000);
 
 var pedsaying = null;
 var pedtext = "";
@@ -157,7 +152,7 @@ mp.game.object.doorControl(mp.game.joaat("prop_ld_bankdoors_02"), 232.6054, 214.
 mp.game.object.doorControl(mp.game.joaat("prop_ld_bankdoors_02"), 231.5075, 216.5148, 106.4049, false, 0.0, 0.0, 0.0);
 mp.game.audio.setAudioFlag("DisableFlightMusic", true);
 
-global.NativeUI = require("./nativeui.js");
+global.NativeUI = require("./game_resources/handlers/nativeui.js");
 global.Menu = NativeUI.Menu;
 global.UIMenuItem = NativeUI.UIMenuItem;
 global.UIMenuListItem = NativeUI.UIMenuListItem;
@@ -241,55 +236,46 @@ mp.events.add('UpdateBank', function (temp, amount) {
 });
 
 // // // // // // //
-require('./client/utils/keys.js');
-require('./menus.js');
-require('./lscustoms.js');
-require('./client/player/afksystem.js');
-require('./character.js');
-require('./render.js');
-require('./main.js');
-require('./voice.js');
-
-require('./phone.js');
-require('./checkpoints.js');
-require('./board.js');
-//require('./inventory.js');
-require('./hud.js');
-require('./gamertag.js');
-require('./furniture.js');
-require('./admesp.js');
-require('./circle.js');
-require('./vehiclesync.js');
-require("./spmenu.js");
-require('./basicsync.js');
-require('./gangzones.js');
-require('./fly.js');
-require('./environment.js');
-require('./elections.js');
-require('./animals.js');
-require('./client/utils/utils.js');
-require('./scripts/autopilot.js');
-require('./scripts/crouch.js');
-//require('./scripts/location.js');
-require('./scripts/markers.js');
-require('./scripts/fingerPointer.js');
-//require('./scripts/Hunting.js'); НЕ РАБОТАЕТ
-require('./scripts/publicGarage/index.js');
-require('./scripts/SmoothThrottle/SmoothThrottle.js');
-require('./banks/atm.js');
-require('./admin/adminpanel.js');
-
-require('./configs/tattoo.js');
-require('./configs/barber.js');
-require('./configs/clothes.js');
-require('./configs/natives.js');
-require('./configs/tuning.js');
-
-require('./realtor.js');
-require('./radiosync.js');
-
-require('./cayo_perico/heistisland.js');
-
+require('./game_resources/handlers/client/utils/keys');
+require('./game_resources/handlers/menus');
+require('./game_resources/handlers/lscustoms');
+require('./game_resources/handlers/client/player/afksystem');
+require('./game_resources/handlers/character');
+require('./game_resources/handlers/render');
+require('./game_resources/handlers/main');
+require('./game_resources/handlers/voice');
+require('./game_resources/handlers/phone');
+require('./game_resources/handlers/checkpoints');
+require('./game_resources/handlers/board');
+require('./game_resources/handlers/hud');
+require('./game_resources/handlers/gamertag');
+require('./game_resources/handlers/furniture');
+require('./game_resources/handlers/admesp');
+require('./game_resources/handlers/circle');
+require('./game_resources/handlers/vehiclesync');
+require("./game_resources/handlers/spmenu");
+require('./game_resources/handlers/basicsync');
+require('./game_resources/handlers/gangzones');
+require('./game_resources/handlers/fly');
+require('./game_resources/handlers/environment');
+require('./game_resources/handlers/elections');
+require('./game_resources/handlers/animals');
+require('./game_resources/handlers/client/utils/utils');
+require('./game_resources/handlers/autopilot');
+require('./game_resources/handlers/crouch');
+require('./game_resources/handlers/markers');
+require('./game_resources/handlers/fingerpointer');
+require('./game_resources/handlers/atm');
+require('./game_resources/handlers/adminpanel');
+require('./game_resources/handlers/configs/tattoo');
+require('./game_resources/handlers/configs/barber');
+require('./game_resources/handlers/configs/clothes');
+require('./game_resources/handlers/configs/natives');
+require('./game_resources/handlers/configs/tuning');
+require('./game_resources/handlers/realtor');
+require('./game_resources/handlers/radiosync');
+require('./game_resources/handlers/containers');
+require('./game_resources/handlers/island/index');
 // // // // // // //
 
 if (mp.storage.data.friends == undefined) {
@@ -329,7 +315,7 @@ global.acheat = {
 }
 
 mp.events.add('authready', () => {
-    require('./auth.js');
+    require('./game_resources/handlers/auth.js');
 })
 
 mp.events.add('acpos', () => {
@@ -338,8 +324,6 @@ mp.events.add('acpos', () => {
 // // // // // // //
 var spectating = false;
 var sptarget = null;
-
-//mp.game.invoke(getNative("REMOVE_ALL_PED_WEAPONS"), localplayer.handle, false);
 
 mp.keys.bind(Keys.VK_R, false, function () { // R key
 	try {
@@ -418,43 +402,6 @@ mp.events.add('serverTakeOffWeapon', (weaponHash) => {
     } catch (e) { }
 });
 
-var petathouse = null;
-mp.events.add('petinhouse', (petName, petX, petY, petZ, petC, Dimension) => {
-	if(petathouse != null) {
-		petathouse.destroy();
-		petathouse = null;
-	}
-	switch(petName) {
-		case "Husky":
-			petName = 1318032802;
-			break;
-		case "Poodle":
-			petName = 1125994524;
-			break;
-		case "Pug":
-			petName = 1832265812;
-			break;
-		case "Retriever":
-			petName = 882848737;
-			break;
-		case "Rottweiler":
-			petName = 2506301981;
-			break;
-		case "Shepherd":
-			petName = 1126154828;
-			break;
-		case "Westy":
-			petName = 2910340283;
-			break;
-		case "Cat":
-			petName = 1462895032;
-			break;
-		case "Rabbit":
-			petName = 3753204865;
-			break;
-	}
-	petathouse = mp.peds.new(petName, new mp.Vector3(petX, petY, petZ), petC, Dimension);
-});
 var checkTimer = setInterval(function () {
     var current = currentWeapon();
     if (localplayer.isInAnyVehicle(true)) {
@@ -624,7 +571,7 @@ mp.events.add("setResistStage", function (stage) {
     mp.game.player.setWeaponDefenseModifier(1.3 + resistStages[stage]);
 });
 
-mp.game.gxt.set("PM_PAUSE_HDR", "RAGEMP.PRO");
+mp.game.gxt.set("PM_PAUSE_HDR", "MarKo");
 
 /* Недостающие части IPL карты */
 
