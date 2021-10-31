@@ -219,21 +219,21 @@ namespace NeptuneEvo.Globals
                             {
                                 if (DateTime.Now.Hour < 10)
                                 {
-                                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Невозможно сесть в машину с 00:00 до 10:00", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Невозможно сесть в машину с 00:00 до 10:00", 3000);
                                     return;
                                 }
-                                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Чтобы завести двигатель, нажмите B", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Чтобы завести двигатель, нажмите B", 3000);
                                 return;
                             }
                             else if (fracid == 14)
                             {
                                 if (Main.Players[player].FractionLVL < NAPI.Data.GetEntityData(vehicle, "MINRANK"))
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не имеете доступа к этому транспорту", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не имеете доступа к этому транспорту", 3000);
                                     VehicleManager.WarpPlayerOutOfVehicle(player);
                                     return;
                                 }
-                                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Чтобы завести двигатель, нажмите B", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Чтобы завести двигатель, нажмите B", 3000);
                                 return;
                             }
                             else
@@ -243,21 +243,21 @@ namespace NeptuneEvo.Globals
                         {
                             if (Main.Players[player].FractionLVL < NAPI.Data.GetEntityData(vehicle, "MINRANK"))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не имеете доступа к этому транспорту", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не имеете доступа к этому транспорту", 3000);
                                 VehicleManager.WarpPlayerOutOfVehicle(player);
                                 return;
                             }
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Чтобы завести двигатель, нажмите B", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Чтобы завести двигатель, нажмите B", 3000);
                         }
                         else
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не имеете доступа к этому транспорту", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не имеете доступа к этому транспорту", 3000);
                             VehicleManager.WarpPlayerOutOfVehicle(player);
                             return;
                         }
                     }
                     else if (NAPI.Data.GetEntityData(vehicle, "ACCESS") == "WORK" && player.GetData<Vehicle>("WORK") == vehicle)
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Чтобы завести двигатель, нажмите B", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Чтобы завести двигатель, нажмите B", 3000);
                 }
             }
             catch (Exception e) { Log.Write("PlayerEnterVehicle: " + e.Message, nLog.Type.Error); }
@@ -673,52 +673,52 @@ namespace NeptuneEvo.Globals
                 case "HOTEL":
                     if (NAPI.Data.GetEntityData(vehicle, "OWNER") != player && Main.Players[player].AdminLVL < 3)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                         return;
                     }
                     if (Globals.VehicleStreaming.GetLockState(vehicle))
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, false);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли двери машины", 3000);
                     }
                     else
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли двери машины", 3000);
                     }
                     break;
                 case "RENT":
                     if (NAPI.Data.GetEntityData(vehicle, "DRIVER") != player && Main.Players[player].AdminLVL < 3)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                         return;
                     }
                     if (Globals.VehicleStreaming.GetLockState(vehicle))
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, false);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли двери машины", 3000);
                     }
                     else
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли двери машины", 3000);
                     }
                     break;
                 case "WORK":
                     if (NAPI.Data.GetEntityData(player, "WORK") != vehicle && Main.Players[player].AdminLVL < 3)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                         return;
                     }
                     if (Globals.VehicleStreaming.GetLockState(vehicle))
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, false);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли двери машины", 3000);
                     }
                     else
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли двери машины", 3000);
                     }
                     break;
                 case "PERSONAL":
@@ -726,20 +726,20 @@ namespace NeptuneEvo.Globals
                     bool access = canAccessByNumber(player, vehicle.NumberPlate);
                     if (!access && Main.Players[player].AdminLVL < 3)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                         return;
                     }
 
                     if (Globals.VehicleStreaming.GetLockState(vehicle))
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, false);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли двери машины", 3000);
                         return;
                     }
                     else
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли двери машины", 3000);
                         return;
                     }
                 case "GARAGE":
@@ -747,39 +747,39 @@ namespace NeptuneEvo.Globals
                     access = canAccessByNumber(player, vehicle.NumberPlate);
                     if (!access && Main.Players[player].AdminLVL < 3)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                         return;
                     }
 
                     if (Globals.VehicleStreaming.GetLockState(vehicle))
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, false);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли двери машины", 3000);
                         return;
                     }
                     else
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли двери машины", 3000);
                         return;
                     }
                 case "ADMIN":
                     if (Main.Players[player].AdminLVL == 0)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                         return;
                     }
 
                     if (Globals.VehicleStreaming.GetLockState(vehicle))
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, false);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли двери машины", 3000);
                         return;
                     }
                     else
                     {
                         Globals.VehicleStreaming.SetLockStatus(vehicle, true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли двери машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли двери машины", 3000);
                         return;
                     }
                 default:
@@ -812,7 +812,7 @@ namespace NeptuneEvo.Globals
                     if (!NAPI.Player.IsPlayerInAnyVehicle(sender)) return;
                     if (sender.VehicleSeat != 0)
                     {
-                        Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны быть в водительском месте", 3000);
+                        Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны быть в водительском месте", 3000);
                         return;
                     }
                     Vehicle vehicle = sender.Vehicle;
@@ -821,7 +821,7 @@ namespace NeptuneEvo.Globals
                     int fuel = vehicle.GetSharedData<int>("PETROL");
                     if (fuel <= 0)
                     {
-                        Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"Топливный бак пуст, невозможно завести машину", 3000);
+                        Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Топливный бак пуст, невозможно завести машину", 3000);
                         return;
                     }
                     switch (NAPI.Data.GetEntityData(vehicle, "ACCESS"))
@@ -829,35 +829,35 @@ namespace NeptuneEvo.Globals
                         case "HOTEL":
                             if (NAPI.Data.GetEntityData(vehicle, "OWNER") != sender && Main.Players[sender].AdminLVL < 3)
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "SCHOOL":
                             if (NAPI.Data.GetEntityData(vehicle, "DRIVER") != sender && Main.Players[sender].AdminLVL < 3)
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "beltCarPressed":
@@ -872,52 +872,52 @@ namespace NeptuneEvo.Globals
                         case "RENT":
                             if (NAPI.Data.GetEntityData(vehicle, "DRIVER") != sender && Main.Players[sender].AdminLVL < 3)
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "WORK":
                             if (NAPI.Data.GetEntityData(sender, "WORK") != vehicle && Main.Players[sender].AdminLVL < 3)
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "FRACTION":
                             if (Main.Players[sender].FractionID != NAPI.Data.GetEntityData(vehicle, "FRACTION"))
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "PERSONAL":
@@ -925,19 +925,19 @@ namespace NeptuneEvo.Globals
                             bool access = canAccessByNumber(sender, vehicle.NumberPlate);
                             if (!access && Main.Players[sender].AdminLVL < 3)
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
 
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "GARAGE":
@@ -955,29 +955,29 @@ namespace NeptuneEvo.Globals
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                         case "ADMIN":
                             if (Main.Players[sender].AdminLVL == 0)
                             {
-                                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                 return;
                             }
                             if (Globals.VehicleStreaming.GetEngineState(vehicle))
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, false);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заглушили двигатель машины", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заглушили двигатель машины", 3000);
                             }
                             else
                             {
                                 Globals.VehicleStreaming.SetEngineState(vehicle, true);
-                                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы завели машину", 3000);
+                                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы завели машину", 3000);
                             }
                             break;
                     }
@@ -1018,7 +1018,7 @@ namespace NeptuneEvo.Globals
                             Player owner = vehicle.GetData<Player>("OWNER");
                             string number = vehicle.NumberPlate;
 
-                            Notify.Send(owner, NotifyType.Alert, NotifyPosition.BottomCenter, "Ваша машина уничтожена", 3000);
+                            Plugins.Notice.Send(owner, Plugins.TypeNotice.Alert, Plugins.PositionNotice.TopCenter, "Ваша машина уничтожена", 3000);
 
                             VehicleData vData = Vehicles[number];
                             vData.Items = new List<nItem>();
@@ -1032,7 +1032,7 @@ namespace NeptuneEvo.Globals
                         if (player != null)
                         {
                             string paymentMsg = (player.GetData<int>("PAYMENT") == 0) ? "" : $"Вы получили зарплату в {player.GetData<int>("PAYMENT")}$";
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Ваш рабочий транспорт был уничтожен. " + paymentMsg, 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Ваш рабочий транспорт был уничтожен. " + paymentMsg, 3000);
                             player.SetData("ON_WORK", false);
                             Customization.ApplyCharacter(player);
                         }

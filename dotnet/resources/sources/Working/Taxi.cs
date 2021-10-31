@@ -46,11 +46,11 @@ namespace NeptuneEvo.Working
 
                     if (!MoneySystem.Wallet.Change(player, taxiRentCost))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                         return;
                     }
                     GameLog.Money($"player({Main.Players[player].UUID})", $"server", taxiRentCost, $"taxiRent");
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы арендовали такси. Чтобы предложить игроку оплатить проезд, напишите /tprice [ID] [Цена]", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы арендовали такси. Чтобы предложить игроку оплатить проезд, напишите /tprice [ID] [Цена]", 3000);
                     Globals.VehicleStreaming.SetEngineState(vehicle, false);
                 }
             }
@@ -65,13 +65,13 @@ namespace NeptuneEvo.Working
 
             if(!MoneySystem.Wallet.Change(player, -price))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                 return;
             }
             MoneySystem.Wallet.Change(seller, price);
             GameLog.Money($"player({Main.Players[player].UUID})", $"player({Main.Players[seller].UUID})", taxiRentCost, $"taxiPay");
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы оплатили проезд", 3000);
-            Notify.Send(seller, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок " + player.Name.Replace('_', ' ') + " оплатил проезд", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы оплатили проезд", 3000);
+            Plugins.Notice.Send(seller, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок " + player.Name.Replace('_', ' ') + " оплатил проезд", 3000);
         }
 
         private static void order_onEntityExit(ColShape shape, Player player)
@@ -86,8 +86,8 @@ namespace NeptuneEvo.Working
                     driver.ResetData("PASSAGER");
                     player.ResetData("TAXI_DRIVER");
                     player.SetData("IS_CALL_TAXI", false);
-                    Notify.Send(driver, NotifyType.Warning, NotifyPosition.BottomCenter, $"Пассажир отменил заказ", 3000);
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы покинули место вызова такси", 3000);
+                    Plugins.Notice.Send(driver, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Пассажир отменил заказ", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы покинули место вызова такси", 3000);
                     try
                     {
                         NAPI.ColShape.DeleteColShape(orderCols[player]);
@@ -109,7 +109,7 @@ namespace NeptuneEvo.Working
                 {
                     if (!Main.Players[player].Licenses[1])
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет лицензии категории B", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет лицензии категории B", 3000);
                         VehicleManager.WarpPlayerOutOfVehicle(player);
                         return;
                     }
@@ -119,7 +119,7 @@ namespace NeptuneEvo.Working
                         {
                             if (vehicle.GetData<Player>("DRIVER") != null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Это такси уже занят", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Это такси уже занят", 3000);
                                 return;
                             }
                             if (Main.Players[player].Money >= taxiRentCost)
@@ -128,16 +128,16 @@ namespace NeptuneEvo.Working
                             }
                             else
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас не хватает " + (taxiRentCost - Main.Players[player].Money) + "$ на аренду такси", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас не хватает " + (taxiRentCost - Main.Players[player].Money) + "$ на аренду такси", 3000);
                                 VehicleManager.WarpPlayerOutOfVehicle(player);
                             }
                         }
                         else if (NAPI.Data.GetEntityData(player, "WORK") == vehicle) NAPI.Data.SetEntityData(player, "IN_WORK_CAR", true);
-                        else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы уже работаете", 3000);
+                        else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы уже работаете", 3000);
                     }
                     else
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не работаете в такси. Устроиться можно в мэрии", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не работаете в такси. Устроиться можно в мэрии", 3000);
                         VehicleManager.WarpPlayerOutOfVehicle(player);
                     }
                 }
@@ -145,7 +145,7 @@ namespace NeptuneEvo.Working
                 {
                     if (NAPI.Data.GetEntityData(vehicle, "DRIVER") != null)
                     {
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Если Вы хотите передать свой маршрут водителю, то поставьте метку на карте и нажмите Z.", 5000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Если Вы хотите передать свой маршрут водителю, то поставьте метку на карте и нажмите Z.", 5000);
                         var driver = NAPI.Data.GetEntityData(vehicle, "DRIVER");
                         if (driver.HasData("PASSAGER") && driver.GetData("PASSAGER") == player)
                         {
@@ -162,7 +162,7 @@ namespace NeptuneEvo.Working
                     }
                     else
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В такси сейчас нет водителя", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В такси сейчас нет водителя", 3000);
                         VehicleManager.WarpPlayerOutOfVehicle(player);
                     }
                 }
@@ -201,7 +201,7 @@ namespace NeptuneEvo.Working
                 {
                     Player driver = player.GetData<Player>("TAXI_DRIVER");
                     driver.ResetData("PASSAGER");
-                    Notify.Send(driver, NotifyType.Warning, NotifyPosition.BottomCenter, $"Пассажир отменил заказ", 3000);
+                    Plugins.Notice.Send(driver, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Пассажир отменил заказ", 3000);
                     try
                     {
                         NAPI.ColShape.DeleteColShape(orderCols[player]);
@@ -218,7 +218,7 @@ namespace NeptuneEvo.Working
                         Player passager = player.GetData<Player>("PASSAGER");
                         passager.ResetData("TAXI_DRIVER");
                         passager.SetData("IS_CALL_TAXI", false);
-                        Notify.Send(passager, NotifyType.Warning, NotifyPosition.BottomCenter, $"Таксист покинул рабочее место, сделайте новый заказ", 3000);
+                        Plugins.Notice.Send(passager, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Таксист покинул рабочее место, сделайте новый заказ", 3000);
                         NAPI.Task.Run(() => {
                             try
                             {
@@ -242,7 +242,7 @@ namespace NeptuneEvo.Working
                 Main.Players[player].WorkID == 3 &&
                 NAPI.Data.GetEntityData(player, "WORK") == vehicle)
                 {
-                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, $"Если Вы не сядете в транспорт через 5 минут, то рабочий день закончится", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Если Вы не сядете в транспорт через 5 минут, то рабочий день закончится", 3000);
                     NAPI.Data.SetEntityData(player, "IN_WORK_CAR", false);
                     if (player.HasData("WORK_CAR_EXIT_TIMER"))
                         //Main.StopT(NAPI.Data.GetEntityData(player, "WORK_CAR_EXIT_TIMER"), "WORK_CAR_EXIT_TIMER_taxi_1");
@@ -271,7 +271,7 @@ namespace NeptuneEvo.Working
                     }
                     if (NAPI.Data.GetEntityData(player, "CAR_EXIT_TIMER_COUNT") > 300)
                     {
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы закончили рабочий день", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы закончили рабочий день", 3000);
                         respawnCar(vehicle);
                         player.SetData<bool>("ON_WORK", false);
                         player.SetData<Vehicle>("WORK", null);
@@ -283,7 +283,7 @@ namespace NeptuneEvo.Working
                             Player passager = player.GetData<Player>("PASSAGER");
                             passager.ResetData("TAXI_DRIVER");
                             passager.SetData("IS_CALL_TAXI", false);
-                            Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, $"Таксист покинул рабочее место, сделайте новый заказ", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Таксист покинул рабочее место, сделайте новый заказ", 3000);
                             player.ResetData("PASSAGER");
                             try
                             {
@@ -313,12 +313,12 @@ namespace NeptuneEvo.Working
                     {
                         if (price > 200 || price < 20)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете установить цену выше 200$ или ниже 20$", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете установить цену выше 200$ или ниже 20$", 3000);
                             return;
                         }
                         if (Main.Players[target].Money < price)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока недостаточно средств", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока недостаточно средств", 3000);
                             return;
                         }
 
@@ -326,12 +326,12 @@ namespace NeptuneEvo.Working
                         target.SetData("TAXI_SELLER", player);
                         target.SetData("TAXI_PAY", price);
 
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы предложили игроку ({target.Value}) оплатить поездку за {price}$", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы предложили игроку ({target.Value}) оплатить поездку за {price}$", 3000);
                     }
                 }
-                else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не работает в данный момент", 3000);
+                else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не работает в данный момент", 3000);
             }
-            else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не работаете таксистом", 3000);
+            else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не работаете таксистом", 3000);
         }
 
         public static void acceptTaxi(Player player, Player target)
@@ -340,13 +340,13 @@ namespace NeptuneEvo.Working
             {
                 if (player.HasData("PASSAGER"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы уже взяли заказ", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы уже взяли заказ", 3000);
                     return;
                 }
                 if (NAPI.Data.GetEntityData(target, "IS_CALL_TAXI") && !target.HasData("TAXI_DRIVER"))
                 {
-                    Notify.Send(target, NotifyType.Warning, NotifyPosition.BottomCenter, $"Таксист ({player.Value}) принял Ваш вызов. Оставайтесь на мест", 3000);
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы приняли вызов игрока ({target.Value})", 3000);
+                    Plugins.Notice.Send(target, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Таксист ({player.Value}) принял Ваш вызов. Оставайтесь на мест", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы приняли вызов игрока ({target.Value})", 3000);
                     Trigger.ClientEvent(player, "createWaypoint", NAPI.Entity.GetEntityPosition(target).X, NAPI.Entity.GetEntityPosition(target).Y);
 
                     target.SetData("TAXI_DRIVER", player);
@@ -356,9 +356,9 @@ namespace NeptuneEvo.Working
                     orderCols[target].SetData("PASSAGER", target);
                     orderCols[target].OnEntityExitColShape += order_onEntityExit;
                 }
-                else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок не вызывал такси или его уже приняли", 3000);
+                else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не вызывал такси или его уже приняли", 3000);
             }
-            else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не работаете таксистом в данный момент", 3000);
+            else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не работаете таксистом в данный момент", 3000);
         }
 
         public static void cancelTaxi(Player player)
@@ -369,8 +369,8 @@ namespace NeptuneEvo.Working
                 passager.ResetData("TAXI_DRIVER");
                 passager.SetData("IS_CALL_TAXI", false);
                 player.ResetData("PASSAGER");
-                Notify.Send(passager, NotifyType.Warning, NotifyPosition.BottomCenter, $"Таксист покинул рабочее место, сделайте новый заказ", 3000);
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы отменили выезд к клиенту", 3000);
+                Plugins.Notice.Send(passager, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Таксист покинул рабочее место, сделайте новый заказ", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы отменили выезд к клиенту", 3000);
                 NAPI.Task.Run(() =>
                 {
                     try
@@ -386,13 +386,13 @@ namespace NeptuneEvo.Working
             if (NAPI.Data.GetEntityData(player, "IS_CALL_TAXI"))
             {
                 NAPI.Data.SetEntityData(player, "IS_CALL_TAXI", false);
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы отменили вызов такси", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы отменили вызов такси", 3000);
                 if (player.HasData("TAXI_DRIVER"))
                 {
                     Player driver = player.GetData<Player>("TAXI_DRIVER");
                     driver.ResetData("PASSAGER");
                     player.ResetData("TAXI_DRIVER");
-                    Notify.Send(driver, NotifyType.Warning, NotifyPosition.BottomCenter, $"Пассажир отменил заказ", 3000);
+                    Plugins.Notice.Send(driver, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Пассажир отменил заказ", 3000);
                     NAPI.Task.Run(() =>
                     {
                         try
@@ -404,7 +404,7 @@ namespace NeptuneEvo.Working
                     });
                 }
             }
-            else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не вызывали такси.", 3000);
+            else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не вызывали такси.", 3000);
         }
 
         public static void callTaxi(Player player)
@@ -425,11 +425,11 @@ namespace NeptuneEvo.Working
                 if (i > 0)
                 {
                     NAPI.Data.SetEntityData(player, "IS_CALL_TAXI", true);
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Ожидайте принятия вызова. В Вашем районе сейчас {i} таксистов. Для отмены вызова используйте /ctaxi", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Ожидайте принятия вызова. В Вашем районе сейчас {i} таксистов. Для отмены вызова используйте /ctaxi", 3000);
                 }
-                else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В Вашем районе сейчас нет таксистов. Попробуйте в другой раз", 3000);
+                else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В Вашем районе сейчас нет таксистов. Попробуйте в другой раз", 3000);
             }
-            else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы уже Вызвали такси. Для отмены напишите /ctaxi", 3000);
+            else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы уже Вызвали такси. Для отмены напишите /ctaxi", 3000);
         }
     }
 }

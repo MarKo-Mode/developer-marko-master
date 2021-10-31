@@ -1,35 +1,11 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Plugins;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using NeptuneEvo.Settings;
-using NeptuneEvo.Plugins;
-
-//Disapproved by god himself
-
-//Just use the API functions, you have nothing else to worry about
-
-//Things to note
-//More things like vehicle mods will be added in the next version
-
-/* API FUNCTIONS:
-public static void SetVehicleWindowState(Vehicle veh, WindowID window, WindowState state)
-public static WindowState GetVehicleWindowState(Vehicle veh, WindowID window)
-public static void SetVehicleWheelState(Vehicle veh, WheelID wheel, WheelState state)
-public static WheelState GetVehicleWheelState(Vehicle veh, WheelID wheel)
-public static void SetVehicleDirt(Vehicle veh, float dirt)
-public static float GetVehicleDirt(Vehicle veh)
-public static void SetDoorState(Vehicle veh, DoorID door, DoorState state)
-public static DoorState GetDoorState(Vehicle veh, DoorID door)
-public static void SetEngineState(Vehicle veh, bool status)
-public static bool GetEngineState(Vehicle veh)
-public static void SetLockStatus(Vehicle veh, bool status)
-public static bool GetLockState(Vehicle veh)
-*/
 
 namespace NeptuneEvo.Globals
 {
-    //Enums for ease of use
     public enum WindowID
     {
         WindowFrontRight,
@@ -157,7 +133,7 @@ namespace NeptuneEvo.Globals
 
             UpdateVehicleSyncData(veh, data);
 
-            if (NAPI.Vehicle.GetVehicleDriver(veh) != default(Player)) //Doesn't work?
+            if (NAPI.Vehicle.GetVehicleDriver(veh) != default(Player))
                 NAPI.ClientEvent.TriggerClientEvent((Player)NAPI.Vehicle.GetVehicleDriver(veh), "VehStream_PlayerExitVehicleAttempt", veh);
         }
 
@@ -186,7 +162,7 @@ namespace NeptuneEvo.Globals
         public static void SetVehicleWindowState(Vehicle veh, WindowID window, WindowState state)
         {
             VehicleSyncData data = GetVehicleSyncData(veh);
-            if (data == default(VehicleSyncData)) //If data doesn't exist create a new one. This is the process for all API functions
+            if (data == default(VehicleSyncData))
                 data = new VehicleSyncData();
 
             data.Window[(int)window] = (int)state;
@@ -362,7 +338,6 @@ namespace NeptuneEvo.Globals
 
             UpdateVehicleSyncData(veh, data);
 
-            //Re-distribute the goods
             NAPI.ClientEvent.TriggerClientEventInDimension(veh.Dimension, "VehStream_SetVehicleDirtLevel", veh.Handle, dirt);
         }
 
@@ -428,7 +403,6 @@ namespace NeptuneEvo.Globals
             data.Wheel[9] = wheel10state;
             UpdateVehicleSyncData(veh, data);
 
-            //Re-distribute the goods
             NAPI.ClientEvent.TriggerClientEventInDimension(veh.Dimension, "VehStream_SetVehicleWheelStatus", veh.Handle, wheel1state, wheel2state, wheel3state, wheel4state, wheel5state, wheel6state, wheel7state, wheel8state, wheel9state, wheel10state);
         }
 
@@ -511,7 +485,6 @@ namespace NeptuneEvo.Globals
             return data.Dirt;
         }
 
-        //Used internally only but publicly available in case any of you need it
         private static VehicleSyncData GetVehicleSyncData(Vehicle veh)
         {
             try
@@ -532,10 +505,9 @@ namespace NeptuneEvo.Globals
             }
             catch { };
 
-            return default(VehicleSyncData); //null
+            return default(VehicleSyncData);
         }
 
-        //Used internally only but publicly available in case any of you need it
         public static bool UpdateVehicleSyncData(Vehicle veh, VehicleSyncData data)
         {
             try

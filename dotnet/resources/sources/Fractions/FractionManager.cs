@@ -19,28 +19,28 @@ namespace NeptuneEvo.Fractions
         {
             try
             {
-                NAPI.Blip.CreateBlip(184, LSNews.LSNewsCoords[0], 1, 1, Main.StringToU16("Новости"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(419, Cityhall.CityhallChecksCoords[2], 1.5f, 14, Main.StringToU16("Мэрия"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(61, Ems.emsCheckpoints[0], 1, 49, Main.StringToU16("Госпиталь"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(88, Fbi.EnterFBI, 1, 58, Main.StringToU16("FIB"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(526, Police.policeCheckpoints[1], 1, 38, Main.StringToU16("Полиция"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(85, Army.ArmyCheckpoints[2], 1, 28, Main.StringToU16("Доки"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(184, LSNews.LSNewsCoords[0], 1f, 1, Main.StringToU16("Новости"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(419, Cityhall.CityhallChecksCoords[2], 1f, 14, Main.StringToU16("Мэрия"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(61, Ems.emsCheckpoints[0], 1f, 49, Main.StringToU16("Госпиталь"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(88, Fbi.EnterFBI, 1f, 58, Main.StringToU16("FIB"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(526, Police.policeCheckpoints[1], 1f, 38, Main.StringToU16("Полиция"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(85, Army.ArmyCheckpoints[2], 1f, 28, Main.StringToU16("Доки"), 255, 0, true, 0, 0);
 
-                NAPI.Blip.CreateBlip(526, Manager.FractionSpawns[18], 1.1f, 47, Main.StringToU16("Sheriff"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(526, Manager.FractionSpawns[18], 1f, 47, Main.StringToU16("Sheriff"), 255, 0, true, 0, 0);
 
-                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[1], 1.35f, 52, Main.StringToU16("The Families"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[2], 1.35f, 58, Main.StringToU16("The Ballas"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[3], 1.35f, 28, Main.StringToU16("Los Santos Vagos"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[4], 1.35f, 74, Main.StringToU16("Marabunta Grande"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[5], 1.35f, 49, Main.StringToU16("Blood Street"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[1], 1f, 52, Main.StringToU16("The Families"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[2], 1f, 58, Main.StringToU16("The Ballas"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[3], 1f, 28, Main.StringToU16("Los Santos Vagos"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[4], 1f, 74, Main.StringToU16("Marabunta Grande"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(630, Manager.FractionSpawns[5], 1f, 49, Main.StringToU16("Blood Street"), 255, 0, true, 0, 0);
 
-                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[10], 1, 5, Main.StringToU16("La Cosa Nostra"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[11], 1, 4, Main.StringToU16("Русская мафия"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[12], 1, 76, Main.StringToU16("Якудза"), 255, 0, true, 0, 0);
-                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[13], 1, 40, Main.StringToU16("Армянская мафия"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[10], 1f, 5, Main.StringToU16("La Cosa Nostra"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[11], 1f, 4, Main.StringToU16("Русская мафия"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[12], 1f, 76, Main.StringToU16("Якудза"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(78, Manager.FractionSpawns[13], 1f, 40, Main.StringToU16("Армянская мафия"), 255, 0, true, 0, 0);
 
-                NAPI.Blip.CreateBlip(668, new Vector3(-1123.202, 4929.628, 217.7096), 1, 75, Main.StringToU16("Redneck"), 255, 0, true, 0);
-                NAPI.Blip.CreateBlip(197, new Vector3(-1036.3226, -2732.918, 12.636636), 1, 26, Main.StringToU16("Спавн новичков"), 255, 0, true, 0);
+                NAPI.Blip.CreateBlip(668, new Vector3(-1123.202, 4929.628, 217.7096), 1f, 75, Main.StringToU16("Redneck"), 255, 0, true, 0);
+                NAPI.Blip.CreateBlip(197, new Vector3(-1036.3226, -2732.918, 12.636636), 1f, 26, Main.StringToU16("Спавн новичков"), 255, 0, true, 0);
 
                 var result = Database.QueryRead("SELECT `uuid`,`firstname`,`lastname`,`fraction`,`fractionlvl` FROM `characters`");
                 if (result != null)
@@ -228,7 +228,7 @@ namespace NeptuneEvo.Fractions
 
                 if (Main.Players[sender].Unmute > 0)
                 {
-                    Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы замучены еще на {Main.Players[sender].Unmute / 60} минут", 3000);
+                    Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы замучены еще на {Main.Players[sender].Unmute / 60} минут", 3000);
                     return;
                 }
 
@@ -274,7 +274,7 @@ namespace NeptuneEvo.Fractions
             if (!canUseCommand(sender, "dep")) return;
             if (Main.Players[sender].Unmute > 0)
             {
-                Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы замучены еще на {Main.Players[sender].Unmute / 60} минут", 3000);
+                Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы замучены еще на {Main.Players[sender].Unmute / 60} минут", 3000);
                 return;
             }
             int Fraction = Main.Players[sender].FractionID;
@@ -403,7 +403,7 @@ namespace NeptuneEvo.Fractions
                     if (p == null) continue;
                     if (!Main.Players.ContainsKey(p)) continue;
                     if (Main.Players[p].FractionID == fracid)
-                        Notify.Send(p, NotifyType.Warning, NotifyPosition.BottomCenter, message, 3000);
+                        Plugins.Notice.Send(p, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, message, 3000);
                 }
             }
             else
@@ -413,7 +413,7 @@ namespace NeptuneEvo.Fractions
                     if (p == null) continue;
                     if (!Main.Players.ContainsKey(p)) continue;
                     if (Main.Players[p].FractionID == fracid)
-                        Notify.Send(p, NotifyType.Warning, NotifyPosition.BottomCenter, message, 3000);
+                        Plugins.Notice.Send(p, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, message, 3000);
                 }
             }
         }
@@ -447,7 +447,7 @@ namespace NeptuneEvo.Fractions
             if (fraclvl < minrank)
             {
                 if (notify)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Нет доступа", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Нет доступа", 3000);
                 return false;
             }
             else return true;
@@ -468,7 +468,7 @@ namespace NeptuneEvo.Fractions
             if (fraclvl < minrank)
             {
                 if (notify)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Нет доступа", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Нет доступа", 3000);
                 return false;
             }
             else return true;
@@ -1251,26 +1251,26 @@ namespace NeptuneEvo.Fractions
                 DateTime g = new DateTime((date - DateTime.Now).Ticks);
                 var min = g.Minute;
                 var sec = g.Second;
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы сможете взять {gun.ToString()} через {min}:{sec}", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы сможете взять {gun.ToString()} через {min}:{sec}", 3000);
                 return;
             }
 
             var frac = Main.Players[player].FractionID;
             if (Configs.FractionWeapons[frac].ContainsKey(weaponstr) && Main.Players[player].FractionLVL < Configs.FractionWeapons[frac][weaponstr])
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не имеете доступа к данному виду оружия", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не имеете доступа к данному виду оружия", 3000);
                 return;
             }
             if (Stocks.fracStocks[Main.Players[player].FractionID].Materials < matsForGun[gun])
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе недостаточно материала", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе недостаточно материала", 3000);
                 return;
             }
 
             var wType = (ItemType)Enum.Parse(typeof(ItemType), gun.ToString());
             if (nInventory.TryAdd(player, new nItem(wType)) == -1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                 return;
             }
 
@@ -1286,7 +1286,7 @@ namespace NeptuneEvo.Fractions
             player.SetData($"GET_{gun.ToString()}", DateTime.Now.AddMinutes(minutes));
 
             GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, $"{gun.ToString()}({serial})", 1, false);
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили {wType.ToString()}", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили {wType.ToString()}", 3000);
             return;
         }
 
@@ -1296,14 +1296,14 @@ namespace NeptuneEvo.Fractions
 
             if (Stocks.fracStocks[Main.Players[player].FractionID].Materials < MatsForAmmoType[ammoType] * ammo)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе недостаточно материала", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе недостаточно материала", 3000);
                 return;
             }
 
             var tryAdd = nInventory.TryAdd(player, new nItem(ammoType, ammo));
             if (tryAdd == -1 || tryAdd > 0)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                 return;
             }
 
@@ -1312,7 +1312,7 @@ namespace NeptuneEvo.Fractions
 
             nInventory.Add(player, new nItem(ammoType, ammo));
             GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, ammoType.ToString(), 1, false);
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили {nInventory.ItemsNames[(int)ammoType]} x{ammo}", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили {nInventory.ItemsNames[(int)ammoType]} x{ammo}", 3000);
             return;
         }
 
@@ -1350,7 +1350,7 @@ namespace NeptuneEvo.Fractions
 
             if (FractionTypes[fracid] == -1 || FractionTypes[fracid] == 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не умеете крафтить оружие", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не умеете крафтить оружие", 3000);
                 return;
             }
             else if (FractionTypes[fracid] == 1) list = gangGuns;
@@ -1385,14 +1385,14 @@ namespace NeptuneEvo.Fractions
                 string selected = list[cat][index];
                 if (FractionTypes[frac] == -1 || FractionTypes[frac] == 2)
                 {
-                    Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не умеете крафтить оружие", 3000);
+                    Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не умеете крафтить оружие", 3000);
                     return;
                 }
                 var mItem = nInventory.Find(Main.Players[client].UUID, ItemType.Material);
                 var count = (mItem == null) ? 0 : mItem.Count;
                 if (count < matsForGun[Weapons.GetHash(selected)])
                 {
-                    Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас недостаточно материала", 3000);
+                    Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас недостаточно материала", 3000);
                     return;
                 }
 
@@ -1400,7 +1400,7 @@ namespace NeptuneEvo.Fractions
                 var tryAdd = nInventory.TryAdd(client, new nItem(wType, 1));
                 if (tryAdd == -1 || tryAdd > 0)
                 {
-                    Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно места в инвентаре", 3000);
+                    Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно места в инвентаре", 3000);
                     return;
                 }
 
@@ -1409,7 +1409,7 @@ namespace NeptuneEvo.Fractions
                     nInventory.Add(client, new nItem(ItemType.BodyArmor, 1, $"50"));
                 else
                     Weapons.GiveWeapon(client, wType, Weapons.GetSerial(true, frac));
-                Notify.Send(client, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы скрафтили {selected} за {matsForGun[Weapons.GetHash(selected)]} матов", 3000);
+                Plugins.Notice.Send(client, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы скрафтили {selected} за {matsForGun[Weapons.GetHash(selected)]} матов", 3000);
             }
             catch (Exception e)
             {
@@ -1431,7 +1431,7 @@ namespace NeptuneEvo.Fractions
 
                 if (ammo == 0)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не указали количество патрон", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не указали количество патрон", 3000);
                     return;
                 }
 
@@ -1439,20 +1439,20 @@ namespace NeptuneEvo.Fractions
                 var matsCount = (matsItem == null) ? 0 : matsItem.Count;
                 if (matsCount < MatsForAmmo[category] * ammo)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас недостаточно материалов", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас недостаточно материалов", 3000);
                     return;
                 }
 
                 var tryAdd = nInventory.TryAdd(player, new nItem(AmmoTypes[category], ammo));
                 if (tryAdd == -1 || tryAdd > 0)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                     return;
                 }
 
                 nInventory.Remove(player, ItemType.Material, MatsForAmmo[category] * ammo);
                 nInventory.Add(player, new nItem(AmmoTypes[category], ammo));
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы успешно скрафтили {nInventory.ItemsNames[(int)AmmoTypes[category]]} x{ammo}", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы успешно скрафтили {nInventory.ItemsNames[(int)AmmoTypes[category]]} x{ammo}", 3000);
             }
             catch (Exception e) { Log.Write(e.ToString(), nLog.Type.Error); }
         }
@@ -1552,7 +1552,7 @@ namespace NeptuneEvo.Fractions
                             Player target = Main.GetPlayerByID(id);
                             if (target == null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок с таким ID не найден", 3000);
                                 return;
                             }
                             FractionCommands.InviteToFraction(player, target);
@@ -1562,7 +1562,7 @@ namespace NeptuneEvo.Fractions
                             Player target = NAPI.Player.GetPlayerFromName(data1);
                             if (target == null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким именем не найден", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок с таким именем не найден", 3000);
                                 return;
                             }
                             FractionCommands.InviteToFraction(player, target);
@@ -1574,7 +1574,7 @@ namespace NeptuneEvo.Fractions
                             Player target = Main.GetPlayerByID(id);
                             if (target == null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок с таким ID не найден", 3000);
                                 return;
                             }
                             FractionCommands.UnInviteFromFraction(player, target);
@@ -1583,7 +1583,7 @@ namespace NeptuneEvo.Fractions
                         {
                             if (!Main.PlayerNames.ContainsValue(data1))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким именем не найден", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок с таким именем не найден", 3000);
                                 return;
                             }
                             Player target = NAPI.Player.GetPlayerFromName(data1);
@@ -1605,16 +1605,16 @@ namespace NeptuneEvo.Fractions
 
                                 if (targetFrac != Main.Players[player].FractionID)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок не состоит в Вашей фракции", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не состоит в Вашей фракции", 3000);
                                     return;
                                 }
                                 if (targetLvl >= Main.Players[player].FractionLVL)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете уволить этого игрока", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете уволить этого игрока", 3000);
                                     return;
                                 }
                                 Database.Query($"UPDATE `characters` SET fraction=0,fractionlvl=0 WHERE firstname='{split[0]}' AND lastname='{split[1]}'");
-                                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы уволили игрока {data1} из Вашей фракции", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы уволили игрока {data1} из Вашей фракции", 3000);
 
                                 int index = Fractions.Manager.AllMembers.FindIndex(m => m.Name == data1);
                                 if (index > -1) Manager.AllMembers.RemoveAt(index);
@@ -1627,7 +1627,7 @@ namespace NeptuneEvo.Fractions
                     case 4: //change
                         if (!Int32.TryParse(data2, out rank))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите корректные данные", 3000);
                             return;
                         }
                         if (Int32.TryParse(data1, out id))
@@ -1635,7 +1635,7 @@ namespace NeptuneEvo.Fractions
                             Player target = Main.GetPlayerByID(id);
                             if (target == null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким ID не найден", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок с таким ID не найден", 3000);
                                 return;
                             }
                             FractionCommands.SetFracRank(player, target, rank);
@@ -1645,7 +1645,7 @@ namespace NeptuneEvo.Fractions
                             Player target = NAPI.Player.GetPlayerFromName(data1);
                             if (target == null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок с таким именем не найден", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок с таким именем не найден", 3000);
                                 return;
                             }
                             FractionCommands.SetFracRank(player, target, rank);
@@ -1951,7 +1951,7 @@ namespace NeptuneEvo.Fractions
                             if (Main.Players[player].FractionID == 14) maxstock = 250000;
                             if (stockContains + amount > maxstock)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад не может вместить такое кол-во материала", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад не может вместить такое кол-во материала", 3000);
                                 return;
                             }
                             playerHave = (nInventory.Find(Main.Players[player].UUID, ItemType.Material) == null) ? 0 : nInventory.Find(Main.Players[player].UUID, ItemType.Material).Count;
@@ -1961,7 +1961,7 @@ namespace NeptuneEvo.Fractions
                             stockContains = data.Drugs;
                             if (stockContains + amount > 10000)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад не может вместить такое кол-во наркотиков", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад не может вместить такое кол-во наркотиков", 3000);
                                 return;
                             }
                             playerHave = (nInventory.Find(Main.Players[player].UUID, ItemType.Drugs) == null) ? 0 : nInventory.Find(Main.Players[player].UUID, ItemType.Drugs).Count;
@@ -1981,7 +1981,7 @@ namespace NeptuneEvo.Fractions
 
                         if (playerHave < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько", 3000);
                             return;
                         }
 
@@ -2007,7 +2007,7 @@ namespace NeptuneEvo.Fractions
                             nInventory.Remove(player, ItemType.HealthKit, amount);
                         }
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, item, amount, true);
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"На складе осталось {stockContains + amount}, у Вас {playerHave - amount}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"На складе осталось {stockContains + amount}, у Вас {playerHave - amount}", 3000);
                         data.UpdateLabel();
                         break;
                     case "take_stock":
@@ -2023,7 +2023,7 @@ namespace NeptuneEvo.Fractions
                             playerHave = (nInventory.Find(Main.Players[player].UUID, ItemType.Material) == null) ? 0 : nInventory.Find(Main.Players[player].UUID, ItemType.Material).Count;
                             if (playerHave + amount > 300)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете вместить столько в свой инвентарь", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете вместить столько в свой инвентарь", 3000);
                                 return;
                             }
                         }
@@ -2033,7 +2033,7 @@ namespace NeptuneEvo.Fractions
                             playerHave = (nInventory.Find(Main.Players[player].UUID, ItemType.Drugs) == null) ? 0 : nInventory.Find(Main.Players[player].UUID, ItemType.Drugs).Count;
                             if (playerHave + amount > 50)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете вместить столько в свой инвентарь", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете вместить столько в свой инвентарь", 3000);
                                 return;
                             }
                         }
@@ -2052,7 +2052,7 @@ namespace NeptuneEvo.Fractions
 
                         if (stockContains < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе столько нет", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе столько нет", 3000);
                             return;
                         }
 
@@ -2061,7 +2061,7 @@ namespace NeptuneEvo.Fractions
                             var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Material, amount));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             data.Materials -= amount;
@@ -2072,7 +2072,7 @@ namespace NeptuneEvo.Fractions
                             var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Drugs, amount));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             data.Drugs -= amount;
@@ -2089,14 +2089,14 @@ namespace NeptuneEvo.Fractions
                             var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.HealthKit, amount));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             data.Medkits -= amount;
                             nInventory.Add(player, new nItem(ItemType.HealthKit, amount));
                         }
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, item, amount, false);
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"На складе осталось {stockContains - amount}, у Вас {playerHave + amount}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"На складе осталось {stockContains - amount}, у Вас {playerHave + amount}", 3000);
                         data.UpdateLabel();
                         break;
                 }
@@ -2105,13 +2105,13 @@ namespace NeptuneEvo.Fractions
             {
                 if (!player.IsInVehicle)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны находиться в машине", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны находиться в машине", 3000);
                     return;
                 }
                 var vehicle = player.Vehicle;
                 if (!vehicle.HasData("CANMATS") && !vehicle.HasData("CANDRUGS") && !vehicle.HasData("CANMEDKITS"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Машина не может ничего перевозить", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Машина не может ничего перевозить", 3000);
                     return;
                 }
                 int onfrac = player.GetData<int>("ONFRACSTOCK");
@@ -2120,32 +2120,32 @@ namespace NeptuneEvo.Fractions
                     case "load_mats":
                         if (onfrac != 14 && Main.Players[player].FractionID != onfrac)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в {Fractions.Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в {Fractions.Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
                             return;
                         }
                         if (onfrac != 14 && !Manager.canUseCommand(player, "takestock")) return;
                         if (fracStocks[onfrac].Materials < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе нет такого кол-ва матов", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе нет такого кол-ва матов", 3000);
                             return;
                         }
                         var maxMats = (Fractions.Stocks.maxMats.ContainsKey(vehicle.DisplayName)) ? Fractions.Stocks.maxMats[vehicle.DisplayName] : 600;
                         if (VehicleInventory.GetCountOfType(vehicle, ItemType.Material) + amount > maxMats)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во матов", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во матов", 3000);
                             return;
                         }
                         var tryAdd = VehicleInventory.TryAdd(vehicle, new nItem(ItemType.Material, amount));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во матов", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во матов", 3000);
                             return;
                         }
                         var data = new nItem(ItemType.Material);
                         data.Count = amount;
                         VehicleInventory.Add(vehicle, data);
                         fracStocks[onfrac].Materials -= amount;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы загрузили материалы в машину", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы загрузили материалы в машину", 3000);
                         fracStocks[onfrac].UpdateLabel();
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, "mats", amount, false);
                         return;
@@ -2153,45 +2153,45 @@ namespace NeptuneEvo.Fractions
                         var count = VehicleInventory.GetCountOfType(vehicle, ItemType.Material);
                         if (count < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В машине нет такого кол-ва матов", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В машине нет такого кол-ва матов", 3000);
                             return;
                         }
                         var maxstock = 50000;
                         if (onfrac == 14) maxstock = 250000;
                         if (fracStocks[onfrac].Materials + amount > maxstock)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад не может вместить такое кол-во материала", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад не может вместить такое кол-во материала", 3000);
                             return;
                         }
                         VehicleInventory.Remove(vehicle, ItemType.Material, amount);
                         fracStocks[onfrac].Materials += amount;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы выгрузили материалы из машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы выгрузили материалы из машины", 3000);
                         fracStocks[onfrac].UpdateLabel();
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, "mats", amount, true);
                         return;
                     case "load_drugs":
                         if (Main.Players[player].FractionID != onfrac)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в ~y~{Fractions.Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в ~y~{Fractions.Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
                             return;
                         }
                         if (!Manager.canUseCommand(player, "takestock")) return;
                         if (fracStocks[onfrac].Drugs < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе нет такого кол-ва наркотиков", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе нет такого кол-ва наркотиков", 3000);
                             return;
                         }
                         tryAdd = VehicleInventory.TryAdd(vehicle, new nItem(ItemType.Drugs, amount));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во наркотиков", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во наркотиков", 3000);
                             return;
                         }
                         data = new nItem(ItemType.Drugs);
                         data.Count = amount;
                         VehicleInventory.Add(vehicle, data);
                         fracStocks[onfrac].Drugs -= amount;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы загрузили наркотики в машину", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы загрузили наркотики в машину", 3000);
                         fracStocks[onfrac].UpdateLabel();
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, "drugs", amount, false);
                         return;
@@ -2199,74 +2199,74 @@ namespace NeptuneEvo.Fractions
                         count = VehicleInventory.GetCountOfType(vehicle, ItemType.Drugs);
                         if (count < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В машине нет такого кол-ва наркотиков", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В машине нет такого кол-ва наркотиков", 3000);
                             return;
                         }
                         if (fracStocks[onfrac].Drugs + amount > 10000)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад не может вместить такое кол-во наркотиков", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад не может вместить такое кол-во наркотиков", 3000);
                             return;
                         }
                         VehicleInventory.Remove(vehicle, ItemType.Drugs, amount);
                         fracStocks[onfrac].Drugs += amount;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы выгрузили наркотики из машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы выгрузили наркотики из машины", 3000);
                         fracStocks[onfrac].UpdateLabel();
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, "drugs", amount, true);
                         return;
                     case "load_medkits":
                         if (Main.Players[player].FractionID != onfrac)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в {Fractions.Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в {Fractions.Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
                             return;
                         }
                         if (!player.GetData<bool>("ON_DUTY"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны начать рабочий день", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны начать рабочий день", 3000);
                             return;
                         }
                         if (fracStocks[onfrac].Medkits < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе нет такого кол-ва аптечек", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе нет такого кол-ва аптечек", 3000);
                             return;
                         }
                         var maxMedkits = 100;
                         if (VehicleInventory.GetCountOfType(vehicle, ItemType.HealthKit) + amount > maxMedkits)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во аптечек", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во аптечек", 3000);
                             return;
                         }
                         tryAdd = VehicleInventory.TryAdd(vehicle, new nItem(ItemType.HealthKit, amount));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во аптечек", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во аптечек", 3000);
                             return;
                         }
                         VehicleInventory.Add(vehicle, new nItem(ItemType.HealthKit, amount));
                         fracStocks[onfrac].Medkits -= amount;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы загрузили аптечки в машину", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы загрузили аптечки в машину", 3000);
                         fracStocks[onfrac].UpdateLabel();
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, "medkits", amount, false);
                         return;
                     case "unload_medkits":
                         if (!player.GetData<bool>("ON_DUTY"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны начать рабочий день", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны начать рабочий день", 3000);
                             return;
                         }
                         count = VehicleInventory.GetCountOfType(vehicle, ItemType.HealthKit);
                         if (count < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В машине нет такого кол-ва аптечек", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В машине нет такого кол-ва аптечек", 3000);
                             return;
                         }
                         if (fracStocks[onfrac].Medkits + amount > 1000)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад не может вместить такое кол-во аптечек", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад не может вместить такое кол-во аптечек", 3000);
                             return;
                         }
                         VehicleInventory.Remove(vehicle, ItemType.HealthKit, amount);
                         fracStocks[onfrac].Medkits += amount;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы выгрузили аптечки из машины", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы выгрузили аптечки из машины", 3000);
                         fracStocks[onfrac].UpdateLabel();
                         GameLog.Stock(Main.Players[player].FractionID, Main.Players[player].UUID, "medkits", amount, true);
                         return;
@@ -2281,24 +2281,24 @@ namespace NeptuneEvo.Fractions
                 case 32:
                     if (!player.IsInVehicle)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны находиться в машине", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны находиться в машине", 3000);
                         return;
                     }
                     var vehicle = player.Vehicle;
                     if (!vehicle.HasData("CANMATS") && !vehicle.HasData("CANDRUGS") && !vehicle.HasData("CANMEDKITS"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Машина не может ничего перевозить", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Машина не может ничего перевозить", 3000);
                         return;
                     }
 
                     if (player.GetData<int>("ONFRACSTOCK") == 14 && (DateTime.Now.Hour < 13 && DateTime.Now.Hour > 1))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад намертво закрыт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад намертво закрыт", 3000);
                         return;
                     }
                     else if (!fracStocks[(int)player.GetData<int>("ONFRACSTOCK")].IsOpen && player.GetData<int>("ONFRACSTOCK") != 14)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад закрыт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад закрыт", 3000);
                         return;
                     }
 
@@ -2307,12 +2307,12 @@ namespace NeptuneEvo.Fractions
                 case 33:
                     if (Main.Players[player].FractionID != player.GetData<int>("ONFRACSTOCK"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в {Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в {Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
                         return;
                     }
                     if (!fracStocks[Main.Players[player].FractionID].IsOpen)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад закрыт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад закрыт", 3000);
                         return;
                     }
                     OpenFracStockMenu(player);
@@ -2369,23 +2369,23 @@ namespace NeptuneEvo.Fractions
             int amount = 0;
             if (!Int32.TryParse(data, out amount))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                 return;
             }
             if (amount < 1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                 return;
             }
             if (!player.IsInVehicle)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны находиться в машине", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны находиться в машине", 3000);
                 return;
             }
             var vehicle = player.Vehicle;
             if (!vehicle.HasData("CANMATS") && !vehicle.HasData("CANDRUGS") && !vehicle.HasData("CANMEDKITS"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Машина не может ничего перевозить", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Машина не может ничего перевозить", 3000);
                 return;
             }
             switch (eventName)
@@ -2393,7 +2393,7 @@ namespace NeptuneEvo.Fractions
                 case "loadmats":
                     if (player.GetData<int>("ONFRACSTOCK") != 14 && Main.Players[player].FractionID != player.GetData<int>("ONFRACSTOCK"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в {Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в {Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
                         return;
                     }
                     //Main.OpenInputMenu(player, "Введите кол-во материалов", "load_mats");
@@ -2411,7 +2411,7 @@ namespace NeptuneEvo.Fractions
                     }
                     if (Main.Players[player].FractionID != player.GetData<int>("ONFRACSTOCK"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в {Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в {Manager.getName(player.GetData<int>("ONFRACSTOCK"))}", 3000);
                         return;
                     }
                     //Main.OpenInputMenu(player, "Введите кол-во наркотиков", "load_drugs");
@@ -2658,34 +2658,34 @@ namespace NeptuneEvo.Fractions
             var fracid = Main.Players[player].FractionID;
             if (!((fracid >= 1 && fracid <= 5) || (fracid >= 10 && fracid <= 13)))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете сделать это", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете сделать это", 3000);
                 return;
             }
             if (!player.IsInVehicle)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны находиться в машине", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны находиться в машине", 3000);
                 return;
             }
             if (!player.Vehicle.HasData("CANMATS"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На этой машине нельзя перевозить маты", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На этой машине нельзя перевозить маты", 3000);
                 return;
             }
             if (player.HasData("loadMatsTimer"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы уже загружаете материалы в машину", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы уже загружаете материалы в машину", 3000);
                 return;
             }
             var count = VehicleInventory.GetCountOfType(player.Vehicle, ItemType.Material);
             if (count >= Fractions.Stocks.maxMats[player.Vehicle.DisplayName])
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В машине максимальное кол-во материала", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В машине максимальное кол-во материала", 3000);
                 return;
             }
             //player.SetData("loadMatsTimer", Main.StartT(20000, 99999999, (o) => Fractions.Army.loadMaterialsTimer(player), "GMLOADMATS_TIMER"));
             player.SetData("loadMatsTimer", Timers.StartOnce(20000, () => Fractions.Army.loadMaterialsTimer(player)));
             player.Vehicle.SetData("loaderMats", player);
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Загрузка материалов началась (20 секунд)", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Загрузка материалов началась (20 секунд)", 3000);
             Trigger.ClientEvent(player, "showLoader", "Загрузка материалов", 1);
             player.SetData("vehicleMats", player.Vehicle);
             player.SetData("whereLoad", "WAR");
@@ -2718,7 +2718,7 @@ namespace NeptuneEvo.Fractions
                         NAPI.Data.ResetEntityData(entity.Vehicle, "loaderMats");
                         player.ResetData("loadMatsTimer");
                         Trigger.ClientEvent(player, "hideLoader");
-                        Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, $"Загрузка материалов отменена, так как машина покинула чекпоинт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Загрузка материалов отменена, так как машина покинула чекпоинт", 3000);
                     }
                 }
             }

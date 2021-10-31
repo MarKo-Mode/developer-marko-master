@@ -1,11 +1,9 @@
-﻿using NeptuneEvo.Globals;
-using NeptuneEvo.Settings;
+﻿using GTANetworkAPI;
+using NeptuneEvo.Globals;
 using NeptuneEvo.GUI;
-using GTANetworkAPI;
+using NeptuneEvo.Plugins;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Houses
 {
@@ -112,7 +110,7 @@ namespace NeptuneEvo.Houses
                     else if (Main.Players[player].HotelID == -1)
                         OpenHotelBuyMenu(player);
                     else
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы уже арендовали отель", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы уже арендовали отель", 3000);
                     return;
                 case 49:
                     NAPI.Entity.SetEntityPosition(player, HotelEnters[Main.Players[player].InsideHotelID] + new Vector3(0, 0, 1.5));
@@ -182,24 +180,24 @@ namespace NeptuneEvo.Houses
 
             if (Main.Players[player].HotelID == -1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не поселены ни в один отель", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не поселены ни в один отель", 3000);
                 return;
             }
 
             if (Main.Players[player].HotelLeft + hours > 10)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Аренда может быть оплачена только на 10 часов", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Аренда может быть оплачена только на 10 часов", 3000);
                 return;
             }
 
             if (!MoneySystem.Wallet.Change(player, -HotelRent * hours))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно средств", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно средств", 3000);
                 return;
             }
             GameLog.Money($"player({Main.Players[player].UUID})", $"server", HotelRent * hours, $"hotelRent");
             Main.Players[player].HotelLeft += hours;
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы продлили аренду на {hours} часов, Вас выселят через {Main.Players[player].HotelLeft} часов", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы продлили аренду на {hours} часов, Вас выселят через {Main.Players[player].HotelLeft} часов", 3000);
         }
 
         public static void MoveOutPlayer(Player player)
@@ -249,20 +247,20 @@ namespace NeptuneEvo.Houses
                 case "rent":
                     if (Houses.HouseManager.GetHouse(player) != null)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы проживаете в доме и не можете арендовать комнату в отеле", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы проживаете в доме и не можете арендовать комнату в отеле", 3000);
                         return;
                     }
 
                     if (!MoneySystem.Wallet.Change(player, -HotelRent))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно средств", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно средств", 3000);
                         return;
                     }
                     GameLog.Money($"player({Main.Players[player].UUID})", $"server", HotelRent, $"hotelRent");
                     Main.Players[player].HotelID = player.GetData<int>("HOTEL_ID");
                     Main.Players[player].HotelLeft = 1;
 
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы арендовали комнату в отеле на 1ч. Продлить аренду можно в телефоне (M)", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы арендовали комнату в отеле на 1ч. Продлить аренду можно в телефоне (M)", 3000);
                     SendToRoom(player);
                     MenuManager.Close(player);
                     return;
@@ -309,7 +307,7 @@ namespace NeptuneEvo.Houses
                     return;
                 case "moveout":
                     MoveOutPlayer(player);
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Вы выселились из отеля", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Вы выселились из отеля", 3000);
                     MenuManager.Close(player);
                     return;
                 case "close":

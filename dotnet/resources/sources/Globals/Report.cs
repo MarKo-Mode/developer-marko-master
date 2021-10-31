@@ -1,14 +1,11 @@
-﻿using System;
-using System.Data;
-using GTANetworkAPI;
-using Newtonsoft.Json;
+﻿using GTANetworkAPI;
 using MySqlConnector;
-using NeptuneEvo.Settings;
-using System.Collections.Generic;
-using NeptuneEvo.GUI;
-using System.Linq;
-using Newtonsoft.Json.Linq;
 using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace NeptuneEvo.Globals
 {
@@ -153,7 +150,7 @@ namespace NeptuneEvo.Globals
             {
                 question = Main.BlockSymbols(question);
                 player.SetData("NEXT_REPORT", DateTime.Now.AddMinutes(2));
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы отправили вопрос: {question}", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы отправили вопрос: {question}", 3000);
                 player.SetData("IS_REPORT", true);
 
                 MySqlCommand cmd = new MySqlCommand();
@@ -204,12 +201,12 @@ namespace NeptuneEvo.Globals
                     Player target = NAPI.Player.GetPlayerFromName(Reports[repID].Author);
                     if (target is null)
                     {
-                        Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Игрок не найден!", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Игрок не найден!", 3000);
                     }
                     else
                     {
                         target.SendChatMessage($"~r~Ответ от {player.Name} ({player.Value}): {response}");
-                        Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Ответ от {player.Name}: {response}", 5000);
+                        Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Ответ от {player.Name}: {response}", 5000);
                         foreach (var p in Main.Players.Keys.ToList())
                         {
                             if (Main.Players[p].AdminLVL >= adminLvL)

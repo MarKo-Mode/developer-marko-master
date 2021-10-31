@@ -15,7 +15,6 @@ namespace NeptuneEvo.Globals
 {
     public class SafeMain : Script
     {
-        // config, use meta.xml instead
         public static int SafeRespawnTime = 10800;
         public static int SafeMinLoot = 150;
         public static int SafeMaxLoot = 500;
@@ -23,7 +22,6 @@ namespace NeptuneEvo.Globals
         public static int MaxMoneyInBag = 100000;
         public static DateTime NextRobbery = new DateTime();
         public static int NowRobberyID = -1;
-        // main safe door
         public static bool isCracking = false;
         private static TextLabel label;
         private static int secondsLeft = 0;
@@ -31,9 +29,6 @@ namespace NeptuneEvo.Globals
         public static bool canBeClosed = true;
         private static GTANetworkAPI.Object safeDrill;
         private static string timer = null;
-
-        // other variables
-
         public static List<Safe> Safes = new List<Safe>();
         public static Random SafeRNG = new Random();
 
@@ -103,17 +98,17 @@ namespace NeptuneEvo.Globals
         {
             if (!player.HasData("HEIST_DRILL"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет дрели для взлома", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет дрели для взлома", 3000);
                 return;
             }
             if (isCracking)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Взлом уже начат", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Взлом уже начат", 3000);
                 return;
             }
             if (isOpen)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Дверь в хранилище уже открыта", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Дверь в хранилище уже открыта", 3000);
                 return;
             }
             nInventory.Remove(player, ItemType.BagWithDrill, 1);
@@ -144,7 +139,7 @@ namespace NeptuneEvo.Globals
                     Trigger.ClientEvent(player, "hideLoader");
                     //Main.StopT(player.GetData("LOCK_TIMER"), "timer_20");
                     player.ResetData("LOCK_TIMER");
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы успешно взломали дверь", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы успешно взломали дверь", 3000);
                 }
                 catch { }
             });
@@ -193,7 +188,7 @@ namespace NeptuneEvo.Globals
                 if ((player.HasData("HAND_MONEY") || player.HasData("HEIST_DRILL")) && player.VehicleSeat == -1 && vehicle.Class != 8)
                 {
                     VehicleManager.WarpPlayerOutOfVehicle(player);
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете сесть в машину с сумками", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете сесть в машину с сумками", 3000);
                 }
             }
             catch (Exception e) { Log.Write("PlayerEnterVehicle: " + e.Message, nLog.Type.Error); }
@@ -281,7 +276,7 @@ namespace NeptuneEvo.Globals
                     //NAPI.Player.PlaySoundFrontEnd(player, "Drill_Pin_Break", "DLC_HEIST_FLEECA_SOUNDSET");
 
                     Trigger.ClientEvent(player, "dial", "close");
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Неправильный пароль", 2000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Неправильный пароль", 2000);
                     nInventory.Remove(player, ItemType.Lockpick, 1);
                     safe.Occupier = null;
                 }
@@ -297,14 +292,14 @@ namespace NeptuneEvo.Globals
 
                         //NAPI.Player.PlaySoundFrontEnd(player, "Drill_Pin_Break", "DLC_HEIST_FLEECA_SOUNDSET");
                         Trigger.ClientEvent(player, "dial", "close");
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы успешно взломали сейф", 2000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы успешно взломали сейф", 2000);
                     }
                     else
                     {
                         stage++;
                         player.SetData("CURRENT_STAGE", stage);
                         Trigger.ClientEvent(player, "dial", "open", safe.LockAngles[stage], true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы подобрали {stage} из 3 паролей", 2000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы подобрали {stage} из 3 паролей", 2000);
                     }
                 }
             }
@@ -326,23 +321,23 @@ namespace NeptuneEvo.Globals
             {
                 if (!player.HasData("IS_MASK") || !player.GetData<bool>("IS_MASK"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Взлом возможен только в маске", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Взлом возможен только в маске", 3000);
                     return;
                 }
 
                 if (safe.Occupier != null && NAPI.Player.GetPlayerFromHandle(safe.Occupier) != null)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Этот сейф уже взламывают", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Этот сейф уже взламывают", 3000);
                     return;
                 }
                 if (Fractions.Manager.FractionTypes[Main.Players[player].FractionID] != 1)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Доступно только для банд", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Доступно только для банд", 3000);
                     return;
                 }
                 if (DateTime.Now.Hour < 13 || DateTime.Now.Hour > 22)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Возможно открыть только с 13:00 до 23:00", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Возможно открыть только с 13:00 до 23:00", 3000);
                     return;
                 }
 
@@ -350,13 +345,13 @@ namespace NeptuneEvo.Globals
                 var count = (lockpick == null) ? 0 : lockpick.Count;
                 if (count == 0)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет отмычки", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет отмычки", 3000);
                     return;
                 }
                 if (DateTime.Now < NextRobbery && NowRobberyID != safe.ID)
                 {
                     DateTime g = new DateTime((NextRobbery - DateTime.Now).Ticks);
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Попробуйте через {g.Minute}:{g.Second}", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Попробуйте через {g.Minute}:{g.Second}", 3000);
                     return;
                 }
 
@@ -370,14 +365,14 @@ namespace NeptuneEvo.Globals
 
                 if (gangsters == 0)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"С Вами должен быть как минимум ещё один тру гангстер", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"С Вами должен быть как минимум ещё один тру гангстер", 3000);
                     //return;
                 }
 
                 safe.Occupier = player;
                 player.SetData("CURRENT_STAGE", 0);
                 Trigger.ClientEvent(player, "dial", "open", safe.LockAngles[0]);
-                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, $"С минуты на минуту сюда прибудут копы", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"С минуты на минуту сюда прибудут копы", 3000);
                 Manager.sendFractionMessage(7, $"Сейф по адресу {safe.Address} пытаются взломать");
                 Manager.sendFractionMessage(9, $"Сейф по адресу {safe.Address} пытаются взломать");
 
@@ -429,7 +424,7 @@ namespace NeptuneEvo.Globals
         {
             if (Main.Players[player].InsideHouseID != -1 || Main.Players[player].InsideGarageID != -1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете сделать это, находясь в доме/гараже", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете сделать это, находясь в доме/гараже", 3000);
                 return;
             }
 
@@ -459,7 +454,7 @@ namespace NeptuneEvo.Globals
         {
             if (Main.Players[player].InsideHouseID != -1 || Main.Players[player].InsideGarageID != -1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете сделать это, находясь в доме/гараже", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете сделать это, находясь в доме/гараже", 3000);
                 return;
             }
 
@@ -497,7 +492,7 @@ namespace NeptuneEvo.Globals
             player.ResetData("HAND_MONEY");
             Wallet.Change(player, (int)(all_money * 0.97));
             GameLog.Money($"server", $"player({Main.Players[player].UUID})", (int)(all_money * 0.97), $"moneyFlow");
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы отмыли {(int)(all_money * 0.97)}$. Мавроди забрал {(int)(all_money * 0.03)}$ за свои услуги", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы отмыли {(int)(all_money * 0.97)}$. Мавроди забрал {(int)(all_money * 0.03)}$ за свои услуги", 3000);
         }
 
         public static void SafeCracker_Disconnect(Player player, DisconnectionType type, string reason)
@@ -601,97 +596,97 @@ namespace NeptuneEvo.Globals
                     case 1:
                         if (player.HasData("HEIST_DRILL") || player.HasData("HAND_MONEY"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть дрель или деньги в руках", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть дрель или деньги в руках", 3000);
                             return;
                         }
                         if (!Wallet.Change(player, -20000))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                             return;
                         }
                         GameLog.Money($"player({Main.Players[player].UUID})", $"server", 20000, $"buyMavr(drill)");
                         player.SetClothes(5, 41, 0);
                         nInventory.Add(player, new nItem(ItemType.BagWithDrill));
                         player.SetData("HEIST_DRILL", true);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили сумку с дрелью для ограблений", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили сумку с дрелью для ограблений", 3000);
                         return;
                     case 2:
                         if (Main.Players[player].Money < 200)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                             return;
                         }
                         var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Lockpick));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                             return;
                         }
                         Wallet.Change(player, -200);
                         GameLog.Money($"player({Main.Players[player].UUID})", $"server", 200, $"buyMavr(lockpick)");
                         nInventory.Add(player, new nItem(ItemType.Lockpick, 1));
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили отмычку для замков", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили отмычку для замков", 3000);
                         return;
                     case 3:
                         if (Main.Players[player].Money < 1200)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                             return;
                         }
                         tryAdd = nInventory.TryAdd(player, new nItem(ItemType.ArmyLockpick));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                             return;
                         }
                         Wallet.Change(player, -1200);
                         GameLog.Money($"player({Main.Players[player].UUID})", $"server", 1200, $"buyMavr(armylockpick)");
                         nInventory.Add(player, new nItem(ItemType.ArmyLockpick, 1));
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили военную отмычку", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили военную отмычку", 3000);
                         return;
                     case 4:
                         if (Main.Players[player].Money < 600)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                             return;
                         }
                         tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Cuffs));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                             return;
                         }
                         Wallet.Change(player, -600);
                         GameLog.Money($"player({Main.Players[player].UUID})", $"server", 600, $"buyMavr(cuffs)");
                         nInventory.Add(player, new nItem(ItemType.Cuffs, 1));
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили стяжки для рук", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили стяжки для рук", 3000);
                         return;
                     case 5:
                         if (Main.Players[player].Money < 600)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно денег", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно денег", 3000);
                             return;
                         }
                         tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Pocket));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                             return;
                         }
                         Wallet.Change(player, -600);
                         GameLog.Money($"player({Main.Players[player].UUID})", $"server", 600, $"buyMavr(pocket)");
                         nInventory.Add(player, new nItem(ItemType.Pocket, 1));
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили мешок на голову", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили мешок на голову", 3000);
                         return;
                     case 6:
                         if (Main.Players[player].WantedLVL == null)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не находитесь в розыске", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не находитесь в розыске", 3000);
                             return;
                         }
                         if (Main.Players[player].Money < 800)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно средств", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно средств", 3000);
                             return;
                         }
                         Wallet.Change(player, -800);
@@ -738,12 +733,12 @@ namespace NeptuneEvo.Globals
                     {
                         if (isCracking)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно сделать это сейчас", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно сделать это сейчас", 3000);
                             return;
                         }
                         if (!canBeClosed)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно сделать это сейчас", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно сделать это сейчас", 3000);
                             return;
                         }
                         if (isOpen)
@@ -758,9 +753,9 @@ namespace NeptuneEvo.Globals
                         }
                         string msg = "Вы закрыли дверь";
                         if (isOpen) msg = "Вы открыли дверь";
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, msg, 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, msg, 3000);
                     }
-                    else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете сделать это", 3000);
+                    else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете сделать это", 3000);
                     return;
                 case "crack":
                     MenuManager.Close(player);
@@ -868,13 +863,13 @@ namespace NeptuneEvo.Globals
 
             if (player.HasData("HEIST_DRILL"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть сумка", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть сумка", 3000);
                 return;
             }
 
             if (SafeLoot == 0)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В сейфе больше нет денег", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В сейфе больше нет денег", 3000);
                 return;
             }
 
@@ -885,7 +880,7 @@ namespace NeptuneEvo.Globals
                 var lefts = (item == null) ? 0 : Convert.ToInt32(item.Data.ToString());
                 if (lefts == SafeMain.MaxMoneyInBag)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Ваша сумка полностью забита деньгами", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Ваша сумка полностью забита деньгами", 3000);
                     return;
                 }
                 if (money + lefts > SafeMain.MaxMoneyInBag)
@@ -893,14 +888,14 @@ namespace NeptuneEvo.Globals
                 lefts += money;
                 item.Data = $"{lefts}";
 
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Теперь в Вашей сумке {lefts}$", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Теперь в Вашей сумке {lefts}$", 3000);
             }
             else
             {
                 var item = new nItem(ItemType.BagWithMoney, 1, $"{money}");
                 nInventory.Items[Main.Players[player].UUID].Add(item);
 
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы взяли сумку с {money}$", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы взяли сумку с {money}$", 3000);
             }
             Dashboard.sendItems(player);
 

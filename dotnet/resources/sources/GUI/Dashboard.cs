@@ -1,14 +1,12 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Globals;
+using NeptuneEvo.MoneySystem;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using NeptuneEvo.Globals;
-using NeptuneEvo.Settings;
-using NeptuneEvo.MoneySystem;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.GUI
 {
@@ -61,7 +59,7 @@ namespace NeptuneEvo.GUI
                             {
                                 if (item.Type == ItemType.GasCan)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Возможность выкладывать канистры временно отключена", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Возможность выкладывать канистры временно отключена", 3000);
                                     return;
                                 }
                                 else if (item.Type == ItemType.BagWithDrill)
@@ -78,7 +76,7 @@ namespace NeptuneEvo.GUI
                                 {
                                     if (item.IsActive)
                                     {
-                                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны сначала снять эту одежду", 3000);
+                                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны сначала снять эту одежду", 3000);
                                         return;
                                     }
                                     items.RemoveAt(index);
@@ -90,7 +88,7 @@ namespace NeptuneEvo.GUI
                                 {
                                     if (item.IsActive)
                                     {
-                                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны убрать оружие из рук", 3000);
+                                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны убрать оружие из рук", 3000);
                                         return;
                                     }
                                     items.RemoveAt(index);
@@ -107,7 +105,7 @@ namespace NeptuneEvo.GUI
                                 }
                                 if (player.IsInVehicle)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Нельзя выбрасывать вещи, находясь в машине", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Нельзя выбрасывать вещи, находясь в машине", 3000);
                                     return;
                                 }
                                 if (item.Count > 1)
@@ -128,7 +126,7 @@ namespace NeptuneEvo.GUI
                                     Log.Debug($"ItemID: {item.ID} | ItemType: {item.Type} | ItemData: {item.Data} | ItemName: {nInventory.ItemsNames[(int)item.Type]}");
                                     if (player.HasData("CHANGE_WITH"))
                                     {
-                                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Чтобы использовать вещи, нужно закрыть обмен вещами", 3000);
+                                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Чтобы использовать вещи, нужно закрыть обмен вещами", 3000);
                                         return;
                                     }
                                     Items.onUse(player, item, index);
@@ -144,12 +142,12 @@ namespace NeptuneEvo.GUI
                                 if (!player.HasData("OPENOUT_TYPE")) return;
                                 if (nInventory.ClothesItems.Contains(item.Type) && item.IsActive == true)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны сначала снять эту одежду", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны сначала снять эту одежду", 3000);
                                     return;
                                 }
                                 else if ((nInventory.WeaponsItems.Contains(item.Type) || nInventory.MeleeWeaponsItems.Contains(item.Type)) && item.IsActive == true)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны убрать оружие из рук", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны убрать оружие из рук", 3000);
                                     return;
                                 }
                                 switch (player.GetData<int>("OPENOUT_TYPE"))
@@ -174,7 +172,7 @@ namespace NeptuneEvo.GUI
                                             int tryAdd = VehicleInventory.TryAdd(veh, new nItem(item.Type, item.Count));
                                             if (tryAdd == -1 || tryAdd > 0)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "В машине недостаточно места", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "В машине недостаточно места", 3000);
                                                 return;
                                             }
 
@@ -202,7 +200,7 @@ namespace NeptuneEvo.GUI
                                                 int maxMats = (Fractions.Stocks.maxMats.ContainsKey(veh.DisplayName)) ? Fractions.Stocks.maxMats[veh.DisplayName] : 600;
                                                 if (VehicleInventory.GetCountOfType(veh, ItemType.Material) + 1 > maxMats)
                                                 {
-                                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во матов", 3000);
+                                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во матов", 3000);
                                                     return;
                                                 }
                                             }
@@ -216,7 +214,7 @@ namespace NeptuneEvo.GUI
                                         {
                                             if (item.Type == ItemType.BagWithDrill || item.Type == ItemType.BagWithMoney || item.Type == ItemType.CarKey || item.Type == ItemType.KeyRing || nInventory.ClothesItems.Contains(item.Type) || nInventory.WeaponsItems.Contains(item.Type))
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Эта вещь не предназначена для этого шкафа", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Эта вещь не предназначена для этого шкафа", 3000);
                                                 return;
                                             }
                                             if (Main.Players[player].InsideHouseID == -1) return;
@@ -234,7 +232,7 @@ namespace NeptuneEvo.GUI
                                             int tryAdd = Houses.FurnitureManager.TryAdd(houseID, furnID, item);
                                             if (tryAdd == -1 || tryAdd > 0)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                                 return;
                                             }
                                             GameLog.Items($"player({Main.Players[player].UUID})", $"itemSafe({furnID} | house: {houseID})", Convert.ToInt32(item.Type), 1, $"{item.Data}");
@@ -247,7 +245,7 @@ namespace NeptuneEvo.GUI
                                         {
                                             if (!nInventory.ClothesItems.Contains(item.Type))
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Шкаф для одежды может хранить только одежду", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Шкаф для одежды может хранить только одежду", 3000);
                                                 return;
                                             }
                                             if (Main.Players[player].InsideHouseID == -1) return;
@@ -257,7 +255,7 @@ namespace NeptuneEvo.GUI
                                             int tryAdd = Houses.FurnitureManager.TryAdd(houseID, furnID, item);
                                             if (tryAdd == -1 || tryAdd > 0)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                                 return;
                                             }
                                             GameLog.Items($"player({Main.Players[player].UUID})", $"clothSafe({furnID} | house: {houseID})", Convert.ToInt32(item.Type), 1, $"{item.Data}");
@@ -283,13 +281,13 @@ namespace NeptuneEvo.GUI
                                             int tryAdd = nInventory.TryAdd(target, new nItem(item.Type, 1));
                                             if (tryAdd == -1 || tryAdd > 0)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У игрока недостаточно места", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У игрока недостаточно места", 3000);
                                                 return;
                                             }
 
                                             if (item.Type == ItemType.BodyArmor && nInventory.Find(Main.Players[target].UUID, ItemType.BodyArmor) != null)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                                 return;
                                             }
 
@@ -297,7 +295,7 @@ namespace NeptuneEvo.GUI
                                             {
                                                 if (target.HasData("HEIST_DRILL") || target.HasData("HAND_MONEY"))
                                                 {
-                                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока уже есть дрель или деньги в руках", 3000);
+                                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока уже есть дрель или деньги в руках", 3000);
                                                     return;
                                                 }
 
@@ -310,7 +308,7 @@ namespace NeptuneEvo.GUI
                                             {
                                                 if (target.HasData("HEIST_DRILL") || target.HasData("HAND_MONEY"))
                                                 {
-                                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть сумка", 3000);
+                                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть сумка", 3000);
                                                     return;
                                                 }
 
@@ -343,7 +341,7 @@ namespace NeptuneEvo.GUI
 
                                             if (Fractions.Stocks.TryAdd(onFraction, new nItem(item.Type, 1)) != 0)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "На складе недостаточно места", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "На складе недостаточно места", 3000);
                                                 return;
                                             }
 
@@ -373,13 +371,13 @@ namespace NeptuneEvo.GUI
 
                                             if (keys.Count >= 5)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Максимум 5 ключей", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Максимум 5 ключей", 3000);
                                                 return;
                                             }
 
                                             if (item.Type != ItemType.CarKey)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Применимо только для ключей", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Применимо только для ключей", 3000);
                                                 return;
                                             }
 
@@ -404,7 +402,7 @@ namespace NeptuneEvo.GUI
                                         {
                                             if (!nInventory.WeaponsItems.Contains(item.Type) && !nInventory.MeleeWeaponsItems.Contains(item.Type))
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Оружейный сейф может хранить только оружие", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Оружейный сейф может хранить только оружие", 3000);
                                                 return;
                                             }
                                             if (Main.Players[player].InsideHouseID == -1) return;
@@ -414,7 +412,7 @@ namespace NeptuneEvo.GUI
                                             int tryAdd = Houses.FurnitureManager.TryAdd(houseID, furnID, item);
                                             if (tryAdd == -1 || tryAdd > 0)
                                             {
-                                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                                 return;
                                             }
                                             GameLog.Items($"player({Main.Players[player].UUID})", $"weapSafe({furnID} | house: {houseID})", Convert.ToInt32(item.Type), 1, $"{item.Data}");
@@ -454,13 +452,13 @@ namespace NeptuneEvo.GUI
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
 
                             if (item.Type == ItemType.BodyArmor && nInventory.Find(Main.Players[player].UUID, ItemType.BodyArmor) != null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
 
@@ -468,7 +466,7 @@ namespace NeptuneEvo.GUI
                             {
                                 if (player.HasData("HEIST_DRILL") || player.HasData("HAND_MONEY"))
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть дрель или деньги в руках", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть дрель или деньги в руках", 3000);
                                     return;
                                 }
 
@@ -479,7 +477,7 @@ namespace NeptuneEvo.GUI
                             {
                                 if (player.HasData("HEIST_DRILL") || NAPI.Data.HasEntityData(player, "HAND_MONEY"))
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть сумка", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть сумка", 3000);
                                     return;
                                 }
 
@@ -513,7 +511,7 @@ namespace NeptuneEvo.GUI
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             if (item.Count > 1)
@@ -549,13 +547,13 @@ namespace NeptuneEvo.GUI
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
 
                             if (item.Type == ItemType.BodyArmor && nInventory.Find(Main.Players[player].UUID, ItemType.BodyArmor) != null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             GameLog.Items($"clothSafe({furnID} | house: {houseID})", $"player({Main.Players[player].UUID})", Convert.ToInt32(item.Type), 1, $"{item.Data}");
@@ -582,7 +580,7 @@ namespace NeptuneEvo.GUI
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type, 1));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
 
@@ -614,7 +612,7 @@ namespace NeptuneEvo.GUI
                             int tryAdd = nInventory.TryAdd(player, item);
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас недостаточно места", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас недостаточно места", 3000);
                                 return;
                             }
 
@@ -645,13 +643,13 @@ namespace NeptuneEvo.GUI
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
 
                             if (item.Type == ItemType.BodyArmor && nInventory.Find(Main.Players[player].UUID, ItemType.BodyArmor) != null)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             GameLog.Items($"weapSafe({furnID} | house: {houseID})", $"player({Main.Players[player].UUID})", Convert.ToInt32(item.Type), 1, $"{item.Data}");
@@ -687,28 +685,28 @@ namespace NeptuneEvo.GUI
                                 item = items[index];
                                 if (nInventory.ClothesItems.Contains(item.Type) && item.IsActive == true)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок должен снять эту одежду", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок должен снять эту одежду", 3000);
                                     return;
                                 }
                                 else if ((nInventory.WeaponsItems.Contains(item.Type) || nInventory.MeleeWeaponsItems.Contains(item.Type)) && item.IsActive == true)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок должен убрать это оружие из рук", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок должен убрать это оружие из рук", 3000);
                                     return;
                                 }
                                 int tryAdd1 = nInventory.TryAdd(player, new nItem(item.Type, 1));
                                 if (tryAdd1 == -1 || tryAdd1 > 0)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас недостаточно места", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас недостаточно места", 3000);
                                     return;
                                 }
                                 if (item.Type == ItemType.BodyArmor && nInventory.Find(Main.Players[player].UUID, ItemType.BodyArmor) != null)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                     return;
                                 }
                                 if (item.Count > 1)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Такие вещи нельзя забрать", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Такие вещи нельзя забрать", 3000);
                                     return;
                                 }
                                 nInventory.Add(player, item);

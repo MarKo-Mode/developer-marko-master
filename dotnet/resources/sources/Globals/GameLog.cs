@@ -2,6 +2,7 @@
 using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace NeptuneEvo.Globals
@@ -10,6 +11,7 @@ namespace NeptuneEvo.Globals
     {
 
         private static Thread thread;
+        private static string timer = null;
         private static nLog Log = new nLog("GameLog");
         private static readonly Queue<string> queue = new Queue<string>();
         private static readonly Dictionary<int, DateTime> OnlineQueue = new Dictionary<int, DateTime>();
@@ -115,20 +117,26 @@ namespace NeptuneEvo.Globals
             try
             {
                 Log.Debug("Worker started");
-                while (true)
-                {
-                    if (queue.Count < 1) continue;
-                    else
-                        Database.Query(queue.Dequeue());
-                }
+
+                timer = Timers.StartTask(500, () => TimerExec());
             }
             catch (Exception e)
             {
-                Log.Write($"{e}\n{CMD}", nLog.Type.Error);
+                Log.Write($"{e.ToString()}\n{CMD}", nLog.Type.Error);
+            }
+        }
+        private static void TimerExec()
+        {
+            var list = queue.ToList();
+
+            if (list.Any())
+            {
+                Database.Query(queue.Dequeue());
             }
         }
         public static void Stop()
         {
+            Timers.Stop(timer);
             thread.Join();
         }
     }

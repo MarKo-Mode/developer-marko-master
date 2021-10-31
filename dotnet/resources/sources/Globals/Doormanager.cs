@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Plugins;
-using NeptuneEvo.Settings;
+using System;
+using System.Collections.Generic;
 
 namespace NeptuneEvo.Globals
 {

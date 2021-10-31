@@ -32,7 +32,7 @@ namespace NeptuneEvo.Working
         {
             try
             {
-                NAPI.Blip.CreateBlip(140, new Vector3(2220.438, 5614.343, 53.60628), 1, 41, Main.StringToU16("Сбор наркотиков"), 255, 0, true, 0, 0);
+                NAPI.Blip.CreateBlip(140, new Vector3(2220.438, 5614.343, 53.60628), 1, 2, Main.StringToU16("Сбор наркотиков"), 255, 0, true, 0, 0);
 
                 Cols.Add(1, NAPI.ColShape.CreateCylinderColShape(new Vector3(2220.919, 5611.979, 54.63075) , 1, 2, 0));// get clothes
                 Cols[1].OnEntityEnterColShape += cf_onEntityEnterColShape;
@@ -75,13 +75,13 @@ namespace NeptuneEvo.Working
                     GUI.Dashboard.sendItems(player);
                     int payment = (int)(drugs.Count * 10);
                     MoneySystem.Wallet.Change(player, payment);
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы продали {drugs.Count} травы  за {payment}$", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы продали {drugs.Count} травы  за {payment}$", 3000);
                     Fractions.Stocks.fracStocks[12].Drugs += drugs.Count;
                     Fractions.Stocks.fracStocks[12].UpdateLabel();
 
                 }
 
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы закончили рабочий день", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы закончили рабочий день", 3000);
                 return;
             }
             else
@@ -108,7 +108,7 @@ namespace NeptuneEvo.Working
                 Trigger.ClientEvent(player, "createWorkBlip", Checkpoints[check].Position);
 
                 player.SetData("ON_WORK", true);
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Вы начали рабочий день", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Вы начали рабочий день", 3000);
                 return;
             }
         }
@@ -134,14 +134,14 @@ namespace NeptuneEvo.Working
                         var drugs= nInventory.Items[UUID].Find(t => t.Type == ItemType.Drugs);                      
                         if (drugs == null)
                         {
-                            Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У вас нет травы", 3000);
+                            Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У вас нет травы", 3000);
                             return;
                         }
                         nInventory.Remove(client, drugs.Type, drugs.Count);
                         GUI.Dashboard.sendItems(client);
                         int payment = (int)(drugs.Count * 200);
                         MoneySystem.Wallet.Change(client, payment);
-                        Notify.Send(client, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы продали {drugs.Count} травы  за {payment}$", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы продали {drugs.Count} травы  за {payment}$", 3000);
 
                     }
                     catch (Exception e) { Log.Write("PlayerExitVehicle: " + e.Message, nLog.Type.Error); }
@@ -173,7 +173,7 @@ namespace NeptuneEvo.Working
                             player.StopAnimation();
                             Main.OffAntiAnim(player);
                             var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Drugs, 1));
-                            if (tryAdd == -1 || tryAdd > 0) Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно места в инвентаре", 3000);                       
+                            if (tryAdd == -1 || tryAdd > 0) Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно места в инвентаре", 3000);                       
                             else nInventory.Add(player, new nItem(ItemType.Drugs, 1, ""));
                             var nextCheck = WorkManager.rnd.Next(0, Checkpoints.Count - 1);
                             while (nextCheck == shape.GetData<int>("NUMBER")) nextCheck = WorkManager.rnd.Next(0, Checkpoints.Count - 1);

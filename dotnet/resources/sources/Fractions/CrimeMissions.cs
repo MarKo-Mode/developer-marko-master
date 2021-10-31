@@ -1,7 +1,6 @@
 ﻿using GTANetworkAPI;
 using NeptuneEvo.Globals;
 using NeptuneEvo.Plugins;
-using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
 
@@ -220,7 +219,7 @@ namespace NeptuneEvo.Fractions
                         e.Vehicle.Delete();
                         MoneySystem.Wallet.Change(e, 250);
                         GameLog.Money($"server", $"player({Main.Players[e].UUID})", 250, $"arrestCar");
-                        Notify.Send(e, NotifyType.Success, NotifyPosition.BottomCenter, "Вы арестовали машину", 3000);
+                        Plugins.Notice.Send(e, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Вы арестовали машину", 3000);
                     }
                     catch (Exception ex) { Log.Write("OnEntityEnterDropDelivery: " + ex.Message); }
                 };
@@ -242,7 +241,7 @@ namespace NeptuneEvo.Fractions
 
                             if (DateTime.Now < e.Vehicle.GetData<DateTime>("ENDDATA"))
                             {
-                                Notify.Send(e, NotifyType.Success, NotifyPosition.BottomCenter, "Попробуйте чуть позже", 3000);
+                                Plugins.Notice.Send(e, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Попробуйте чуть позже", 3000);
                                 return;
                             }
 
@@ -275,7 +274,7 @@ namespace NeptuneEvo.Fractions
 
                             if (DateTime.Now < e.Vehicle.GetData<DateTime>("ENDDATA"))
                             {
-                                Notify.Send(e, NotifyType.Success, NotifyPosition.BottomCenter, "Попробуйте чуть позже", 3000);
+                                Plugins.Notice.Send(e, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Попробуйте чуть позже", 3000);
                                 return;
                             }
 
@@ -309,36 +308,36 @@ namespace NeptuneEvo.Fractions
                         if (fraction == 7 || fraction == 9)
                         {
                             Trigger.ClientEvent(player, "createWaypoint", PoliceEndDelivery.X, PoliceEndDelivery.Y);
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Отвезите машину в полицейский участок", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Отвезите машину в полицейский участок", 3000);
                         }
                         else if (fraction != vehicle.GetData<int>("GANG"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Нет доступа", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Нет доступа", 3000);
                             VehicleManager.WarpPlayerOutOfVehicle(player);
                         }
                         else
                         {
                             var end = (int)vehicle.GetData<int>("ENDPOINT");
                             Trigger.ClientEvent(player, "createWaypoint", GangEndDelivery[end].X, GangEndDelivery[end].Y);
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Доставьте машину в точку, отмеченную на карте", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Доставьте машину в точку, отмеченную на карте", 3000);
                         }
                         return;
                     case "MAFIADELIVERY":
                         if (fraction == 7 || fraction == 9)
                         {
                             Trigger.ClientEvent(player, "createWaypoint", PoliceEndDelivery.X, PoliceEndDelivery.Y);
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Отвезите машину в полицейский участок", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Отвезите машину в полицейский участок", 3000);
                         }
                         else if (fraction != vehicle.GetData<int>("MAFIA"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Нет доступа", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Нет доступа", 3000);
                             VehicleManager.WarpPlayerOutOfVehicle(player);
                         }
                         else
                         {
                             var end = (int)vehicle.GetData<int>("ENDPOINT");
                             Trigger.ClientEvent(player, "createWaypoint", MafiaEndDelivery[end].X, MafiaEndDelivery[end].Y);
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Доставьте машину в точку, отмеченную на карте", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Доставьте машину в точку, отмеченную на карте", 3000);
                         }
                         return;
                 }
@@ -386,18 +385,18 @@ namespace NeptuneEvo.Fractions
                 switch (id)
                 {
                     case 0:
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недоступно на данный момент", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недоступно на данный момент", 3000);
                         return;
                     case 1:
                         if (DateTime.Now < NextDelivery[fraction])
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Попробуйте позже", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Попробуйте позже", 3000);
                             return;
                         }
 
                         if (player.HasData("DELIVERY_CAR"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны сначала доставить предыдущую машину", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны сначала доставить предыдущую машину", 3000);
                             return;
                         }
 
@@ -420,7 +419,7 @@ namespace NeptuneEvo.Fractions
                         player.SetData("DELIVERY_CAR", vehicle);
 
                         NextDelivery[fraction] = DateTime.Now.AddMinutes(5);
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, "Вы получили координаты машины. Сядьте в неё и отвезите в место, которое отмечено в GPS автомобиля.", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, "Вы получили координаты машины. Сядьте в неё и отвезите в место, которое отмечено в GPS автомобиля.", 3000);
                         return;
                 }
             }
@@ -440,13 +439,13 @@ namespace NeptuneEvo.Fractions
 
                 if (DateTime.Now < NextDelivery[fraction])
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Попробуйте позже", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Попробуйте позже", 3000);
                     return;
                 }
 
                 if (player.HasData("DELIVERY_CAR"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны сначала доставить предыдущую машину", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны сначала доставить предыдущую машину", 3000);
                     return;
                 }
 
@@ -485,7 +484,7 @@ namespace NeptuneEvo.Fractions
                 player.SetData("DELIVERY_CAR", vehicle);
 
                 NextDelivery[fraction] = DateTime.Now.AddMinutes(5);
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили фургон с {text} для транспортировки. Отвезите его в указанное на карте место", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили фургон с {text} для транспортировки. Отвезите его в указанное на карте место", 3000);
                 Trigger.ClientEvent(player, "createWaypoint", MafiaEndDelivery[end].X, MafiaEndDelivery[end].Y);
                 player.SetIntoVehicle(vehicle, 0);
                 return;

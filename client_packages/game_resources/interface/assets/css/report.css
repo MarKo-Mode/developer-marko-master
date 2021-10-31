@@ -1,10 +1,4 @@
-﻿@font-face {
-    font-family: "Uni Neue";
-    src: url("../fonts/UniNeueRegular/UniNeueRegular.eot");
-    src: url("../fonts/UniNeueRegular/UniNeueRegular.woff") format("woff"), url("../fonts/UniNeueRegular/UniNeueRegular.ttf") format("truetype"), url("../fonts/UniNeueRegular/UniNeueRegular.svg") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
+﻿
 
 body {
     user-select: none;

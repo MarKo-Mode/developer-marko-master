@@ -2,10 +2,9 @@ namespace NeptuneEvo.Globals
 {
     using GTANetworkAPI;
     using System;
-    using System.Linq;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Timers;
-    using NeptuneEvo.Settings;
 
     public class Hunting : Script
     {
@@ -17,14 +16,12 @@ namespace NeptuneEvo.Globals
         private static Random Rnd = new Random();
         public static int Interval = 1000;
 
-        // Defining of the animals.
         public enum Animals
         {
             Deer,
             Boar,
         }
 
-        // Animals have three states, Grazing, Wandering, and Fleeing.
         public enum AnimalStates
         {
             Fleeing,
@@ -32,7 +29,6 @@ namespace NeptuneEvo.Globals
             Wandering,
         }
 
-        // Coordinates where animals can spawn. (Currently around Paleto Bay)
         public static Vector3[] AnimalSpawnPoints =
         {
             new Vector3(-1725.521, 4699.659, 33.80555),
@@ -72,11 +68,9 @@ namespace NeptuneEvo.Globals
             {
                 if (sender.Position.DistanceTo(NAPI.Entity.GetEntityPosition(animal.handle)) < 2.0)
                 {
-                    // Checks if the animal is dead or dying.
                     bool isDead = NAPI.Native.FetchNativeFromPlayer<bool>(sender, Hash.IS_PED_DEAD_OR_DYING, animal.handle, true);
                     if (isDead)
                     {
-                        // Removes and spawns a new animal.
                         animal.Respawn();
                     }
                     else
@@ -125,14 +119,12 @@ namespace NeptuneEvo.Globals
             public Vector3 Spawn;
             public Animals Type;
             public AnimalStates State;
-
             public Timer stateTimer;
             public int stateChangeTick;
             public Vector3 Destination;
             public bool updateState;
             public Player FleeingPed;
 
-            // Handles each animal and it's current state.
             public HuntingAnimal(Vector3 spawn, Animals type, AnimalStates state)
             {
                 handle = NAPI.Ped.CreatePed((type == Animals.Deer) ? (PedHash.Deer) : (PedHash.Boar), spawn, 0, 0);
@@ -151,7 +143,6 @@ namespace NeptuneEvo.Globals
                 SpawnedAnimals.Add(this);
             }
 
-            // Handles the animals position relative to the server and deals with state updating.
             public void AnimalAi(HuntingAnimal animal)
             {
                 if (handle == null)
@@ -164,7 +155,6 @@ namespace NeptuneEvo.Globals
                     if (player == null)
                         continue;
 
-                    // Every player within the radius will be added to a list of clients.
                     if (player.Position.DistanceTo(NAPI.Entity.GetEntityPosition(handle)) <= 100)
                     {
                         playersInRadius.Add(player);
@@ -177,7 +167,6 @@ namespace NeptuneEvo.Globals
                 }
                 NAPI.ClientEvent.TriggerClientEvent(playersInRadius[0], "update_animal_position", handle);
 
-                // Syncs the animals death to every player nearby.
                 foreach (var player in playersInRadius)
                 {
                     bool isDead = NAPI.Native.FetchNativeFromPlayer<bool>(player, Hash.IS_PED_DEAD_OR_DYING, handle, true);
@@ -188,7 +177,6 @@ namespace NeptuneEvo.Globals
                     }
                 }
 
-                // If there are players near the animal, and it's not already fleeing, then make it flee.
                 if (playersInRadius.Count > 0 && State != AnimalStates.Fleeing)
                 {
                     State = AnimalStates.Fleeing;
@@ -198,7 +186,6 @@ namespace NeptuneEvo.Globals
 
                 stateChangeTick++;
 
-                // Automatic state updating.
                 if (State != AnimalStates.Fleeing)
                 {
                     if (stateChangeTick > 15)
@@ -220,7 +207,6 @@ namespace NeptuneEvo.Globals
                 }
                 else
                 {
-                    // Make the animal stop fleeing and go back to grazing the land.
                     if (stateChangeTick > 20)
                     {
                         State = AnimalStates.Grazing;
@@ -255,7 +241,6 @@ namespace NeptuneEvo.Globals
                 updateState = false;
             }
 
-            // Removes the dead animal and spawns a new one.
             public void Respawn()
             {
                 if (NAPI.Entity.DoesEntityExist(handle))

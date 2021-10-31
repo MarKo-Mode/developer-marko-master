@@ -111,12 +111,12 @@ namespace NeptuneEvo.Fractions
                     if (player.IsInVehicle) return;
                     if (player.HasData("FOLLOWING"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вас кто-то тащит за собой", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вас кто-то тащит за собой", 3000);
                         return;
                     }
                     if(Main.Players[player].FractionID != 15)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не состоите в News", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не состоите в News", 3000);
                         return;
                     }
                     NAPI.Entity.SetEntityPosition(player, LSNewsCoords[1] + new Vector3(0, 0, 1.12));
@@ -125,12 +125,12 @@ namespace NeptuneEvo.Fractions
                     if (player.IsInVehicle) return;
                     if (player.HasData("FOLLOWING"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вас кто-то тащит за собой", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вас кто-то тащит за собой", 3000);
                         return;
                     }
                     if(Main.Players[player].FractionID != 15)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не состоите в News", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не состоите в News", 3000);
                         return;
                     }
                     NAPI.Entity.SetEntityPosition(player, LSNewsCoords[0] + new Vector3(0, 0, 1.12));
@@ -250,7 +250,7 @@ namespace NeptuneEvo.Fractions
 
                 GameLog.Money($"bank({Main.Players[player].Bank})", $"server", price, "ad");
                 player.SetData("NEXT_AD", DateTime.Now.AddMinutes(45));
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, "Вы подали объявление. Ожидайте модерации", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Вы подали объявление. Ожидайте модерации", 3000);
 
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "INSERT INTO `advertised` (`Author`,`AuthorSIM`,`AD`,`Opened`,`Closed`) VALUES (@pn,@sim,@ques,@time,@ntime); SELECT LAST_INSERT_ID();";
@@ -319,9 +319,9 @@ namespace NeptuneEvo.Fractions
                     }
                 } else {
                     if(Main.Players[player].AdminLVL != 0) GameLog.Admin($"{player.Name}", $"delAd", $"{Adverts[repID].Author}");
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы удалили объявление игрока {Adverts[repID].Author}", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы удалили объявление игрока {Adverts[repID].Author}", 3000);
                     Player target = NAPI.Player.GetPlayerFromName(Adverts[repID].Author);
-                    if (target != null) Notify.Send(target, NotifyType.Error, NotifyPosition.BottomCenter, $"{player.Name} удалил Ваше объявление по причине: {response}.", 3000);
+                    if (target != null) Plugins.Notice.Send(target, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"{player.Name} удалил Ваше объявление по причине: {response}.", 3000);
                     response += " | Удалено";
                 }
 

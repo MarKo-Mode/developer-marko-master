@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GTANetworkAPI;
-using Newtonsoft.Json;
+﻿using GTANetworkAPI;
 using NeptuneEvo.Globals;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Houses
 {
@@ -109,7 +108,7 @@ namespace NeptuneEvo.Houses
                 House house = HouseManager.GetHouse(player, true);
                 if (house == null)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет дома", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет дома", 3000);
                     return;
                 }
                 int id = player.GetData<int>("EDIT_ID");

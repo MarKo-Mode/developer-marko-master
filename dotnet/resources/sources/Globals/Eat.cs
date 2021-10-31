@@ -1,8 +1,8 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using System;
 using System.Linq;
-using NeptuneEvo.Settings;
-using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Globals
 {

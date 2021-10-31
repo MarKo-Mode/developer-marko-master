@@ -80,7 +80,7 @@
 		font-style: normal;
 		src: local('Roboto'), url('../fonts/Roboto/700/Roboto-Bold.woff2') format('woff2'), url('../fonts/Roboto/700/Roboto-Bold.woff') format('woff');
 	  }
-	
+		
 	@media (max-width: 1300px) {
 		.gta-acount {
 			zoom: 70%

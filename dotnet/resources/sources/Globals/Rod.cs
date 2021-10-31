@@ -1,15 +1,10 @@
 ﻿using GTANetworkAPI;
+using NeptuneEvo.Plugins;
+using NeptuneEvo.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using NeptuneEvo.GUI;
-using NeptuneEvo.MoneySystem;
-using NeptuneEvo.Settings;
-using System.Threading;
-using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Globals
 {
@@ -253,7 +248,7 @@ namespace NeptuneEvo.Globals
         public static void allowfish(Player player)
         {
             player.PlayAnimation("amb@world_human_stand_fishing@idle_a", "idle_c", 31);
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Что-то клюнуло", 1000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Что-то клюнуло", 1000);
 
             player.TriggerEvent("fishingBaitTaken");
 
@@ -273,7 +268,7 @@ namespace NeptuneEvo.Globals
             var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.Ocetr));
             if (tryAdd == -1 || tryAdd > 0)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно места в инвентаре", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно места в инвентаре", 3000);
                 RodManager.crashpros(player);
                 return;
             }
@@ -282,21 +277,21 @@ namespace NeptuneEvo.Globals
                 var rnd = new Random();
                 int fishco = rnd.Next(1, RodManager.FishItems1.Count);
                 nInventory.Add(player, new nItem(RodManager.FishItems1[fishco], 1));
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы поймали рыбу {GetNameByItemType(RodManager.FishItems1[fishco])}", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы поймали рыбу {GetNameByItemType(RodManager.FishItems1[fishco])}", 3000);
             }
             if (player.GetData<int>("FISHLEVEL") == 2)
             {
                 var rnd = new Random();
                 int fishco = rnd.Next(1, RodManager.FishItems2.Count);
                 nInventory.Add(player, new nItem(RodManager.FishItems2[fishco], 1));
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы поймали рыбу {GetNameByItemType(RodManager.FishItems2[fishco])}", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы поймали рыбу {GetNameByItemType(RodManager.FishItems2[fishco])}", 3000);
             }
             if (player.GetData<int>("FISHLEVEL") == 3)
             {
                 var rnd = new Random();
                 int fishco = rnd.Next(1, RodManager.FishItems3.Count);
                 nInventory.Add(player, new nItem(RodManager.FishItems3[fishco], 1));
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы поймали рыбу {GetNameByItemType(RodManager.FishItems3[fishco])}", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы поймали рыбу {GetNameByItemType(RodManager.FishItems3[fishco])}", 3000);
             }
             RodManager.crashpros(player);
         }
@@ -304,7 +299,7 @@ namespace NeptuneEvo.Globals
         [RemoteEvent("stopFishDrop")]
         public static void stopFishDrop(Player player)
         {
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Рыба сошла с крючка!", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Рыба сошла с крючка!", 3000);
             RodManager.crashpros(player);
         }
 
@@ -313,24 +308,24 @@ namespace NeptuneEvo.Globals
             nInventory.Add(player, new nItem(TypeRod[level], 1));
             if (player.IsInVehicle)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не должны находится в машине!", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не должны находится в машине!", 3000);
                 GUI.Dashboard.Close(player);
                 return;
             }
             if (player.GetData<bool>("FISHING") == true)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы уже рыбачите!", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы уже рыбачите!", 3000);
                 return;
             }
             var aItem = nInventory.Find(Main.Players[player].UUID, ItemType.Naz);
             if (aItem == null)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас нет наживки", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас нет наживки", 3000);
                 return;
             }
             if (player.GetData<bool>("ALLOWFISHING") == false || player.GetData<bool>("ALLOWFISHING") == false)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "В данном месте нельзя рыбачить", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "В данном месте нельзя рыбачить", 3000);
                 return;
             }
             var rndf = new Random();

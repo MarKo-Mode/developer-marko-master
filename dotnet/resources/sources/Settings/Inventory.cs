@@ -153,6 +153,7 @@ namespace NeptuneEvo.Settings
         Ygol = 216, // Угорь
         Amyr = 217, // Чёрный амур
         Chyka = 218, // Щука
+        pineapple = 219,
     }
 
     public class nItem

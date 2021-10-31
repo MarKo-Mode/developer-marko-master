@@ -1,6 +1,5 @@
 ﻿using GTANetworkAPI;
 using NeptuneEvo.Plugins;
-using NeptuneEvo.Settings;
 using System;
 using System.Collections.Generic;
 
@@ -40,12 +39,12 @@ namespace NeptuneEvo.GUI
             Vector3 pos = to.Position;
             if (from.Position.DistanceTo(pos) > 2)
             {
-                Notify.Send(from, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок находится слишком далеко", 3000);
+                Plugins.Notice.Send(from, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок находится слишком далеко", 3000);
                 return;
             }
             to.SetData("REQUEST", "acceptPass");
             to.SetData("IS_REQUESTED", true);
-            Notify.Send(to, NotifyType.Warning, NotifyPosition.BottomCenter, $"Игрок ({from.Value}) хочет показать паспорт. Y/N - принять/отклонить", 3000);
+            Plugins.Notice.Send(to, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Игрок ({from.Value}) хочет показать паспорт. Y/N - принять/отклонить", 3000);
             NAPI.Data.SetEntityData(to, "DOCFROM", from);
         }
         public static void Licenses(Player from, Player to)
@@ -53,12 +52,12 @@ namespace NeptuneEvo.GUI
             Vector3 pos = to.Position;
             if (from.Position.DistanceTo(pos) > 2)
             {
-                Notify.Send(from, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок находится слишком далеко", 3000);
+                Plugins.Notice.Send(from, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок находится слишком далеко", 3000);
                 return;
             }
             to.SetData("REQUEST", "acceptLics");
             to.SetData("IS_REQUESTED", true);
-            Notify.Send(to, NotifyType.Warning, NotifyPosition.BottomCenter, $"Игрок ({from.Value}) хочет показать лицензии. Y/N - принять/отклонить", 3000);
+            Plugins.Notice.Send(to, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Игрок ({from.Value}) хочет показать лицензии. Y/N - принять/отклонить", 3000);
             NAPI.Data.SetEntityData(to, "DOCFROM", from);
         }
         public static void AcceptPasport(Player player)
@@ -79,8 +78,8 @@ namespace NeptuneEvo.GUI
                         work
                     };
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({from.Value}) показал Вам паспорт", 5000);
-            Notify.Send(from, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы показали паспорт игроку ({player.Value})", 5000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({from.Value}) показал Вам паспорт", 5000);
+            Plugins.Notice.Send(from, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы показали паспорт игроку ({player.Value})", 5000);
             Log.Debug(json);
             Trigger.ClientEvent(player, "passport", json);
             Trigger.ClientEvent(player, "newPassport", from, acc.UUID);
@@ -105,8 +104,8 @@ namespace NeptuneEvo.GUI
                         lic
                     };
 
-            Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({from.Value}) показал Вам лицензии", 5000);
-            Notify.Send(from, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы показали лицензии игроку ({player.Value})", 5000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({from.Value}) показал Вам лицензии", 5000);
+            Plugins.Notice.Send(from, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы показали лицензии игроку ({player.Value})", 5000);
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
             Trigger.ClientEvent(player, "licenses", json);
         }

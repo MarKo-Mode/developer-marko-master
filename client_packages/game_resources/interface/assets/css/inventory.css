@@ -3,44 +3,6 @@
     #inv {
     zoom: 100%}
 
-@font-face {
-    font-family: ProximaNova;
-    src: url(../fonts/ProximaNova/ProximaNova-Regular.woff);
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-}
-@font-face {
-    font-family: ProximaNova;
-    src: url(../fonts/ProximaNova/ProximaNova-Semibold.woff);
-    font-weight: 500;
-    font-display: swap
-}
-
-@font-face {
-    font-family: ProximaNova;
-    src: url(../fonts/ProximaNova/ProximaNova-Light.woff);
-    font-weight: 100;
-    font-display: swap
-}
-
-@font-face {
-    font-family: ProximaNova;
-    src: url(../fonts/ProximaNova/ProximaNova-Bold.woff);
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap
-}
-
-@font-face {
-    font-family: ProximaNova;
-    src: url(../fonts/ProximaNova/ProximaNova-Extrabld.woff);
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap
-}
-
-
 }::-webkit-scrollbar {
     width: 2px;
     display: block;
@@ -69,46 +31,60 @@
 
 @font-face {
     font-family: 'Uni Neue';
+    font-weight: 300;
+    font-style: normal;
+    src: local('Uni Neue'), local('Uni_Neue'), local('Uni-Neue'), url('../fonts/UniNeue/100/UniNeueLight.woff2') format('woff2'), url('../fonts/UniNeue/100/UniNeueLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Uni Neue';
     font-weight: 400;
     font-style: normal;
-    src: local('Uni Neue'), local(Uni_Neue), local(Uni-Neue), url(../fonts/UniNeue/200/UniNeueRegular.woff2) format("woff2"), url(../fonts/UniNeue/200/UniNeueRegular.woff) format("woff");
+    src: local('Uni Neue'), local('Uni_Neue'), local('Uni-Neue'), url('../fonts/UniNeue/200/UniNeueRegular.woff2') format('woff2'), url('../fonts/UniNeue/200/UniNeueRegular.woff') format('woff');
 }
+
 @font-face {
     font-family: 'Uni Neue';
     font-weight: 700;
     font-style: normal;
-    src: local('Uni Neue'), local(Uni_Neue), local(Uni-Neue), url(../fonts/UniNeue/300/UniNeueBold.woff2) format("woff2"), url(../fonts/UniNeue/300/UniNeueBold.woff) format("woff");
+    src: local('Uni Neue'), local('Uni_Neue'), local('Uni-Neue'), url('../fonts/UniNeue/300/UniNeueBold.woff2') format('woff2'), url('../fonts/UniNeue/300/UniNeueBold.woff') format('woff');
 }
+
 @font-face {
     font-family: 'Uni Neue';
     font-weight: 800;
     font-style: normal;
-    src: local('Uni Neue'), local(Uni_Neue), local(Uni-Neue), url(../fonts/UniNeue/400/UniNeueHeavy.woff2) format("woff2"), url(../fonts/UniNeue/400/UniNeueHeavy.woff) format("woff");
+    src: local('Uni Neue'), local('Uni_Neue'), local('Uni-Neue'), url('../fonts/UniNeue/400/UniNeueHeavy.woff2') format('woff2'), url('../fonts/UniNeue/400/UniNeueHeavy.woff') format('woff');
 }
+
 @font-face {
     font-family: 'Uni Neue';
     font-weight: 900;
     font-style: normal;
-    src: local('Uni Neue'), local(Uni_Neue), local(Uni-Neue), url(../fonts/UniNeue/500/UniNeueBlack.woff2) format("woff2"), url(../fonts/UniNeue/500/UniNeueBlack.woff) format("woff");
+    src: local('Uni Neue'), local('Uni_Neue'), local('Uni-Neue'), url('../fonts/UniNeue/500/UniNeueBlack.woff2') format('woff2'), url('../fonts/UniNeue/500/UniNeueBlack.woff') format('woff');
 }
+
 @font-face {
     font-family: 'Roboto';
     font-weight: 400;
     font-style: normal;
-    src: local(Roboto), url(../fonts/Roboto/400/Roboto-Regular.woff2) format("woff2"), url(../fonts/Roboto/400/Roboto-Regular.woff) format("woff");
+    src: local('Roboto'), url('../fonts/Roboto/400/Roboto-Regular.woff2') format('woff2'), url('../fonts/Roboto/400/Roboto-Regular.woff') format('woff');
 }
+
 @font-face {
     font-family: 'Roboto';
     font-weight: 500;
     font-style: normal;
-    src: local(Roboto), url(../fonts/Roboto/500/Roboto-Medium.woff2) format("woff2"), url(../fonts/Roboto/500/Roboto-Medium.woff) format("woff");
+    src: local('Roboto'), url('../fonts/Roboto/500/Roboto-Medium.woff2') format('woff2'), url('../fonts/Roboto/500/Roboto-Medium.woff') format('woff');
 }
+
 @font-face {
     font-family: 'Roboto';
     font-weight: 700;
     font-style: normal;
-    src: local(Roboto), url(../fonts/Roboto/700/Roboto-Bold.woff2) format("woff2"), url(../fonts/Roboto/700/Roboto-Bold.woff) format("woff");
+    src: local('Roboto'), url('../fonts/Roboto/700/Roboto-Bold.woff2') format('woff2'), url('../fonts/Roboto/700/Roboto-Bold.woff') format('woff');
 }
+
 @media (min-width: 400px) and (max-width: 8799px) {
     #inventory {
     zoom: 100%}
@@ -1192,7 +1168,7 @@ position: fixed;
 }
 #inv  .item-1ma .item.active {
     position: fixed;
-    background: url(../items4/-1.png);
+    background: url(../images/items4/-1.png);
     border-radius: 10px;
     z-index: 1;
     height: 5vh;    background-color: #bbbbbbd4;
@@ -1218,7 +1194,7 @@ position: fixed;
 }
 #inv  .item-3ma .item.active {
     position: fixed;
-    background: url(../items4/-3.png);
+    background: url(../images/items4/-3.png);
     border-radius: 10px;
     z-index: 1;
     height: 5.5vh;    background-color: #bbbbbbd4;
@@ -1244,7 +1220,7 @@ position: fixed;
 }
 #inv  .item-4ma .item.active {
     position: fixed;
-    background: url(../items4/-4.png);
+    background: url(../images/items4/-4.png);
     border-radius: 10px;
     z-index: 1;
     height: 6vh;    background-color: #bbbbbbd4;
@@ -1271,7 +1247,7 @@ position: fixed;
 }
 #inv  .item-5ma .item.active {
     position: fixed;
-    background: url(../items4/-5.png);
+    background: url(../images/items4/-5.png);
     border-radius: 10px;
     z-index: 1;
     height: 9vh;
@@ -1298,7 +1274,7 @@ position: fixed;
 }
 #inv  .item-6ma .item.active {
     position: fixed;
-    background: url(../items4/-6.png);
+    background: url(../images/items4/-6.png);
     border-radius: 10px;
     z-index: 1;
     height: 6.2vh;    background-color: #bbbbbbd4;
@@ -1324,7 +1300,7 @@ position: fixed;
 }
 #inv  .item-7ma .item.active {
     position: fixed;
-    background: url(../items4/-7.png);
+    background: url(../images/items4/-7.png);
     border-radius: 10px;
     z-index: 1;
     height: 4vh;    background-color: #bbbbbbd4;
@@ -1350,7 +1326,7 @@ position: fixed;
 }
 #inv  .item-8ma .item.active {    
     position: fixed;
-    background: url(../items4/-8.png);
+    background: url(../images/items4/-8.png);
     border-radius: 10px;
     z-index: 1;
     height: 6.3vh;    background-color: #bbbbbbd4;
@@ -1376,7 +1352,7 @@ position: fixed;
 }
 #inv  .item-9ma .item.active {
     position: fixed;
-    background: url(../items4/-9.png);
+    background: url(../images/items4/-9.png);
     border-radius: 10px;
     z-index: 1;
     height: 6.3vh;    background-color: #bbbbbbd4;
@@ -1402,7 +1378,7 @@ position: fixed;
 }
 #inv  .item-11ma .item.active {
     position: fixed;
-    background: url(../items4/-11.png);
+    background: url(../images/items4/-11.png);
     border-radius: 10px;
     z-index: 1;
     height: 6.3vh;    background-color: #bbbbbbd4;
@@ -1428,7 +1404,7 @@ position: fixed;
 }
 #inv  .item-12ma .item.active {
     position: fixed;
-    background: url(../items4/-12.png);
+    background: url(../images/items4/-12.png);
     border-radius: 10px;
     z-index: 1;
     height: 5.3vh;    background-color: #bbbbbbd4;
@@ -1454,7 +1430,7 @@ position: fixed;
 }
 #inv  .item-13ma .item.active {
     position: fixed;
-    background: url(../items4/-13.png);
+    background: url(../images/items4/-13.png);
     border-radius: 10px;
     z-index: 1;
     height: 5.3vh;    background-color: #bbbbbbd4;
@@ -1480,7 +1456,7 @@ position: fixed;
 }
 #inv  .item-14ma .item.active {
     position: fixed;
-    background: url(../items4/-14.png);
+    background: url(../images/items4/-14.png);
     border-radius: 10px;
     z-index: 1;
     height: 4.3vh;    background-color: #bbbbbbd4;

@@ -1,12 +1,12 @@
 ﻿using GTANetworkAPI;
-using Newtonsoft.Json;
+using NeptuneEvo.Infodata;
+using NeptuneEvo.Plugins;
 using NeptuneEvo.Settings;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using NeptuneEvo.Infodata;
-using NeptuneEvo.Plugins;
 
 namespace NeptuneEvo.Globals
 {
@@ -2747,7 +2747,7 @@ namespace NeptuneEvo.Globals
                         Main.Accounts[player].VipLvl = 3;
                         Main.Accounts[player].VipDate = DateTime.Now.AddDays(3);
                         GUI.Dashboard.sendStats(player);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, "Добро пожаловать в штат! Вы получили первый уровень, Gold VIP на 3 дня и 5000$!", 6000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Добро пожаловать в штат! Вы получили первый уровень, Gold VIP на 3 дня и 5000$!", 6000);
                         NAPI.Task.Run(() => { try { Trigger.ClientEvent(player, "disabledmg", false); } catch { } }, 5000);
                     }
                 }

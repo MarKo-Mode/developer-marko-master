@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace NeptuneEvo.Modules
 {
@@ -104,7 +103,7 @@ namespace NeptuneEvo.Modules
                 {
                     if (Main.Accounts[player].RedBucks < container.Price)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно средств", 2500);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно средств", 2500);
                         return;
                     }
                     MoneySystem.Wallet.ChangeDonateBalance(player, -container.Price);
@@ -113,7 +112,7 @@ namespace NeptuneEvo.Modules
                 {
                     if (Main.Players[player].Money < container.Price)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно средств", 2500);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно средств", 2500);
                         return;
                     }
                     MoneySystem.Wallet.Change(player, -container.Price);
@@ -258,14 +257,14 @@ namespace NeptuneEvo.Modules
             vNumber = VehicleManager.Create(player.Name, vName, new Color(0, 0, 0), new Color(0, 0, 0), new Color(0, 0, 0), 1000, 100);
             var house = Houses.HouseManager.GetHouse(player, true);
             if (house == null || house.GarageID == 0)
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Ваш приз - {vName}", 2500);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Ваш приз - {vName}", 2500);
             else
             {
                 var garage = Houses.GarageManager.Garages[house.GarageID];
                 if (vNumber != "none")
                 {
                     garage.SpawnCar(vNumber);
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Ваш приз - {vName} будет доставлен в гараж", 2500);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Ваш приз - {vName} будет доставлен в гараж", 2500);
                 }
             }
             NAPI.Task.Run(() => { CloseDoor(veh); }, 10000);

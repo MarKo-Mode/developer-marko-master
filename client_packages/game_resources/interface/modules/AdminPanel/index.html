@@ -4,15 +4,14 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/adminpanel.css">
-  <link rel="stylesheet" href="css/font.css">
-  <link rel="stylesheet" href="css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
   <title>AdminPanel</title>
 </head>
 
 <body>
-  <div id="app" v-if="active">
-    <div class="container">
+  <div id="app" v-if="active" v-cloak>
+    <div class="adminpanel">
       <header>
         <i class="fa fa-users" aria-hidden="true"></i>
         <h1>Админ панель</h1>
@@ -171,7 +170,7 @@
               IP: {{player[0].Account.IP}}
             </p>
             <p>
-              HWID: {{player[0].Account.HWID}}
+              HWID: <input :value="player[0].Account.HWID" disabled>
             </p>
             <p>
               SocialClub: {{player[0].Account.SocialClub}}

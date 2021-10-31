@@ -125,7 +125,7 @@ namespace NeptuneEvo.MoneySystem
                                     try
                                     {
                                         if (!Main.Accounts.ContainsKey(client)) return;
-                                        Notify.Send(client, NotifyType.Success, NotifyPosition.BottomCenter, $"Вам пришли {reds} Redbucks", 3000);
+                                        Plugins.Notice.Send(client, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вам пришли {reds} Redbucks", 3000);
                                         Trigger.ClientEvent(client, "starset", Main.Accounts[client].RedBucks);
                                     }
                                     catch { }
@@ -183,7 +183,7 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (acc.RedBucks < 100)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 100;
@@ -195,7 +195,7 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (acc.RedBucks < 25)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
 
@@ -207,12 +207,12 @@ namespace NeptuneEvo.MoneySystem
 
                                 if (split[0] == "null" || string.IsNullOrEmpty(split[0]))
                                 {
-                                    Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не указали имя!", 3000);
+                                    Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не указали имя!", 3000);
                                     return;
                                 }
                                 else if (split[1] == "null" || string.IsNullOrEmpty(split[1]))
                                 {
-                                    Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не указали фамилию!", 3000);
+                                    Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не указали фамилию!", 3000);
                                     return;
                                 }
                             }
@@ -224,7 +224,7 @@ namespace NeptuneEvo.MoneySystem
 
                             if (Main.PlayerNames.ContainsValue(data))
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Такое имя уже существует!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Такое имя уже существует!", 3000);
                                 return;
                             }
 
@@ -245,17 +245,17 @@ namespace NeptuneEvo.MoneySystem
                             int amount = 0;
                             if (!Int32.TryParse(data, out amount))
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Возникла ошибка, попоробуйте еще раз", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Возникла ошибка, попоробуйте еще раз", 3000);
                                 return;
                             }
                             amount = Math.Abs(amount);
                             if(amount <= 0) {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Введите количество, равное 1 или больше.", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите количество, равное 1 или больше.", 3000);
                                 return;
                             }
                             if (Main.Accounts[client].RedBucks < amount)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= amount;
@@ -269,12 +269,12 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (Main.Accounts[client].VipLvl >= 1)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У вас уже куплен VIP статус!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У вас уже куплен VIP статус!", 3000);
                                 return;
                             }
                             if (acc.RedBucks < 300)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 300;
@@ -288,12 +288,12 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (acc.VipLvl >= 1)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У вас уже куплен VIP статус!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У вас уже куплен VIP статус!", 3000);
                                 return;
                             }
                             if (acc.RedBucks < 600)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 600;
@@ -307,12 +307,12 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (Main.Accounts[client].VipLvl >= 1)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У вас уже куплен VIP статус!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У вас уже куплен VIP статус!", 3000);
                                 return;
                             }
                             if (acc.RedBucks < 800)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 800;
@@ -326,12 +326,12 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (Main.Accounts[client].VipLvl >= 1)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У вас уже куплен VIP статус!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У вас уже куплен VIP статус!", 3000);
                                 return;
                             }
                             if (acc.RedBucks < 1000)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 1000;
@@ -345,12 +345,12 @@ namespace NeptuneEvo.MoneySystem
                         {
                             if (Main.Players[client].Warns <= 0)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У вас нет Warn'a!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У вас нет Warn'a!", 3000);
                                 return;
                             }
                             if (acc.RedBucks < 250)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 250;
@@ -364,7 +364,7 @@ namespace NeptuneEvo.MoneySystem
                             Log.Debug("Unlock slot");
                             if (acc.RedBucks < 1000)
                             {
-                                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно Redbucks!", 3000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно Redbucks!", 3000);
                                 return;
                             }
                             Main.Accounts[client].RedBucks -= 1000;

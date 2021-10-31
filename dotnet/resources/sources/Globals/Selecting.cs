@@ -56,7 +56,7 @@ namespace NeptuneEvo.Globals
                             if (item.Type == ItemType.BodyArmor && nInventory.Find(Main.Players[player].UUID, ItemType.BodyArmor) != null)
                             {
                                 entity.SetSharedData("PICKEDT", false);
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 Items.InProcessering.Remove(id);
                                 return;
                             }
@@ -65,7 +65,7 @@ namespace NeptuneEvo.Globals
                             if (tryAdd == -1 || (tryAdd > 0 && nInventory.WeaponsItems.Contains(item.Type)))
                             {
                                 entity.SetSharedData("PICKEDT", false);
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 Items.InProcessering.Remove(id);
                                 return;
                             }
@@ -100,7 +100,7 @@ namespace NeptuneEvo.Globals
                             if (house == null) return;
                             if (!house.Owner.Equals(player.Name))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Пользоваться мебелью может только владелец дома.", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Пользоваться мебелью может только владелец дома.", 3000);
                                 return;
                             }
                             var furnID = NAPI.Data.GetEntityData(entity, "ID");
@@ -117,7 +117,7 @@ namespace NeptuneEvo.Globals
                             if (player.HasData("HEIST_DRILL") || NAPI.Data.HasEntityData(player, "HAND_MONEY"))
                             {
                                 entity.SetSharedData("PICKEDT", false);
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть сумка", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть сумка", 3000);
                                 return;
                             }
 
@@ -139,7 +139,7 @@ namespace NeptuneEvo.Globals
                             if (player.HasData("HEIST_DRILL") || player.HasData("HAND_MONEY"))
                             {
                                 entity.SetSharedData("PICKEDT", false);
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть дрель или деньги в руках", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть дрель или деньги в руках", 3000);
                                 return;
                             }
 
@@ -167,7 +167,7 @@ namespace NeptuneEvo.Globals
                 int index = (int)arguments[1];
                 if (vehicle == null || player.Position.DistanceTo(vehicle.Position) > 5)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Машина находится далеко от Вас", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Машина находится далеко от Вас", 3000);
                     return;
                 }
                 switch (index)
@@ -175,14 +175,14 @@ namespace NeptuneEvo.Globals
                     case 0:
                         if (player.IsInVehicle)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете открыть/закрыть капот, находясь в машине", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете открыть/закрыть капот, находясь в машине", 3000);
                             return;
                         }
                         if (VehicleStreaming.GetDoorState(vehicle, DoorID.DoorHood) == DoorState.DoorClosed)
                         {
                             if (VehicleStreaming.GetLockState(vehicle))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете открыть капот, пока машина закрыта", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете открыть капот, пока машина закрыта", 3000);
                                 return;
                             }
                             VehicleStreaming.SetDoorState(vehicle, DoorID.DoorHood, DoorState.DoorOpen);
@@ -192,7 +192,7 @@ namespace NeptuneEvo.Globals
                     case 1:
                         if (player.IsInVehicle)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете открыть/закрыть багажник, находясь в машине", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете открыть/закрыть багажник, находясь в машине", 3000);
                             return;
                         }
                         if (VehicleStreaming.GetDoorState(vehicle, DoorID.DoorTrunk) == DoorState.DoorOpen)
@@ -212,7 +212,7 @@ namespace NeptuneEvo.Globals
                                 var access = VehicleManager.canAccessByNumber(player, vehicle.NumberPlate);
                                 if (!access)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ключей от этого транспорта", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ключей от этого транспорта", 3000);
                                     return;
                                 }
                             }
@@ -220,7 +220,7 @@ namespace NeptuneEvo.Globals
                             {
                                 if (Main.Players[player].FractionID != 7 && Main.Players[player].FractionID != 9)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете открыть багажник у этой машины", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете открыть багажник у этой машины", 3000);
                                     return;
                                 }
                             }
@@ -234,22 +234,22 @@ namespace NeptuneEvo.Globals
                     case 3:
                         if (player.IsInVehicle)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете открыть инвентарь, находясь в машине", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете открыть инвентарь, находясь в машине", 3000);
                             return;
                         }
                         if (NAPI.Data.GetEntityData(vehicle, "ACCESS") == "WORK" || vehicle.Class == 13 || vehicle.Class == 8)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Эта транспортное средство не поддерживает инвентарь", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Эта транспортное средство не поддерживает инвентарь", 3000);
                             return;
                         }
                         if (Main.Players[player].AdminLVL == 0 && VehicleStreaming.GetDoorState(vehicle, DoorID.DoorTrunk) == DoorState.DoorClosed)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете открыть инвентарь машины, пока багажник закрыт", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете открыть инвентарь машины, пока багажник закрыт", 3000);
                             return;
                         }
                         if (vehicle.GetData<bool>("BAGINUSE") == true)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Дождитесь, пока другой человек перестанет пользоваться багажником.", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Дождитесь, пока другой человек перестанет пользоваться багажником.", 3000);
                             return;
                         }
                         vehicle.SetData("BAGINUSE", true);
@@ -270,7 +270,7 @@ namespace NeptuneEvo.Globals
                 var target = (Player)arguments[0];
                 if (target == null || player.Position.DistanceTo(target.Position) > 2)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок находится далеко от Вас", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок находится далеко от Вас", 3000);
                     return;
                 }
                 player.SetData("SELECTEDPLAYER", target);
@@ -295,12 +295,12 @@ namespace NeptuneEvo.Globals
                         if (player.IsInVehicle) return;
                         if (!target.HasData("FOLLOWING"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Этого игрока никто не тащит", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Этого игрока никто не тащит", 3000);
                             return;
                         }
                         if (!player.HasData("FOLLOWER") || player.GetData<Player>("FOLLOWER") != target)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Этого игрока тащит кто-то другой", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Этого игрока тащит кто-то другой", 3000);
                             return;
                         }
                         Fractions.FractionCommands.unFollow(player, target);
@@ -310,7 +310,7 @@ namespace NeptuneEvo.Globals
                         {
                             if (!target.GetData<bool>("CUFFED"))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок не в наручниках", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не в наручниках", 3000);
                                 return;
                             }
 
@@ -340,7 +340,7 @@ namespace NeptuneEvo.Globals
                         {
                             if (!target.GetData<bool>("CUFFED"))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок не в наручниках", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не в наручниках", 3000);
                                 return;
                             }
 
@@ -368,7 +368,7 @@ namespace NeptuneEvo.Globals
                         {
                             if (!target.GetData<bool>("CUFFED"))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок не в наручниках", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не в наручниках", 3000);
                                 return;
                             }
 
@@ -419,7 +419,7 @@ namespace NeptuneEvo.Globals
                         House house = HouseManager.GetHouse(player, true);
                         if (house == null)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет дома", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет дома", 3000);
                             return;
                         }
                         Trigger.ClientEvent(player, "openInput", "Продать дом", "Цена $$$", 8, "player_offerhousesell");
@@ -433,7 +433,7 @@ namespace NeptuneEvo.Globals
                     case "Передать деньги":
                         if (Main.Players[player].LVL < 1)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Перевод денег доступен после первого уровня", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Перевод денег доступен после первого уровня", 3000);
                             return;
                         }
                         Trigger.ClientEvent(player, "openInput", "Передать деньги", "Сумма $$$", 4, "player_givemoney");
@@ -442,8 +442,8 @@ namespace NeptuneEvo.Globals
                         target.SetData("OFFER_MAKER", player);
                         target.SetData("REQUEST", "OFFER_ITEMS");
                         target.SetData("IS_REQUESTED", true);
-                        Notify.Send(target, NotifyType.Warning, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) предложил Вам обменяться предметами. Y/N - принять/отклонить", 3000);
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы предложили игроку ({target.Value}) обменяться предметами.", 3000);
+                        Plugins.Notice.Send(target, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) предложил Вам обменяться предметами. Y/N - принять/отклонить", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы предложили игроку ({target.Value}) обменяться предметами.", 3000);
                         return;
                     case "Мешок":
                         if (player.IsInVehicle) return;
@@ -467,7 +467,7 @@ namespace NeptuneEvo.Globals
         {
             if (Main.Players[player].LVL < 1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Передача денег будет доступна начиная с 1 уровня.", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Передача денег будет доступна начиная с 1 уровня.", 3000);
                 return;
             }
             try
@@ -476,34 +476,34 @@ namespace NeptuneEvo.Globals
             }
             catch
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите корректные данные", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите корректные данные", 3000);
                 return;
             }
             var amount = Convert.ToInt32(arg);
             if (amount < 1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите корректные данные", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите корректные данные", 3000);
                 return;
             }
             Player target = player.GetData<Player>("SELECTEDPLAYER");
             if (!Main.Players.ContainsKey(target) || player.Position.DistanceTo(target.Position) > 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок слишком далеко от Вас", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок слишком далеко от Вас", 3000);
                 return;
             }
             if (amount > Main.Players[player].Money)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас недостаточно средств", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас недостаточно средств", 3000);
                 return;
             }
             if (player.HasData("NEXT_TRANSFERM") && DateTime.Now < player.GetData<DateTime>("NEXT_TRANSFERM") && Main.Players[player].AdminLVL == 0)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "С момента последней передачи денег прошло мало времени.", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "С момента последней передачи денег прошло мало времени.", 3000);
                 return;
             }
             player.SetData("NEXT_TRANSFERM", DateTime.Now.AddMinutes(1));
-            Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) передал Вам {amount}$", 3000);
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы передали игроку ({target.Value}) {amount}$", 3000);
+            Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) передал Вам {amount}$", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы передали игроку ({target.Value}) {amount}$", 3000);
             MoneySystem.Wallet.Change(target, amount);
             MoneySystem.Wallet.Change(player, -amount);
             GameLog.Money($"player({Main.Players[player].UUID})", $"player({Main.Players[target].UUID})", amount, $"transfer");
@@ -515,13 +515,13 @@ namespace NeptuneEvo.Globals
             {
                 if (player.Position.DistanceTo(target.Position) > 2)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок слишком далеко от Вас", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок слишком далеко от Вас", 3000);
                     return;
                 }
                 var item = nInventory.Find(Main.Players[player].UUID, ItemType.HealthKit);
                 if (item == null || item.Count < 1)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет аптечки", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет аптечки", 3000);
                     return;
                 }
 
@@ -529,8 +529,8 @@ namespace NeptuneEvo.Globals
                 if (target.HasData("IS_DYING"))
                 {
                     player.PlayAnimation("amb@medic@standing@tendtodead@idle_a", "idle_a", 39);
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы начали реанимирование игрока ({target.Value})", 3000);
-                    Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) начал реанимировать Вас", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы начали реанимирование игрока ({target.Value})", 3000);
+                    Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) начал реанимировать Вас", 3000);
                     NAPI.Task.Run(() =>
                     {
                         try
@@ -543,7 +543,7 @@ namespace NeptuneEvo.Globals
                                 var random = new Random();
                                 if (random.Next(0, 11) <= 5)
                                 {
-                                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({target.Value}) чуть ласты не склеил. У Вас не вышло его реанимировать", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({target.Value}) чуть ласты не склеил. У Вас не вышло его реанимировать", 3000);
                                     return;
                                 }
                             }
@@ -571,8 +571,8 @@ namespace NeptuneEvo.Globals
                                 Timers.Stop(target.GetData<string>("DYING_TIMER"));
                                 target.ResetData("DYING_TIMER");
                             }
-                            Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) реанимировал Вас", 3000);
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы реанимировали игрока ({target.Value})", 3000);
+                            Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) реанимировал Вас", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы реанимировали игрока ({target.Value})", 3000);
 
                             if (target.HasData("CALLEMS_BLIP"))
                             {
@@ -588,8 +588,8 @@ namespace NeptuneEvo.Globals
                 }
                 else
                 {
-                    Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) вылечил Вас с помощью аптечки", 3000);
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы вылечили игрока ({target.Value}) с помощью аптечки", 3000);
+                    Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) вылечил Вас с помощью аптечки", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы вылечили игрока ({target.Value}) с помощью аптечки", 3000);
                     target.Health = 100;
                 }
                 return;
@@ -600,20 +600,20 @@ namespace NeptuneEvo.Globals
         {
             if (player.Position.DistanceTo(target.Position) > 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок слишком далеко от Вас", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок слишком далеко от Вас", 3000);
                 return;
             }
             if (!Fractions.Manager.canUseCommand(player, "takeguns")) return;
             Weapons.RemoveAll(target, true);
-            Notify.Send(target, NotifyType.Warning, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) изъял у Вас всё оружие", 3000);
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы изъяли всё оружие у игрока ({target.Value})", 3000);
+            Plugins.Notice.Send(target, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) изъял у Вас всё оружие", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы изъяли всё оружие у игрока ({target.Value})", 3000);
             return;
         }
         public static void playerTakeIlleagal(Player player, Player target)
         {
             if (player.Position.DistanceTo(target.Position) > 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок слишком далеко от Вас", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок слишком далеко от Вас", 3000);
                 return;
             }
             var matItem = nInventory.Find(Main.Players[target].UUID, ItemType.Material);
@@ -622,13 +622,13 @@ namespace NeptuneEvo.Globals
             var drugs = (drugItem == null) ? 0 : drugItem.Count;
             if (materials < 1 && drugs < 1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок не имеет ничего запрещённого", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не имеет ничего запрещённого", 3000);
                 return;
             }
             nInventory.Remove(target, ItemType.Material, materials);
             nInventory.Remove(target, ItemType.Drugs, drugs);
-            Notify.Send(target, NotifyType.Warning, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) изъял у Вас запрещённые предметы", 3000);
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы изъяили у игрока {target.Value} запрещённые предметы", 3000);
+            Plugins.Notice.Send(target, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) изъял у Вас запрещённые предметы", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы изъяили у игрока {target.Value} запрещённые предметы", 3000);
             return;
         }
         public static void playerOfferChangeItems(Player player)
@@ -642,7 +642,7 @@ namespace NeptuneEvo.Globals
             }
             if (player.Position.DistanceTo(offerMaker.Position) > 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок слишком далеко", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок слишком далеко", 3000);
                 return;
             }
 
@@ -663,12 +663,12 @@ namespace NeptuneEvo.Globals
                     target.SetData("HANDSHAKER", player);
                     target.SetData("REQUEST", "HANDSHAKE");
                     target.SetData("IS_REQUESTED", true);
-                    Notify.Send(target, NotifyType.Warning, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) хочет пожать Вам руку. Y/N - принять/отклонить", 3000);
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы предложили игроку ({target.Value}) пожать руку.", 3000);
+                    Plugins.Notice.Send(target, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) хочет пожать Вам руку. Y/N - принять/отклонить", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы предложили игроку ({target.Value}) пожать руку.", 3000);
                 }
-                else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Невозможно пожать руку игроку в данный момент", 3000);
+                else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Невозможно пожать руку игроку в данный момент", 3000);
             }
-            else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Невозможно пожать руку игроку в данный момент", 3000);
+            else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Невозможно пожать руку игроку в данный момент", 3000);
         }
         public static void hanshakeTarget(Player player)
         {

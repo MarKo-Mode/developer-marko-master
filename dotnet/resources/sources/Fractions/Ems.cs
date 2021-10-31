@@ -128,12 +128,12 @@ namespace NeptuneEvo.Fractions
             {
                 if (Manager.countOfFractionMembers(8) == 0)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Нет медиков в Вашем районе. Попробуйте позже", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Нет медиков в Вашем районе. Попробуйте позже", 3000);
                     return;
                 }
                 if (player.HasData("NEXTCALL_EMS") && DateTime.Now < player.GetData<DateTime>("NEXTCALL_EMS"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы уже вызвали медиков, попробуйте позже", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы уже вызвали медиков, попробуйте позже", 3000);
                     return;
                 }
                 player.SetData("NEXTCALL_EMS", DateTime.Now.AddMinutes(7));
@@ -195,7 +195,7 @@ namespace NeptuneEvo.Fractions
                 if (!target.HasData("IS_CALLEMS"))
                 {
                     where = 2;
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок не вызывал EMS, или этот вызов уже кто-то принял", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок не вызывал EMS, или этот вызов уже кто-то принял", 3000);
                     return;
                 }
                 where = 3;
@@ -235,7 +235,7 @@ namespace NeptuneEvo.Fractions
                 where = 9;
                 Manager.sendFractionMessage(7, $"~b~{player.Name.Replace('_', ' ')} принял вызов от игрока ({target.Value})", true);
                 where = 10;
-                Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) принял Ваш вызов", 3000);
+                Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) принял Ваш вызов", 3000);
                 where = 11;
             }
             catch (Exception e) { Log.Write($"acceptCall/{where}/: {e.ToString()}"); }
@@ -290,6 +290,7 @@ namespace NeptuneEvo.Fractions
 
                 Working.Collector.Event_PlayerDeath(player, entityKiller, weapon);
                 Working.Gopostal.Event_PlayerDeath(player, entityKiller, weapon);
+                Working.Construction.Event_PlayerDeath(player, entityKiller, weapon);
 
                 VehicleManager.WarpPlayerOutOfVehicle(player);
                 Main.Players[player].IsAlive = false;
@@ -403,7 +404,7 @@ namespace NeptuneEvo.Fractions
             var deadAnimName = deadAnims[Main.rnd.Next(deadAnims.Count)];
             NAPI.Task.Run(() => { try { player.PlayAnimation("dead", deadAnimName, 39); } catch { } }, 500);
 
-            Notify.Send(player, NotifyType.Alert, NotifyPosition.BottomCenter, $"Если в течение {timeMsg}, то Вы попадёте в больницу", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Alert, Plugins.PositionNotice.TopCenter, $"Если в течение {timeMsg}, то Вы попадёте в больницу", 3000);
         }
 
         public static void DeathTimer(Player player)
@@ -415,25 +416,25 @@ namespace NeptuneEvo.Fractions
         {
             if (Main.Players[player].Money < player.GetData<int>("PRICE"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько денег", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько денег", 3000);
                 return;
             }
             Player seller = player.GetData<Player>("SELLER");
             if (player.Position.DistanceTo(seller.Position) > 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы слишком далеко от продавца", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы слишком далеко от продавца", 3000);
                 return;
             }
             var item = nInventory.Find(Main.Players[seller].UUID, ItemType.HealthKit);
             if (item == null || item.Count < 1)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У продавца не осталось аптечек", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У продавца не осталось аптечек", 3000);
                 return;
             }
             var tryAdd = nInventory.TryAdd(player, new nItem(ItemType.HealthKit));
             if (tryAdd == -1 || tryAdd > 0)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                 return;
             }
 
@@ -444,21 +445,21 @@ namespace NeptuneEvo.Fractions
             MoneySystem.Wallet.Change(player, -player.GetData<int>("PRICE"));
             MoneySystem.Wallet.Change(seller, Convert.ToInt32(player.GetData<int>("PRICE") * 0.15));
 
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили аптечку", 3000);
-            Notify.Send(seller, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) купил у Вас аптечку", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили аптечку", 3000);
+            Plugins.Notice.Send(seller, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) купил у Вас аптечку", 3000);
         }
 
         public static void payHeal(Player player)
         {
             if (Main.Players[player].Money < player.GetData<int>("PRICE"))
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько денег", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько денег", 3000);
                 return;
             }   
             var seller = player.GetData<Player>("SELLER");
             if (player.Position.DistanceTo(seller.Position) > 2)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы слишком далеко от врача", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы слишком далеко от врача", 3000);
                 return;
             }
             if (NAPI.Player.IsPlayerInAnyVehicle(seller) && NAPI.Player.IsPlayerInAnyVehicle(player))
@@ -468,16 +469,16 @@ namespace NeptuneEvo.Fractions
                 Vehicle veh = NAPI.Entity.GetEntityFromHandle<Vehicle>(pveh);
                 if (veh.GetData<string>("ACCESS") != "FRACTION" || veh.GetData<string>("TYPE") != "EMS" || !veh.HasData("CANMEDKITS"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы сидите не в карете EMS", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы сидите не в карете EMS", 3000);
                     return;
                 }
                 if (pveh != tveh)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок сидит в другой машине", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок сидит в другой машине", 3000);
                     return;
                 }
-                Notify.Send(seller, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы вылечили игрока ({player.Value})", 3000);
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Игрок ({seller.Value}) вылечил Вас", 3000);
+                Plugins.Notice.Send(seller, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы вылечили игрока ({player.Value})", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Игрок ({seller.Value}) вылечил Вас", 3000);
                 Trigger.ClientEvent(player, "stopScreenEffect", "PPFilter");
                 NAPI.Player.SetPlayerHealth(player, 100);
                 MoneySystem.Wallet.Change(player, -player.GetData<int>("PRICE"));
@@ -487,8 +488,8 @@ namespace NeptuneEvo.Fractions
             }
             else if (seller.GetData<bool>("IN_HOSPITAL") && player.GetData<bool>("IN_HOSPITAL"))
             {
-                Notify.Send(seller, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы вылечили игрока ({player.Value})", 3000);
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Игрок ({seller.Value}) вылечил Вас", 3000);
+                Plugins.Notice.Send(seller, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы вылечили игрока ({player.Value})", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Игрок ({seller.Value}) вылечил Вас", 3000);
                 NAPI.Player.SetPlayerHealth(player, 100);
                 MoneySystem.Wallet.Change(player, -player.GetData<int>("PRICE"));
                 MoneySystem.Wallet.Change(seller, player.GetData<int>("PRICE"));
@@ -498,7 +499,7 @@ namespace NeptuneEvo.Fractions
             }
             else
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны быть в больнице или корете скорой помощи", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны быть в больнице или корете скорой помощи", 3000);
                 return;
             }
         }
@@ -511,7 +512,7 @@ namespace NeptuneEvo.Fractions
                     if (player.IsInVehicle) return;
                     if (player.HasData("FOLLOWING"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вас кто-то тащит за собой", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вас кто-то тащит за собой", 3000);
                         return;
                     }
                     player.SetData("IN_HOSPITAL", true);
@@ -521,19 +522,19 @@ namespace NeptuneEvo.Fractions
                 case 16:
                     if (player.HasData("FOLLOWING"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вас кто-то тащит за собой", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вас кто-то тащит за собой", 3000);
                         return;
                     }
                     if (NAPI.Player.GetPlayerHealth(player) < 100)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны сначала закончить лечение", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны сначала закончить лечение", 3000);
                         break;
                     }
                     /*if (player.HasData("HEAL_TIMER"))
                     {
                         Main.StopT(player.GetData("HEAL_TIMER"));
                         player.ResetData("HEAL_TIMER");
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Ваше лечение закончено", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Ваше лечение закончено", 3000);
                     }*/
                     player.SetData("IN_HOSPITAL", false);
                     NAPI.Entity.SetEntityPosition(player, emsCheckpoints[0] + new Vector3(0, 0, 1.12));
@@ -542,17 +543,17 @@ namespace NeptuneEvo.Fractions
                 case 17:
                     if (Main.Players[player].FractionID != 8)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник EMS", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник EMS", 3000);
                         return;
                     }
                     if (!player.GetData<bool>("ON_DUTY"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не начали рабочий день", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не начали рабочий день", 3000);
                         return;
                     }
                     if (!Stocks.fracStocks[8].IsOpen)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад закрыт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад закрыт", 3000);
                         return;
                     }
                     OpenHospitalStockMenu(player);
@@ -562,14 +563,14 @@ namespace NeptuneEvo.Fractions
                     {
                         if (!NAPI.Data.GetEntityData(player, "ON_DUTY"))
                         {
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы начали рабочий день", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы начали рабочий день", 3000);
                             Manager.setSkin(player, 8, Main.Players[player].FractionLVL);
                             NAPI.Data.SetEntityData(player, "ON_DUTY", true);
                             break;
                         }
                         else
                         {
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закончили рабочий день", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закончили рабочий день", 3000);
                             Customization.ApplyCharacter(player);
                             if (player.HasData("HAND_MONEY")) player.SetClothes(5, 45, 0);
                             else if (player.HasData("HEIST_DRILL")) player.SetClothes(5, 41, 0);
@@ -577,20 +578,20 @@ namespace NeptuneEvo.Fractions
                             break;
                         }
                     }
-                    else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник EMS", 3000);
+                    else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник EMS", 3000);
                     return;
                 case 19:
                     if (NAPI.Player.GetPlayerHealth(player) > 99)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не нуждаетесь в лечении", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не нуждаетесь в лечении", 3000);
                         break;
                     }
                     if (player.HasData("HEAL_TIMER"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы уже лечитесь", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы уже лечитесь", 3000);
                         break;
                     }
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы начали лечение", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы начали лечение", 3000);
                     //player.SetData("HEAL_TIMER", Main.StartT(3750, 3750, (o) => healTimer(player), "HEAL_TIMER"));
                     player.SetData("HEAL_TIMER", Timers.Start(3750, () => healTimer(player)));
                     return;
@@ -600,36 +601,36 @@ namespace NeptuneEvo.Fractions
                 case 58:
                     if (Main.Players[player].FractionID != 8)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник EMS", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник EMS", 3000);
                         break;
                     }
                     if (!player.IsInVehicle || !player.Vehicle.HasData("CANMEDKITS"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не в машине или Ваша машина не может перевозить аптечки", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не в машине или Ваша машина не может перевозить аптечки", 3000);
                         break;
                     }
 
                     var medCount = VehicleInventory.GetCountOfType(player.Vehicle, ItemType.HealthKit);
                     if (medCount >= 50)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В машине максимум аптечек", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В машине максимум аптечек", 3000);
                         break;
                     }
                     if (HumanMedkitsLefts <= 0)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Аптечки закончились. Приезжайте за новыми через час", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Аптечки закончились. Приезжайте за новыми через час", 3000);
                         break;
                     }
                     var toAdd = (HumanMedkitsLefts > 50 - medCount) ? 50 - medCount : HumanMedkitsLefts;
                     HumanMedkitsLefts = toAdd;
 
                     VehicleInventory.Add(player.Vehicle, new nItem(ItemType.HealthKit, toAdd));
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы заполнили машину аптечками", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы заполнили машину аптечками", 3000);
                     return;
                 case 63:
                     if (Main.Players[player].FractionID != 8)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник EMS", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник EMS", 3000);
                         break;
                     }
                     if (player.IsInVehicle) return;
@@ -637,7 +638,7 @@ namespace NeptuneEvo.Fractions
                     {
                         if (player.HasData("FOLLOWING"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вас кто-то тащит за собой", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вас кто-то тащит за собой", 3000);
                             return;
                         }
                         player.SetData("IN_HOSPITAL", true);
@@ -648,7 +649,7 @@ namespace NeptuneEvo.Fractions
                     {
                         if (player.HasData("FOLLOWING"))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вас кто-то тащит за собой", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вас кто-то тащит за собой", 3000);
                             return;
                         }
                         player.SetData("IN_HOSPITAL", false);
@@ -671,7 +672,7 @@ namespace NeptuneEvo.Fractions
                         Timers.Stop(player.GetData<string>("HEAL_TIMER"));
                         player.ResetData("HEAL_TIMER");
                         Trigger.ClientEvent(player, "stopScreenEffect", "PPFilter");
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Ваше лечение закончено", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Ваше лечение закончено", 3000);
                         return;
                     }
                     player.Health = player.Health + 1;
@@ -734,18 +735,18 @@ namespace NeptuneEvo.Fractions
                     if (!Manager.canGetWeapon(client, "Medkits")) return;
                     if (Stocks.fracStocks[8].Medkits <= 0)
                     {
-                        Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе не осталось аптечек", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе не осталось аптечек", 3000);
                         return;
                     }
                     var tryAdd = nInventory.TryAdd(client, new nItem(ItemType.HealthKit));
                     if (tryAdd == -1 || tryAdd > 0)
                     {
-                        Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                         return;
                     }
                     nInventory.Add(client, new nItem(ItemType.HealthKit));
                     var itemInv = nInventory.Find(Main.Players[client].UUID, ItemType.HealthKit);
-                    Notify.Send(client, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы взяли аптечку. У Вас {itemInv.Count} штук", 3000);
+                    Plugins.Notice.Send(client, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы взяли аптечку. У Вас {itemInv.Count} штук", 3000);
                     Stocks.fracStocks[8].Medkits--;
                     GameLog.Stock(Main.Players[client].FractionID, Main.Players[client].UUID, "medkit", 1, false);
                     break;
@@ -753,11 +754,11 @@ namespace NeptuneEvo.Fractions
                     itemInv = nInventory.Find(Main.Players[client].UUID, ItemType.HealthKit);
                     if (itemInv == null)
                     {
-                        Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет аптечек", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет аптечек", 3000);
                         return;
                     }
                     nInventory.Remove(client, ItemType.HealthKit, 1);
-                    Notify.Send(client, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы положили аптечку. У Вас осталось {itemInv.Count - 1} штук", 3000);
+                    Plugins.Notice.Send(client, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы положили аптечку. У Вас осталось {itemInv.Count - 1} штук", 3000);
                     Stocks.fracStocks[8].Medkits++;
                     GameLog.Stock(Main.Players[client].FractionID, Main.Players[client].UUID, "medkit", 1, true);
                     break;
@@ -766,7 +767,7 @@ namespace NeptuneEvo.Fractions
 
                     if (Main.Players[client].FractionLVL < 3)
                     {
-                        Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не имеете доступа к электрошокеру", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не имеете доступа к электрошокеру", 3000);
                         return;
                     }
 
@@ -838,12 +839,12 @@ namespace NeptuneEvo.Fractions
             var zone = Enum.Parse<TattooZones>(item.ID);
             if (Customization.CustomPlayerData[Main.Players[client].UUID].Tattoos[Convert.ToInt32(zone)].Count == 0)
             {
-                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас нет татуировок в этой зоне", 3000);
+                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас нет татуировок в этой зоне", 3000);
                 return;
             }
             if (!MoneySystem.Wallet.Change(client, -600))
             {
-                Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно средств", 3000);
+                Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно средств", 3000);
                 return;
             }
             GameLog.Money($"player({Main.Players[client].UUID})", $"server", 600, $"tattooRemove");
@@ -859,7 +860,7 @@ namespace NeptuneEvo.Fractions
             Customization.CustomPlayerData[Main.Players[client].UUID].Tattoos[Convert.ToInt32(zone)] = new List<Tattoo>();
             client.SetSharedData("TATTOOS", Newtonsoft.Json.JsonConvert.SerializeObject(Customization.CustomPlayerData[Main.Players[client].UUID].Tattoos));
 
-            Notify.Send(client, NotifyType.Success, NotifyPosition.BottomCenter, "Вы свели татуировки с " + TattooZonesNames[Convert.ToInt32(zone)], 3000);
+            Plugins.Notice.Send(client, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Вы свели татуировки с " + TattooZonesNames[Convert.ToInt32(zone)], 3000);
         }
         #endregion
     }

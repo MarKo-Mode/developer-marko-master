@@ -27,7 +27,7 @@ namespace NeptuneEvo
     public class Main : Script
     { 
         public static string Codename { get; } = "Developer-Marko-Master";
-        public static string Version { get; } = "0.0.1";
+        public static string Version { get; } = "0.0.4";
         public static string Full { get; } = $"{Codename} {Version}";
         public static DateTime StartDate { get; } = DateTime.Now;
         public static DateTime CompileDate { get; } = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
@@ -422,6 +422,7 @@ namespace NeptuneEvo
                         Working.Truckers.onPlayerDissconnectedHandler(player, type, reason);
                         Working.Collector.Event_PlayerDisconnected(player, type, reason);
                         Working.AutoMechanic.onPlayerDissconnectedHandler(player, type, reason);
+                        Working.Construction.Event_PlayerDisconnected(player, type, reason);
                     }
                     catch (Exception e) { Log.Write("EXCEPTION AT \"UnLoad:Unloading Neptune.jobs\":\n" + e.ToString()); }
                     Log.Debug("STAGE 5 (JOBS)");
@@ -499,8 +500,6 @@ namespace NeptuneEvo
                 }
                 player.SetSharedData("playermood", 0);
                 player.SetSharedData("playerws", 0);
-                //player.SendChatMessage($"!{{#ffb21d}} Добро пожаловать на сервер !{{#00FFFF}} Sirus !{{#FFFFFF}} RolePlay");
-                //player.SendChatMessage($"!{{#ffb21d}} Бета тест");
                 player.Eval("let g_swapDate=Date.now();let g_triggersCount=0;mp._events.add('cefTrigger',(eventName)=>{if(++g_triggersCount>10){let currentDate=Date.now();if((currentDate-g_swapDate)>200){g_swapDate=currentDate;g_triggersCount=0}else{g_triggersCount=0;return!0}}})");
                 uint dimension = Dimensions.RequestPrivateDimension(player);
                 NAPI.Entity.SetEntityDimension(player, dimension);
@@ -552,7 +551,7 @@ namespace NeptuneEvo
                 var tempDriver = NAPI.Vehicle.GetVehicleDriver(player.Vehicle);
                 var driver = NAPI.Player.GetPlayerFromHandle(tempDriver);
                 if (driver == player || driver == null) return;
-                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, "Вы передали водителю данные о своём маршруте!", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Вы передали водителю данные о своём маршруте!", 3000);
                 Trigger.ClientEvent(driver, "syncWP", X, Y);
             } catch {
             }
@@ -712,7 +711,7 @@ namespace NeptuneEvo
                         int limit = 0;
                         if (!Int32.TryParse(text, out limit) || limit <= 0)
                         {
-                            Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
 
@@ -755,7 +754,7 @@ namespace NeptuneEvo
                         }
 
                         Fractions.Stocks.fracStocks[fracID].FuelLimit = limit;
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы установили дневной лимит топлива в ${limit} для {fracName}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы установили дневной лимит топлива в ${limit} для {fracName}", 3000);
                         return;
                     case "club_setprice":
                         try
@@ -764,12 +763,12 @@ namespace NeptuneEvo
                         }
                         catch
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
                         if (Convert.ToInt32(text) < 1)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
                         Fractions.AlcoFabrication.SetAlcoholPrice(player, Convert.ToInt32(text));
@@ -778,14 +777,14 @@ namespace NeptuneEvo
                         int price = 0;
                         if (!Int32.TryParse(text, out price) || price <= 0)
                         {
-                            Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
 
                         Player target = player.GetData<Player>("SELECTEDPLAYER");
                         if (!Main.Players.ContainsKey(target) || player.Position.DistanceTo(target.Position) > 2)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Игрок слишком далеко от Вас", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок слишком далеко от Вас", 3000);
                             return;
                         }
 
@@ -795,7 +794,7 @@ namespace NeptuneEvo
                         int amount = 0;
                         if (!Int32.TryParse(text, out amount))
                         {
-                            Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
                         if (amount <= 0) return;
@@ -815,13 +814,13 @@ namespace NeptuneEvo
 
                         if (amount > Fractions.Cityhall.canGetMoney)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не можете получить больше {Fractions.Cityhall.canGetMoney}$ сегодня", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не можете получить больше {Fractions.Cityhall.canGetMoney}$ сегодня", 3000);
                             return;
                         }
 
                         if (Fractions.Stocks.fracStocks[6].Money < amount)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно средств в казне", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно средств в казне", 3000);
                             return;
                         }
                         MoneySystem.Bank.Change(Players[player].Bank, amount);
@@ -841,7 +840,7 @@ namespace NeptuneEvo
 
                         if (!MoneySystem.Bank.Change(Players[player].Bank, -amount))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно средств", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно средств", 3000);
                             return;
                         }
                         Fractions.Stocks.fracStocks[6].Money += amount;
@@ -850,7 +849,7 @@ namespace NeptuneEvo
                     case "call_police":
                         if (text.Length == 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите причину", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите причину", 3000);
                             return;
                         }
                         Fractions.Police.callPolice(player, text);
@@ -858,7 +857,7 @@ namespace NeptuneEvo
                     case "call_sheriff":
                         if (text.Length == 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите причину", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите причину", 3000);
                             return;
                         }
                         Fractions.Sheriff.callSheriff(player, text);
@@ -881,7 +880,7 @@ namespace NeptuneEvo
                         }
                         catch
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите корректные данные", 3000);
                             return;
                         }
                         if (!player.HasData("SELECTEDPLAYER") || player.GetData<Player>("SELECTEDPLAYER") == null || !Main.Players.ContainsKey(player.GetData<Player>("SELECTEDPLAYER"))) return;
@@ -894,7 +893,7 @@ namespace NeptuneEvo
                         }
                         catch
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Введите корректные данные", 3000);
                             return;
                         }
                         if (!player.HasData("SELECTEDPLAYER") || player.GetData<Player>("SELECTEDPLAYER") == null || !Main.Players.ContainsKey(player.GetData<Player>("SELECTEDPLAYER"))) return;
@@ -908,17 +907,17 @@ namespace NeptuneEvo
                         }
                         catch
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
                         if (Convert.ToInt32(text) < 1)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
                         if (Admin.IsServerStoping)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Сервер сейчас не может принять это действие", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Сервер сейчас не может принять это действие", 3000);
                             return;
                         }
                         Fractions.Stocks.inputStocks(player, 0, callback, Convert.ToInt32(text));
@@ -928,7 +927,7 @@ namespace NeptuneEvo
                         target = player.GetData<Player>("SELLCARFOR");
                         if (!Main.Players.ContainsKey(target) || player.Position.DistanceTo(target.Position) > 3)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок находится слишком далеко от Вас", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок находится слишком далеко от Вас", 3000);
                             return;
                         }
                         try
@@ -937,54 +936,54 @@ namespace NeptuneEvo
                         }
                         catch
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
                         price = Convert.ToInt32(text);
                         if (price < 1 || price > 100000000)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                             return;
                         }
 
                         /*Houses.House house = Houses.HouseManager.GetHouse(target, true);
                         if (house == null)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока нет личного дома", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока нет личного дома", 3000);
                             return;
                         }
                         if (house.GarageID == 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока нет гаража", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока нет гаража", 3000);
                             return;
                         }
                         Houses.Garage garage = Houses.GarageManager.Garages[house.GarageID];
                         if (VehicleManager.getAllPlayerVehicles(target.Name).Count >= Houses.GarageManager.GarageTypes[garage.Type].MaxCars)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока уже максимальное кол-во машин", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока уже максимальное кол-во машин", 3000);
                             return;
                         }*/
 
                         if (Main.Players[target].Money < price)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока недостаточно средств", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока недостаточно средств", 3000);
                             return;
                         }
 
                         string number = player.GetData<string>("SELLCARNUMBER");
                         if (!VehicleManager.Vehicles.ContainsKey(number))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Такой машины больше не существует", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Такой машины больше не существует", 3000);
                             return;
                         }
                         if (PublicGarage.spawnedVehiclesNumber.Contains(number))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Припаркуйте свой автомобиль перед продажей", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Припаркуйте свой автомобиль перед продажей", 3000);
                             return;
                         }
 
                         string vName = VehicleManager.Vehicles[number].Model;
-                        Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы предложили {target.Name} купить Ваш {vName} ({number}) за {price}$", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы предложили {target.Name} купить Ваш {vName} ({number}) за {price}$", 3000);
 
                         Trigger.ClientEvent(target, "openDialog", "BUY_CAR", $"{player.Name} предложил Вам купить {vName} ({number}) за ${price}");
                         target.SetData("SELLDATE", DateTime.Now);
@@ -1006,7 +1005,7 @@ namespace NeptuneEvo
                                 if (dropAmount <= 0) return;
                                 if (item.Count < dropAmount)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                     return;
                                 }
                                 nInventory.Remove(player, item.Type, dropAmount);
@@ -1014,7 +1013,7 @@ namespace NeptuneEvo
                             }
                             else
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Некорректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Некорректные данные", 3000);
                                 return;
                             }
                         }
@@ -1035,7 +1034,7 @@ namespace NeptuneEvo
                                 if (transferAmount <= 0) return;
                                 if (item.Count < transferAmount)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                     return;
                                 }
 
@@ -1057,7 +1056,7 @@ namespace NeptuneEvo
                                     int maxMats = (Fractions.Stocks.maxMats.ContainsKey(veh.DisplayName)) ? Fractions.Stocks.maxMats[veh.DisplayName] : 600;
                                     if (VehicleInventory.GetCountOfType(veh, ItemType.Material) + transferAmount > maxMats)
                                     {
-                                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Невозможно загрузить такое кол-во матов", 3000);
+                                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Невозможно загрузить такое кол-во матов", 3000);
                                         return;
                                     }
                                 }
@@ -1065,7 +1064,7 @@ namespace NeptuneEvo
                                 int tryAdd = VehicleInventory.TryAdd(veh, new nItem(item.Type, transferAmount));
                                 if (tryAdd == -1 || tryAdd > 0)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "В машине недостаточно места", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "В машине недостаточно места", 3000);
                                     return;
                                 }
 
@@ -1075,7 +1074,7 @@ namespace NeptuneEvo
                             }
                             else
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Некорретные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Некорретные данные", 3000);
                                 return;
                             }
                         }
@@ -1094,7 +1093,7 @@ namespace NeptuneEvo
                             if (transferAmount <= 0) return;
                             if (item.Count < transferAmount)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                 return;
                             }
 
@@ -1105,7 +1104,7 @@ namespace NeptuneEvo
                             int tryAdd = Houses.FurnitureManager.TryAdd(houseID, furnID, item);
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в сейфе", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в сейфе", 3000);
                                 return;
                             }
 
@@ -1127,7 +1126,7 @@ namespace NeptuneEvo
                             if (transferAmount <= 0) return;
                             if (item.Count < transferAmount)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                 return;
                             }
 
@@ -1138,7 +1137,7 @@ namespace NeptuneEvo
                             int tryAdd = Fractions.Stocks.TryAdd(onFraction, item);
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места на складе", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места на складе", 3000);
                                 return;
                             }
 
@@ -1171,7 +1170,7 @@ namespace NeptuneEvo
                             if (transferAmount <= 0) return;
                             if (item.Count < transferAmount)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                 GUI.Dashboard.OpenOut(player, new List<nItem>(), changeTarget.Name, 5);
                                 return;
                             }
@@ -1180,7 +1179,7 @@ namespace NeptuneEvo
                             int tryAdd = nInventory.TryAdd(changeTarget, new nItem(item.Type, transferAmount));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У игрока недостаточно места", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У игрока недостаточно места", 3000);
                                 GUI.Dashboard.OpenOut(player, new List<nItem>(), changeTarget.Name, 5);
                                 return;
                             }
@@ -1210,14 +1209,14 @@ namespace NeptuneEvo
                                 if (transferAmount <= 0) return;
                                 if (count < transferAmount)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В машине нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В машине нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                     return;
                                 }
 
                                 int tryAdd = nInventory.TryAdd(player, new nItem(item.Type, transferAmount));
                                 if (tryAdd == -1 || tryAdd > 0)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                     return;
                                 }
                                 VehicleInventory.Remove(veh, item.Type, transferAmount);
@@ -1226,7 +1225,7 @@ namespace NeptuneEvo
                             }
                             else
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Некорретные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Некорретные данные", 3000);
                                 return;
                             }
                         }
@@ -1251,13 +1250,13 @@ namespace NeptuneEvo
                             if (transferAmount <= 0) return;
                             if (count < transferAmount)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"В ящике нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"В ящике нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                 return;
                             }
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type, transferAmount));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             nInventory.Add(player, new nItem(item.Type, transferAmount));
@@ -1283,13 +1282,13 @@ namespace NeptuneEvo
                             if (transferAmount <= 0) return;
                             if (count < transferAmount)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе нет столько {nInventory.ItemsNames[(int)item.Type]}", 3000);
                                 return;
                             }
                             int tryAdd = nInventory.TryAdd(player, new nItem(item.Type, transferAmount));
                             if (tryAdd == -1 || tryAdd > 0)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Недостаточно места в инвентаре", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Недостаточно места в инвентаре", 3000);
                                 return;
                             }
                             nInventory.Add(player, new nItem(item.Type, transferAmount));
@@ -1302,7 +1301,7 @@ namespace NeptuneEvo
                         {
                             int ammo = 0;
                             if (!Int32.TryParse(text, out ammo)) {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             if (ammo <= 0) return;
@@ -1314,12 +1313,12 @@ namespace NeptuneEvo
                             int hours = 0;
                             if (!Int32.TryParse(text, out hours))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             if (hours <= 0)
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             Houses.Hotel.ExtendHotelRent(player, hours);
@@ -1329,7 +1328,7 @@ namespace NeptuneEvo
                         {
                             if (string.IsNullOrEmpty(text) || text.Contains("'"))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             int num;
@@ -1337,20 +1336,20 @@ namespace NeptuneEvo
                             {
                                 if (Players[player].Contacts.Count >= Group.GroupMaxContacts[Accounts[player].VipLvl])
                                 {
-                                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "У Вас записано максимальное кол-во контактов", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "У Вас записано максимальное кол-во контактов", 3000);
                                     return;
                                 }
                                 if (Players[player].Contacts.ContainsKey(num))
                                 {
-                                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Контакт уже записан", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Контакт уже записан", 3000);
                                     return;
                                 }
                                 Players[player].Contacts.Add(num, num.ToString());
-                                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы добавили новый контакт {num}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы добавили новый контакт {num}", 3000);
                             }
                             else
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Некорректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Некорректные данные", 3000);
                                 return;
                             }
 
@@ -1360,7 +1359,7 @@ namespace NeptuneEvo
                         {
                             if (string.IsNullOrEmpty(text))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             int num;
@@ -1368,7 +1367,7 @@ namespace NeptuneEvo
                             {
                                 if (!SimCards.ContainsKey(num))
                                 {
-                                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Игрока с таким номером не найдено", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Игрока с таким номером не найдено", 3000);
                                     return;
                                 }
                                 Player t = GetPlayerByUUID(SimCards[num]);
@@ -1376,7 +1375,7 @@ namespace NeptuneEvo
                             }
                             else
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                         }
@@ -1385,87 +1384,86 @@ namespace NeptuneEvo
                         {
                             if (string.IsNullOrEmpty(text))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             int num = player.GetData<int>("SMSNUM");
                             if (!SimCards.ContainsKey(num))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Игрока с таким номером не найдено", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Игрока с таким номером не найдено", 3000);
                                 return;
                             }
                             Player t = GetPlayerByUUID(SimCards[num]);
                             if (t == null)
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Игрок оффлайн", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Игрок оффлайн", 3000);
                                 return;
                             }
                             if (!MoneySystem.Bank.Change(Players[player].Bank, -10, false))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Недостаточно средств на банковском счете", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Недостаточно средств на банковском счете", 3000);
                                 return;
                             }
-                            //Fractions.Stocks.fracStocks[6].Money += 10;
                             GameLog.Money($"bank({Main.Players[player].Bank})", $"frac(6)", 10, "sms");
                             int senderNum = Main.Players[player].Sim;
                             string senderName = (Players[t].Contacts.ContainsKey(senderNum)) ? Players[t].Contacts[senderNum] : senderNum.ToString();
                             string msg = $"Сообщение от {senderName}: {text}";
                             t.SendChatMessage("~o~" + msg);
-                            Notify.Send(t, NotifyType.Info, NotifyPosition.CenterRight, msg, 2000 + msg.Length * 70);
+                            Plugins.Notice.Send(t, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, msg, 2000 + msg.Length * 70);
 
                             string notif = $"Сообщение для {Players[player].Contacts[num]}: {text}";
                             player.SendChatMessage("~o~" + notif);
-                            Notify.Send(player, NotifyType.Info, NotifyPosition.CenterRight, notif, 2000 + msg.Length * 50);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, notif, 2000 + msg.Length * 50);
                         }
                         break;
                     case "smsname":
                         {
                             if (string.IsNullOrEmpty(text))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
                             if (text.Contains('"'.ToString()) || text.Contains("'") || text.Contains("[") || text.Contains("]") || text.Contains(":") || text.Contains("|") || text.Contains("\"") || text.Contains("`") || text.Contains("$") || text.Contains("%") || text.Contains("@") || text.Contains("{") || text.Contains("}") || text.Contains("(") || text.Contains(")"))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Имя содержит запрещенный символ.", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Имя содержит запрещенный символ.", 3000);
                                 return;
                             }
                             int num = player.GetData<int>("SMSNUM");
                             string oldName = Players[player].Contacts[num];
                             Players[player].Contacts[num] = text;
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы переименовали {oldName} в {text}", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы переименовали {oldName} в {text}", 3000);
                         }
                         break;
                     case "make_ad":
                         {
                             if (string.IsNullOrEmpty(text))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                                 return;
                             }
 
                             if (player.HasData("NEXT_AD") && DateTime.Now < player.GetData<DateTime>("NEXT_AD"))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы не можете подать объявление в данный момент", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы не можете подать объявление в данный момент", 3000);
                                 return;
                             }
 
                             if (Fractions.LSNews.AdvertNames.Contains(player.Name))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас уже есть одно объявление в очереди", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас уже есть одно объявление в очереди", 3000);
                                 return;
                             }
 
                             if (text.Length < 15)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Слишком короткое объявление", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Слишком короткое объявление", 3000);
                                 return;
                             }
 
                             int adPrice = text.Length / 15 * 6;
                             if (!MoneySystem.Bank.Change(Main.Players[player].Bank, -adPrice, false))
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас не хватает денежных средств в банке", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас не хватает денежных средств в банке", 3000);
                                 return;
                             }
                             Fractions.LSNews.AddAdvert(player, text, adPrice);
@@ -1475,7 +1473,7 @@ namespace NeptuneEvo
                         int sum = 0;
                         if (!Int32.TryParse(text, out sum))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Некорректные данные", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Некорректные данные", 3000);
                             return;
                         }
                         player.SetData("TICKETSUM", sum);
@@ -1546,7 +1544,7 @@ namespace NeptuneEvo
                 Ban ban = Ban.Get2(Accounts[player].Characters[slot - 1]);
                 if(ban != null)
                 {
-                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Ты не пройдёшь!", 4000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Ты не пройдёшь!", 4000);
                     return;
                 }
                 
@@ -1631,7 +1629,7 @@ namespace NeptuneEvo
                                 await Task.Run(() => {
                                     PasswordRestore.SendEmail(1, Main.RestorePass[client].Item4, newpas); // Отправляем сообщение на емейл с новым паролем
                                 });
-                                Notify.Send(client, NotifyType.Success, NotifyPosition.Center, "Ваш пароль был сброшен, новый пароль должен прийти в сообщении на почту, смените его сразу же после входа через команду /password", 10000);
+                                Plugins.Notice.Send(client, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Ваш пароль был сброшен, новый пароль должен прийти в сообщении на почту, смените его сразу же после входа через команду /password", 10000);
                                 Database.Query($"UPDATE `accounts` SET `password`='{Account.GetSha256(newpas.ToString())}' WHERE `login`='{Main.RestorePass[client].Item2}' AND `socialclub`='{Main.RestorePass[client].Item3}'");
                                 await SignInOnTimer(client, Main.RestorePass[client].Item2, newpas.ToString());  // Отправляем в логин по этим данным
                                 Main.RestorePass.Remove(client); // Удаляем из списка тех, кто восстанавливает пароль
@@ -1662,7 +1660,7 @@ namespace NeptuneEvo
                     if(cheatCode > 1)
                     {
                         Log.Write($"CheatKick: {((Cheat)cheatCode).ToString()} on {player.Name} ", nLog.Type.Warn);
-                        Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Непредвиденная ошибка! Попробуйте перезайти.", 10000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Непредвиденная ошибка! Попробуйте перезайти.", 10000);
                         player.Kick();
                         return;
                     }
@@ -1706,15 +1704,15 @@ namespace NeptuneEvo
                 }
                 else if (result == LoginEvent.Already)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Аккаунт уже авторизован.", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Аккаунт уже авторизован.", 3000);
                 }
                 else if (result == LoginEvent.Refused)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Данные введены неверно", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Данные введены неверно", 3000);
                 }
                 if (result == LoginEvent.SclubError)
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "SocialClub, с которого Вы подключены, не совпадает с тем, который привязан к аккаунту.", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "SocialClub, с которого Вы подключены, не совпадает с тем, который привязан к аккаунту.", 3000);
                 }
                 await Log.WriteAsync($"{nickname} try to signin step 3");
                 return;
@@ -1735,7 +1733,7 @@ namespace NeptuneEvo
                     if (cheatCode > 1)
                     {
                         //Log.Write($"CheatKick: {((Cheat)cheatCode).ToString()} on {player.Name} ", nLog.Type.Warn);
-                        Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Непредвиденная ошибка! Попробуйте перезайти.", 10000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Непредвиденная ошибка! Попробуйте перезайти.", 10000);
                         player.Kick();
                         return;
                     }
@@ -1762,15 +1760,15 @@ namespace NeptuneEvo
                 Account user = new Account();
                 RegisterEvent result = await user.Register(player, login, pass, email, promo);
                 if (result == RegisterEvent.Error)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Непредвиденная ошибка!", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Непредвиденная ошибка!", 3000);
                 else if (result == RegisterEvent.SocialReg)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "На этот SocialClub уже зарегистрирован игровой аккаунт!", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "На этот SocialClub уже зарегистрирован игровой аккаунт!", 3000);
                 else if (result == RegisterEvent.UserReg)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Данное имя пользователя уже занято!", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Данное имя пользователя уже занято!", 3000);
                 else if (result == RegisterEvent.EmailReg)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Данный email уже занят!", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Данный email уже занят!", 3000);
                 else if (result == RegisterEvent.DataError)
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Ошибка в заполнении полей!", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Ошибка в заполнении полей!", 3000);
                 Log.Write($"{nickname} try to signup step 3");
                 return;
             }
@@ -2113,6 +2111,12 @@ namespace NeptuneEvo
                     case 382:
                         Working.DrugFarm.interactPressed(player, id);
                         return;
+                    case 383:
+                        Working.Pineapple.interactPressed(player, id);
+                        return;
+                    case 509:
+                        Working.Construction.StartWorkDayConstruction(player);
+                        return;
                     case 512:
                         Realtor.OpenRealtorMenu(player);
                         return;
@@ -2169,7 +2173,7 @@ namespace NeptuneEvo
             {
                 if (!Main.Players.ContainsKey(player) || !player.GetData<bool>("IS_REQUESTED")) return;
                 player.SetData("IS_REQUESTED", false);
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Отмена", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Отмена", 3000);
             }
             catch (Exception e) { Log.Write("cancelPressed: " + e.Message, nLog.Type.Error); }
         }
@@ -2216,18 +2220,18 @@ namespace NeptuneEvo
                                 Houses.House house = Houses.HouseManager.GetHouse(player, true);
                                 if (house == null)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет личного дома", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет личного дома", 3000);
                                     break;
                                 }
                                 if (house.GarageID == 0)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет гаража", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет гаража", 3000);
                                     break;
                                 }
                                 Houses.Garage garage = Houses.GarageManager.Garages[house.GarageID];
                                 if (VehicleManager.getAllPlayerVehicles(player.Name).Count >= Houses.GarageManager.GarageTypes[garage.Type].MaxCars)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас максимальное кол-во машин", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас максимальное кол-во машин", 3000);
                                     break;
                                 }
 
@@ -2240,13 +2244,13 @@ namespace NeptuneEvo
                                 }
                                 if (!Main.Players.ContainsKey(seller) || player.Position.DistanceTo(seller.Position) > 3)
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок находится слишком далеко от Вас", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок находится слишком далеко от Вас", 3000);
                                     break;
                                 }
                                 string number = player.GetData<string>("CAR_NUMBER");
                                 if (!VehicleManager.Vehicles.ContainsKey(number))
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Этой машины больше не существует", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Этой машины больше не существует", 3000);
                                     break;
                                 }
                                 if (VehicleManager.Vehicles[number].Holder != seller.Name)
@@ -2258,14 +2262,14 @@ namespace NeptuneEvo
                                 // Public garage
                                 if (PublicGarage.spawnedVehiclesNumber.Contains(number))
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Продавец должен припарковать автомобиль перед продажей", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Продавец должен припарковать автомобиль перед продажей", 3000);
                                     break;
                                 }
 
                                 int price = player.GetData<int>("CAR_PRICE");
                                 if (!MoneySystem.Wallet.Change(player, -price))
                                 {
-                                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас недостаточно средств", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас недостаточно средств", 3000);
                                     break;
                                 }
                                 VehicleManager.VehicleData vData = VehicleManager.Vehicles[number];
@@ -2279,8 +2283,8 @@ namespace NeptuneEvo
 
                                 garage.SpawnCar(number);
 
-                                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили {vData.Model} ({number}) за {price}$ у {seller.Name}", 3000);
-                                Notify.Send(seller, NotifyType.Success, NotifyPosition.BottomCenter, $"{player.Name} купил у Вас {vData.Model} ({number}) за {price}$", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили {vData.Model} ({number}) за {price}$ у {seller.Name}", 3000);
+                                Plugins.Notice.Send(seller, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"{player.Name} купил у Вас {vData.Model} ({number}) за {price}$", 3000);
                                 break;
                             }
                         case "INVITED":
@@ -2298,10 +2302,10 @@ namespace NeptuneEvo
                                     Fractions.LSNews.onLSNPlayerLoad(player); // Загрузка всех объявлений в F7
                                 }
                                 Dashboard.sendStats(player);
-                                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы вступили в {Fractions.Manager.FractionNames[fracid]}", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы вступили в {Fractions.Manager.FractionNames[fracid]}", 3000);
                                 try
                                 {
-                                    Notify.Send(player.GetData<Player>("SENDERFRAC"), NotifyType.Success, NotifyPosition.BottomCenter, $"{player.Name} принял приглашение вступить в Вашу фракцию", 3000);
+                                    Plugins.Notice.Send(player.GetData<Player>("SENDERFRAC"), Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"{player.Name} принял приглашение вступить в Вашу фракцию", 3000);
                                 }
                                 catch { }
                                 return;
@@ -2351,7 +2355,7 @@ namespace NeptuneEvo
                                 }
                                 MoneySystem.Wallet.Change(player, price);
                                 GameLog.Money($"server", $"player({Main.Players[player].UUID})", price, $"carSell({vData.Model})");
-                                Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы продали {vData.Model} ({vnumber}) за {price}$", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы продали {vData.Model} ({vnumber}) за {price}$", 3000);
                                 VehicleManager.Remove(vnumber, player);
                             }
                             return;
@@ -2842,13 +2846,13 @@ namespace NeptuneEvo
                                 if (Players[player].HotelLeft <= 0)
                                 {
                                     Houses.Hotel.MoveOutPlayer(player);
-                                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Вас выселили из отеля за неуплату", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Вас выселили из отеля за неуплату", 3000);
                                 }
                             }
 
                             if (Players[player].LastHourMin < 15)
                             {
-                                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны наиграть хотя бы 15 минут, чтобы получить пейдей", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны наиграть хотя бы 15 минут, чтобы получить пейдей", 3000);
                                 continue;
                             }
 
@@ -2859,13 +2863,13 @@ namespace NeptuneEvo
                                 case 1:
                                     if (Players[player].WorkID != 0) break;
                                     int payment = Convert.ToInt32((100 * oldconfig.PaydayMultiplier) + (Group.GroupAddPayment[Accounts[player].VipLvl] * oldconfig.PaydayMultiplier));
-                                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили пособие по безработице {payment}$", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили пособие по безработице {payment}$", 3000);
                                     MoneySystem.Wallet.Change(player, payment);
                                     GameLog.Money($"server", $"player({Players[player].UUID})", payment, $"allowance");
                                     break;
                                 case 2:
                                     payment = Convert.ToInt32((Fractions.Configs.FractionRanks[Players[player].FractionID][Players[player].FractionLVL].Item4 * oldconfig.PaydayMultiplier) + (Group.GroupAddPayment[Accounts[player].VipLvl] * oldconfig.PaydayMultiplier));
-                                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили зарплату в {payment}$", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили зарплату в {payment}$", 3000);
                                     MoneySystem.Wallet.Change(player, payment);
                                     GameLog.Money($"server", $"player({Players[player].UUID})", payment, $"payday");
                                     break;
@@ -2880,7 +2884,7 @@ namespace NeptuneEvo
                                 {
                                     NAPI.Task.Run(() => { try { Trigger.ClientEvent(player, "disabledmg", false); } catch { } }, 5000);
                                 }
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, $"Поздравляем, у Вас новый уровень ({Players[player].LVL})!", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Поздравляем, у Вас новый уровень ({Players[player].LVL})!", 3000);
                                 if (Players[player].LVL == 1 && Accounts[player].PromoCodes[0] != "noref" && PromoCodes.ContainsKey(Accounts[player].PromoCodes[0]))
                                 {
                                     if (!Accounts[player].PresentGet)
@@ -2893,7 +2897,7 @@ namespace NeptuneEvo
                                         nInventory.Add(player, new nItem(ItemType.Sprunk, 3));
                                         nInventory.Add(player, new nItem(ItemType.Сrisps, 3));
 
-                                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Поздравляем, Вы получили награду за достижение 1 уровня по промокоду {promo}!", 3000);
+                                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Поздравляем, Вы получили награду за достижение 1 уровня по промокоду {promo}!", 3000);
 
                                         try
                                         {
@@ -2903,7 +2907,7 @@ namespace NeptuneEvo
                                                 if (Players.ContainsKey(pl) && Players[pl].UUID == PromoCodes[promo].Item3)
                                                 {
                                                     MoneySystem.Wallet.Change(pl, 2000);
-                                                    Notify.Send(pl, NotifyType.Info, NotifyPosition.Bottom, $"Вы получили $2000 за достижение 1 уровня игроком {player.Name}", 2000);
+                                                    Plugins.Notice.Send(pl, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили $2000 за достижение 1 уровня игроком {player.Name}", 2000);
                                                     isGiven = true;
                                                     break;
                                                 }
@@ -2912,7 +2916,7 @@ namespace NeptuneEvo
                                         }
                                         catch { }
                                     }
-                                    else Notify.Send(player, NotifyType.Error, NotifyPosition.Bottom, "Этот аккаунт уже получал подарок за активацию промокода", 5000);
+                                    else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Этот аккаунт уже получал подарок за активацию промокода", 5000);
                                 }
                             }
 
@@ -2921,7 +2925,7 @@ namespace NeptuneEvo
                             if (Accounts[player].VipLvl > 0 && Accounts[player].VipDate <= DateTime.Now)
                             {
                                 Accounts[player].VipLvl = 0;
-                                Notify.Send(player, NotifyType.Alert, NotifyPosition.BottomCenter, "С вас снят VIP статус", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Alert, Plugins.PositionNotice.TopCenter, "С вас снят VIP статус", 3000);
                             }
 
                             GUI.Dashboard.sendStats(player);
@@ -2978,7 +2982,7 @@ namespace NeptuneEvo
 
                                 if (player != null && Main.Players.ContainsKey(player))
                                 {
-                                    Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, $"Государство отобрало у Вас бизнес за неуплату налогов", 3000);
+                                    Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, $"Государство отобрало у Вас бизнес за неуплату налогов", 3000);
                                     MoneySystem.Wallet.Change(player, Convert.ToInt32(biz.SellPrice * 0.8));
                                     Main.Players[player].BizIDs.Remove(biz.ID);
                                 }
@@ -3029,7 +3033,7 @@ namespace NeptuneEvo
 
                             if (player != null && Players.ContainsKey(player))
                             {
-                                Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "У Вас отобрали дом за неуплату налогов", 3000);
+                                Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "У Вас отобрали дом за неуплату налогов", 3000);
                                 MoneySystem.Wallet.Change(player, Convert.ToInt32(h.Price / 2.0));
                                 Trigger.ClientEvent(player, "deleteCheckpoint", 333);
                                 Trigger.ClientEvent(player, "deleteGarageBlip");
@@ -3184,7 +3188,7 @@ namespace NeptuneEvo
                 case "call":
                     if (!SimCards.ContainsKey(num))
                     {
-                        Notify.Send(player, NotifyType.Warning, NotifyPosition.BottomCenter, "Игрока с таким номером не найдено", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Warning, Plugins.PositionNotice.TopCenter, "Игрока с таким номером не найдено", 3000);
                         return;
                     }
                     Player target = GetPlayerByUUID(SimCards[num]);
@@ -3194,7 +3198,7 @@ namespace NeptuneEvo
                     Trigger.ClientEvent(player, "openInput", "Переименование", $"Введите новое имя для {num}", 18, "smsname");
                     break;
                 case "remove":
-                    Notify.Send(player, NotifyType.Alert, NotifyPosition.BottomCenter, $"{num} удален из контактов.", 4000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Alert, Plugins.PositionNotice.TopCenter, $"{num} удален из контактов.", 4000);
                     lock (Players)
                     {
                         Players[player].Contacts.Remove(num);
@@ -3213,7 +3217,7 @@ namespace NeptuneEvo
         {
             try
             {
-                client.SendChatMessage($"!{{#00FFFF}}{Full}!{{#FFF}}!{{#f39c12}}{StartDate}");
+                client.SendChatMessage($"!{{#00FFFF}}{Full}!{{#FFF}} !{{#f39c12}}{StartDate}");
             }
             catch { }
         }
@@ -3371,7 +3375,7 @@ namespace NeptuneEvo
                     }
                     catch
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                         BusinessManager.OpenBizProductsMenu(player);
                         return;
                     }
@@ -3384,7 +3388,7 @@ namespace NeptuneEvo
                     }
                     catch
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                         BusinessManager.OpenBizProductsMenu(player);
                         return;
                     }
@@ -3397,31 +3401,11 @@ namespace NeptuneEvo
                     }
                     catch
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                         return;
                     }
                     BusinessManager.fillCar(player, Convert.ToInt32(text));
                     return;
-                /*case "load_mats":
-                case "unload_mats":
-                case "load_drugs":
-                case "unload_drugs":
-                    try
-                    {
-                        Convert.ToInt32(text);
-                    }
-                    catch
-                    {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
-                        return;
-                    }
-                    if (Convert.ToInt32(text) < 1)
-                    {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
-                        return;
-                    }
-                    Fractions.Stocks.inputStocks(player, 1, func, Convert.ToInt32(text));
-                    return;*/
                 case "put_stock":
                 case "take_stock":
                     try
@@ -3430,12 +3414,12 @@ namespace NeptuneEvo
                     }
                     catch
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                         return;
                     }
                     if (Convert.ToInt32(text) < 1)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Введите корректные данные", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Введите корректные данные", 3000);
                         return;
                     }
                     Fractions.Stocks.inputStocks(player, 0, func, Convert.ToInt32(text));
@@ -3631,7 +3615,7 @@ namespace NeptuneEvo
                 case "contacts":
                     if (Main.Players[player].Sim == -1)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет сим-карты", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет сим-карты", 3000);
                         return;
                     }
                     OpenContacts(player);
@@ -3643,8 +3627,8 @@ namespace NeptuneEvo
                     {
                         Houses.House house = Houses.HouseManager.GetHouse(player);
                         house.SetLock(!house.Locked);
-                        if (house.Locked) Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закрыли дом", 3000);
-                        else Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы открыли дом", 3000);
+                        if (house.Locked) Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закрыли дом", 3000);
+                        else Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы открыли дом", 3000);
                         return;
                     }
                 case "leavehouse":
@@ -3652,7 +3636,7 @@ namespace NeptuneEvo
                         Houses.House house = Houses.HouseManager.GetHouse(player);
                         if (house == null)
                         {
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы не живете в доме", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы не живете в доме", 3000);
                             MenuManager.Close(player);
                             return;
                         }

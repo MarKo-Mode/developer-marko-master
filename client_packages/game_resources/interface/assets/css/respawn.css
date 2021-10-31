@@ -1,25 +1,4 @@
-﻿@font-face {
-    font-family: 'UniNeueBold';
-    font-weight: 700;
-    font-style: normal;
-    src: url(../fonts/UniNeueBold/UniNeueBold.eot) format('embedded-opentype'), url(../fonts/UniNeueBold/UniNeueBold.woff) format('woff'), url(../fonts/UniNeueBold/UniNeueBold.ttf) format('truetype'), url(../fonts/UniNeueBold/UniNeueBold.svg#UniNeueBold) format('svg');
-}
-
-@font-face {
-    font-family: 'UniNeueRegular';
-    font-weight: 400;
-    font-style: normal;
-    src: url(../fonts/UniNeueRegular/UniNeueRegular.eot) format('embedded-opentype'), url(../fonts/UniNeueRegular/UniNeueRegular.woff) format('woff'), url(../fonts/UniNeueRegular/UniNeueRegular.ttf) format('truetype'), url(../fonts/UniNeueRegular/UniNeueRegular.svg#UniNeueBold) format('svg');
-}
-
-@font-face {
-    font-family: 'UniNeueBook';
-    font-weight: 300;
-    font-style: normal;
-    src: url(../fonts/UniNeueBook/UniNeueBook.eot) format('embedded-opentype'), url(../fonts/UniNeueBook/UniNeueBook.woff) format('woff'), url(../fonts/UniNeueBook/UniNeueBook.ttf) format('truetype'), url(../fonts/UniNeueBook/UniNeueBook.svg#UniNeueBold) format('svg');
-}
-
-* {
+﻿* {
     margin: 0;
     padding: 0;
 }

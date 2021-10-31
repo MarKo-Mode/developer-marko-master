@@ -111,12 +111,12 @@ namespace NeptuneEvo.Fractions
                 try {
                     if (Manager.countOfFractionMembers(18) == 0 && Manager.countOfFractionMembers(9) == 0)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Нет полицейских в Вашем районе. Попробуйте позже", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Нет полицейских в Вашем районе. Попробуйте позже", 3000);
                         return;
                     }
                     if (player.HasData("NEXTCALL_SHERIFF") && DateTime.Now < player.GetData<DateTime>("NEXTCALL_SHERIFF"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы уже вызвали полицию, попробуйте позже", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы уже вызвали полицию, попробуйте позже", 3000);
                         return;
                     }
                     player.SetData("NEXTCALL_SHERIFF", DateTime.Now.AddMinutes(7));
@@ -175,7 +175,7 @@ namespace NeptuneEvo.Fractions
                 if(target == null || !NAPI.Entity.DoesEntityExist(target)) return;
                 if (!target.HasData("IS_CALLSHERIFF"))
                 {
-                    Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Игрок не вызывал полицию или этот вызов уже кто-то принял", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Игрок не вызывал полицию или этот вызов уже кто-то принял", 3000);
                     return;
                 }
                 Blip blip = target.GetData<Blip>("CALLSHERIFF_BLIP");
@@ -207,7 +207,7 @@ namespace NeptuneEvo.Fractions
 
                 Manager.sendFractionMessage(18, $"{player.Name.Replace('_', ' ')} принял вызов от игрока ({target.Value})");
                 Manager.sendFractionMessage(18, $"~b~{player.Name.Replace('_', ' ')} принял вызов от игрока ({target.Value})", true);
-                Notify.Send(target, NotifyType.Info, NotifyPosition.BottomCenter, $"Игрок ({player.Value}) принял Ваш вызов", 3000);
+                Plugins.Notice.Send(target, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Игрок ({player.Value}) принял Ваш вызов", 3000);
             }
             catch {
             }
@@ -225,7 +225,7 @@ namespace NeptuneEvo.Fractions
                     var pasport = Convert.ToInt32(target);
                     if (!Main.PlayerNames.ContainsKey(pasport))
                     {
-                        Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomRight, $"Паспорта с таким номером не существует", 3000);
+                        Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Паспорта с таким номером не существует", 3000);
                         return;
                     }
                     player = NAPI.Player.GetPlayerFromName(Main.PlayerNames[pasport]);
@@ -236,7 +236,7 @@ namespace NeptuneEvo.Fractions
                     target.Replace(' ', '_');
                     if (!Main.PlayerNames.ContainsValue(target))
                     {
-                        Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomRight, $"Игрок не найден", 3000);
+                        Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не найден", 3000);
                         return;
                     }
                     player = NAPI.Player.GetPlayerFromName(target);
@@ -249,7 +249,7 @@ namespace NeptuneEvo.Fractions
                     setPlayerWantedLevel(player, null);
                 }
                 catch { }
-                Notify.Send(sender, NotifyType.Success, NotifyPosition.BottomRight, $"Вы сняли розыск с владельца паспорта {target}", 3000);
+                Plugins.Notice.Send(sender, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы сняли розыск с владельца паспорта {target}", 3000);
             } catch (Exception e) { Log.Write("ClearWantedLvl1: " + e.Message, nLog.Type.Error); }
         }
 
@@ -266,7 +266,7 @@ namespace NeptuneEvo.Fractions
                 }
                 catch
                 {
-                    Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomCenter, $"Машины с таким номером не найдено", 3000);
+                    Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Машины с таким номером не найдено", 3000);
                     return;
                 }
                 Trigger.ClientEvent(sender, "executeCarInfo", Convert.ToString(vehicle.Model), vehicle.Holder.Replace('_', ' '));
@@ -286,7 +286,7 @@ namespace NeptuneEvo.Fractions
                     var pasport = Convert.ToInt32(target);
                     if (!Main.PlayerNames.ContainsKey(pasport))
                     {
-                        Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomRight, $"Паспорта с таким номером не существует", 3000);
+                        Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Паспорта с таким номером не существует", 3000);
                         return;
                     }
                     player = NAPI.Player.GetPlayerFromName(Main.PlayerNames[pasport]);
@@ -297,7 +297,7 @@ namespace NeptuneEvo.Fractions
                     target.Replace(' ', '_');
                     if (!Main.PlayerNames.ContainsValue(target))
                     {
-                        Notify.Send(sender, NotifyType.Error, NotifyPosition.BottomRight, $"Игрок не найден", 3000);
+                        Plugins.Notice.Send(sender, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Игрок не найден", 3000);
                         return;
                     }
                     player = NAPI.Player.GetPlayerFromName(target);
@@ -409,17 +409,17 @@ namespace NeptuneEvo.Fractions
                 case 100:
                     if (Main.Players[player].FractionID != 18)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник Sheriff", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник Sheriff", 3000);
                         return;
                     }
                     if (!Stocks.fracStocks[18].IsOpen)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад закрыт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад закрыт", 3000);
                         return;
                     }
                     if (!NAPI.Data.GetEntityData(player, "ON_DUTY"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны начать рабочий день", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны начать рабочий день", 3000);
                         return;
                     }
                     OpenSheriffGunMenu(player);
@@ -429,14 +429,14 @@ namespace NeptuneEvo.Fractions
                     {
                         if (!NAPI.Data.GetEntityData(player, "ON_DUTY"))
                         {
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы начали рабочий день", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы начали рабочий день", 3000);
                             Manager.setSkin(player, 18, Main.Players[player].FractionLVL);
                             NAPI.Data.SetEntityData(player, "ON_DUTY", true);
                             break;
                         }
                         else
                         {
-                            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы закончили рабочий день", 3000);;
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы закончили рабочий день", 3000);;
                             Customization.ApplyCharacter(player);
                             if (player.HasData("HAND_MONEY")) player.SetClothes(5, 45, 0);
                             else if (player.HasData("HEIST_DRILL")) player.SetClothes(5, 41, 0);
@@ -444,22 +444,22 @@ namespace NeptuneEvo.Fractions
                             break;
                         }
                     }
-                    else Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник Sheriff", 3000);
+                    else Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник Sheriff", 3000);
                     return;
                 case 120:
                     if (Main.Players[player].FractionID != 18)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник Sheriff", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник Sheriff", 3000);
                         return;
                     }
                     if (!NAPI.Data.GetEntityData(player, "ON_DUTY"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны начать рабочий день", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны начать рабочий день", 3000);
                         return;
                     }
                     if (!is_warg)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Не включен режим ЧП", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Не включен режим ЧП", 3000);
                         return;
                     }
                     OpenSpecialSheriffMenu(player);
@@ -467,7 +467,7 @@ namespace NeptuneEvo.Fractions
                 case 420:
                     if (!player.HasData("HAND_MONEY") && !player.HasData("HEIST_DRILL"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас нет ни сумки с деньгами, ни сумки с дрелью", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас нет ни сумки с деньгами, ни сумки с дрелью", 3000);
                         return;
                     }
                     if (player.HasData("HAND_MONEY"))
@@ -484,37 +484,37 @@ namespace NeptuneEvo.Fractions
                     }
                     MoneySystem.Wallet.Change(player, 200);
                     GameLog.Money($"server", $"player({Main.Players[player].UUID})", 200, $"sheriffAward");
-                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, $"Вы получили вознаграждение в 200$", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Info, Plugins.PositionNotice.TopCenter, $"Вы получили вознаграждение в 200$", 3000);
                     return;
                 case 440:
                     if (Main.Players[player].Licenses[6])
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас уже есть лицензия на оружие", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас уже есть лицензия на оружие", 3000);
                         return;
                     }
                     if (!MoneySystem.Wallet.Change(player, -30000))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"У Вас недостаточно средств.", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"У Вас недостаточно средств.", 3000);
                         return;
                     }
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили лицензию на оружие", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили лицензию на оружие", 3000);
                     Main.Players[player].Licenses[6] = true;
                     Dashboard.sendStats(player);
                     return;
                 case 590:
                     if (Main.Players[player].FractionID != 18)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник Sheriff", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник Sheriff", 3000);
                         return;
                     }
                     if (!NAPI.Data.GetEntityData(player, "ON_DUTY"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны начать рабочий день", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны начать рабочий день", 3000);
                         return;
                     }
                     if (!Stocks.fracStocks[18].IsOpen)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Склад закрыт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Склад закрыт", 3000);
                         return;
                     }
                     if (!Manager.canUseCommand(player, "openweaponstock")) return;
@@ -524,23 +524,23 @@ namespace NeptuneEvo.Fractions
                 case 660:
                     if (Main.Players[player].FractionID != 18)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не сотрудник Sheriff", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не сотрудник Sheriff", 3000);
                         return;
                     }
                     if (!NAPI.Data.GetEntityData(player, "ON_DUTY"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны начать рабочий день", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны начать рабочий день", 3000);
                         return;
                     }
                     if (!player.IsInVehicle || (player.Vehicle.Model != NAPI.Util.GetHashKey("sheriff") && 
                         player.Vehicle.Model != NAPI.Util.GetHashKey("sheriff2") && player.Vehicle.Model != NAPI.Util.GetHashKey("sheriff3") && player.Vehicle.Model != NAPI.Util.GetHashKey("sheriff4")))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы должны находиться в рабочей машине", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы должны находиться в рабочей машине", 3000);
                         return;
                     }
                     Trigger.ClientEvent(player, "svem", 20, 20);
                     player.Vehicle.SetSharedData("BOOST", 20);
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Пробущено", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Пробущено", 3000);
                     return;
             }
         }
@@ -665,39 +665,39 @@ namespace NeptuneEvo.Fractions
                         if (!Manager.canGetWeapon(client, "armor")) return;
                         if (Fractions.Stocks.fracStocks[18].Materials < Fractions.Manager.matsForArmor)
                         {
-                            Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "На складе недостаточно материала", 3000);
+                            Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "На складе недостаточно материала", 3000);
                             return;
                         }
                         var aItem = nInventory.Find(Main.Players[client].UUID, ItemType.BodyArmor);
                         if (aItem != null)
                         {
-                            Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас уже есть бронежилет", 3000);
+                            Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас уже есть бронежилет", 3000);
                             return;
                         }
                         Fractions.Stocks.fracStocks[18].Materials -= Fractions.Manager.matsForArmor;
                         Fractions.Stocks.fracStocks[18].UpdateLabel();
                         nInventory.Add(client, new nItem(ItemType.BodyArmor, 1, 100.ToString()));
-                        Notify.Send(client, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы получили бронежилет", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы получили бронежилет", 3000);
                         GameLog.Stock(Main.Players[client].FractionID, Main.Players[client].UUID, "armor", 1, false);
                         return;
                     case 6: // medkit
                         if (!Manager.canGetWeapon(client, "Medkits")) return;
                         if (Fractions.Stocks.fracStocks[18].Medkits == 0)
                         {
-                            Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "На складе нет аптечек", 3000);
+                            Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "На складе нет аптечек", 3000);
                             return;
                         }
                         var hItem = nInventory.Find(Main.Players[client].UUID, ItemType.HealthKit);
                         if (hItem != null)
                         {
-                            Notify.Send(client, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас уже есть аптечка", 3000);
+                            Plugins.Notice.Send(client, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас уже есть аптечка", 3000);
                             return;
                         }
                         Fractions.Stocks.fracStocks[18].Medkits--;
                         Fractions.Stocks.fracStocks[18].UpdateLabel();
                         nInventory.Add(client, new nItem(ItemType.HealthKit, 1));
                         GameLog.Stock(Main.Players[client].FractionID, Main.Players[client].UUID, "medkit", 1, false);
-                        Notify.Send(client, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы получили аптечку", 3000);
+                        Plugins.Notice.Send(client, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы получили аптечку", 3000);
                         return;
                     case 7: // pistol ammo
                         if (!Manager.canGetWeapon(client, "PistolAmmo")) return;

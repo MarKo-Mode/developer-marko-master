@@ -279,13 +279,13 @@ namespace NeptuneEvo.Fractions
 
                     if (Main.Players[player].FractionID != player.GetData<int>("CLUB"))
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"Вы не состоите в {Fractions.Manager.getName(player.GetData<int>("CLUB"))}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"Вы не состоите в {Fractions.Manager.getName(player.GetData<int>("CLUB"))}", 3000);
                         return;
                     }
 
                     if (!player.IsInVehicle)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Вы должны находиться в машине", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Вы должны находиться в машине", 3000);
                         return;
                     }
 
@@ -294,20 +294,20 @@ namespace NeptuneEvo.Fractions
                     var matCount = VehicleInventory.GetCountOfType(player.Vehicle, ItemType.Material);
                     if (matCount == 0)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "В машине нет материала", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "В машине нет материала", 3000);
                         return;
                     }
 
                     if (ClubsStocks[club].Materials >= MaxMats)
                     {
-                        Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Склад заполнен", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Склад заполнен", 3000);
                         return;
                     }
 
                     VehicleInventory.Remove(player.Vehicle, ItemType.Material, matCount);
                     ClubsStocks[club].Materials += matCount;
                     ClubsStocks[club].UpdateLabel();
-                    Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, "Вы выгрузили весь материал из машины на склад клуба", 3000);
+                    Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, "Вы выгрузили весь материал из машины на склад клуба", 3000);
                     return;
                 case 57:
                     if (!Main.Players.ContainsKey(player)) return;
@@ -376,18 +376,18 @@ namespace NeptuneEvo.Fractions
                     case 0: // buy
                         if (alcoCounts[index] <= 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно товара на складе", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно товара на складе", 3000);
                             return;
                         }
                         var tryAdd = nInventory.TryAdd(player, new nItem(invItem));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно места в инвентаре", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно места в инвентаре", 3000);
                             return;
                         }
                         if (!MoneySystem.Wallet.Change(player, -Convert.ToInt32(DrinksPrices[index] * ClubsStocks[club].PriceModifier)))
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "У Вас недостаточно средств", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "У Вас недостаточно средств", 3000);
                             return;
                         }
                         Stocks.fracStocks[club].Money += Convert.ToInt32(DrinksPrices[index] * ClubsStocks[club].PriceModifier);
@@ -408,18 +408,18 @@ namespace NeptuneEvo.Fractions
                         }
                         ClubsStocks[club].UpdateLabel();
                         OpenBuyAlcoholMenu(player);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы купили {nInventory.ItemsNames[(int)invItem]}", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы купили {nInventory.ItemsNames[(int)invItem]}", 3000);
                         return;
                     case 1: // take
                         if (alcoCounts[index] <= 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно товара на складе", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно товара на складе", 3000);
                             return;
                         }
                         tryAdd = nInventory.TryAdd(player, new nItem(invItem));
                         if (tryAdd == -1 || tryAdd > 0)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Недостаточно места в инвентаре", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Недостаточно места в инвентаре", 3000);
                             return;
                         }
                         nInventory.Add(player, new nItem(invItem));
@@ -438,17 +438,17 @@ namespace NeptuneEvo.Fractions
                         }
                         ClubsStocks[club].UpdateLabel();
                         OpenBuyAlcoholMenu(player);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы взяли {nInventory.ItemsNames[(int)invItem]}. На складе {alcoCounts[index] - 1}шт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы взяли {nInventory.ItemsNames[(int)invItem]}. На складе {alcoCounts[index] - 1}шт", 3000);
                         return;
                     case 2: // craft
                         if (alcoCounts[index] >= 80)
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе максимум {nInventory.ItemsNames[(int)invItem]}", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе максимум {nInventory.ItemsNames[(int)invItem]}", 3000);
                             return;
                         }
                         if (ClubsStocks[club].Materials < DrinksMats[index])
                         {
-                            Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, $"На складе недостаточно материалов", 3000);
+                            Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, $"На складе недостаточно материалов", 3000);
                             return;
                         }
 
@@ -468,7 +468,7 @@ namespace NeptuneEvo.Fractions
 
                         ClubsStocks[club].UpdateLabel();
                         OpenBuyAlcoholMenu(player);
-                        Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы скрафтили {nInventory.ItemsNames[(int)invItem]}. На складе {alcoCounts[index] + 1}шт", 3000);
+                        Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы скрафтили {nInventory.ItemsNames[(int)invItem]}. На складе {alcoCounts[index] + 1}шт", 3000);
                         return;
                     case 3: // setprice
                         Trigger.ClientEvent(player, "openInput", "Установить цену", "Введите цену для алкоголя в процентах", 3, "club_setprice");
@@ -483,12 +483,12 @@ namespace NeptuneEvo.Fractions
 
             if (price < 50 || price > 150)
             {
-                Notify.Send(player, NotifyType.Error, NotifyPosition.BottomCenter, "Установите цену от 50% до 150%", 3000);
+                Plugins.Notice.Send(player, Plugins.TypeNotice.Error, Plugins.PositionNotice.TopCenter, "Установите цену от 50% до 150%", 3000);
                 return;
             }
 
             ClubsStocks[Main.Players[player].FractionID].PriceModifier = price / 100.0f;
-            Notify.Send(player, NotifyType.Success, NotifyPosition.BottomCenter, $"Вы изменили цену алкогольной продукции до {price}%", 3000);
+            Plugins.Notice.Send(player, Plugins.TypeNotice.Success, Plugins.PositionNotice.TopCenter, $"Вы изменили цену алкогольной продукции до {price}%", 3000);
         }
         #endregion
 

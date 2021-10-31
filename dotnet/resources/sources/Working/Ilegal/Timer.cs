@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GTANetworkAPI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GTANetworkAPI;
 
 public class TimerEx : Script
 {
